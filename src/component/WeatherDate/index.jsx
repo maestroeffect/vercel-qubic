@@ -33,6 +33,10 @@ const useWeatherAndDate = () => {
         year: "numeric",
         month: "long",
         day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        // second: "2-digit",
+        // timeZoneName: "short",
       };
       setDateTime(now.toLocaleString("en-US", options).replace(" at", ","));
     };
