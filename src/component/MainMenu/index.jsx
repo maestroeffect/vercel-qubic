@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProtoTypes from "prop-types";
 import FontAwesome from "../uiStyle/FontAwesome";
 import tempIcon from "../../assets/img/icon/temp.png";
 import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
+import useWeatherAndDate from "../WeatherDate";
 
 const menus = [
   {
@@ -405,8 +406,22 @@ const menusDark = [
 const MainMenu = ({ className, dark }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
+// Destructure weather, dateTime, and location from the hook
+const { weather, dateTime, location } = useWeatherAndDate();
 
-  
+// UseEffect to log weather and location when they update
+useEffect(() => {
+  if (weather !== null) {
+    console.log("Current weather:", weather);  // Log the weather
+  }
+}, [weather]);  // This will run whenever weather updates
+
+// Optionally, log the location when it updates
+useEffect(() => {
+  if (location !== "Loading...") {
+    console.log("Current location:", location);  // Log the location
+  }
+}, [location]);  // This will run whenever location updates
   const arr = dark ? menusDark : menus;
   return (
     <>
@@ -553,9 +568,9 @@ const MainMenu = ({ className, dark }) => {
                         <img src={tempIcon} alt="temp icon" />
                       </div>
                       <h3 className="temp_count">
-                        13
+                      {weather !== null ? `${weather}°C` : "Loading..."}
                       </h3>
-                      <p>San Francisco</p>
+                      <p>{location}</p>
                     </div>
                   </div>
                 </div>

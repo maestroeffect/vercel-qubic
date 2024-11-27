@@ -8,10 +8,7 @@ import useWeatherAndDate from "../WeatherDate";
 
 const TopBar = ({ className, dark }) => {
   // Use the custom hook to get weather and date/time
-  const { weather, dateTime } = useWeatherAndDate(
-    "YOUR_LATITUDE",
-    "YOUR_LONGITUDE"
-  );
+  const { weather, dateTime } = useWeatherAndDate();
   return (
     <div className={`topbar ${className ? className : ""}`} id="top">
       <div className="container">
