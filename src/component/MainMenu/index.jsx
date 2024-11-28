@@ -37,22 +37,22 @@ const menus = [
       {
         id: 41,
         link: "/business",
-        linkText: "Business",
+        linkText: "Cybersecurity",
       },
       {
         id: 42,
         link: "/entertainment",
-        linkText: "Entertainment",
+        linkText: "Software Development",
       },
       {
         id: 43,
         link: "/features",
-        linkText: "Features",
+        linkText: "DevOps",
       },
       {
         id: 44,
         link: "/sports",
-        linkText: "Sports",
+        linkText: "Data Analysis",
       },
       {
         id: 45,

@@ -106,7 +106,7 @@ const WidgetTab = ({ className, dark }) => {
               toggle("1");
             }}
           >
-            RELATED
+            TRENDING
           </Link>
         </NavItem>
         <NavItem>

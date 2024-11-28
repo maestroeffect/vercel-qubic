@@ -13,32 +13,32 @@ const categories = [
   {
     small_img: union,
     big_image: category1,
-    title: "Restaurant",
+    title: "Cybersecurity",
   },
   {
     small_img: union,
     big_image: category2,
-    title: "Entertainment",
+    title: "Data Analysis",
   },
   {
     small_img: union,
     big_image: category3,
-    title: "Feature",
+    title: "DevOps",
   },
   {
     small_img: union,
     big_image: category4,
-    title: "Business",
+    title: "Cybercrime",
   },
   {
     small_img: union,
     big_image: category5,
-    title: "Trending",
+    title: "Artificial Intelligence",
   },
   {
     small_img: union,
     big_image: category6,
-    title: "Sports",
+    title: "Trending",
   },
 ];
 

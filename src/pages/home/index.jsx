@@ -18,6 +18,7 @@ import CategoriesWidget from "../../component/CategoriesWidget";
 // images
 import banner1 from "../../assets/img/banner/banner-1.png";
 import banner2 from "../../assets/img/banner/banner-2.jpg";
+import banner8 from "../../assets/img/banner/banner-8.jpg";
 import { Link } from "react-router-dom";
 import { businessNews, entertainments } from "../../data/entertainments";
 
@@ -71,7 +72,7 @@ function Home() {
             <div className="col-lg-4">
               <div className="row">
                 <div className="col-lg-12">
-                  <MostShareWidget title="Most share" />
+                  <MostShareWidget title="Most shared" />
                 </div>
                 <div className="col-lg-12">
                   <UpcomingMatches />
@@ -85,6 +86,7 @@ function Home() {
                 <div className="col-lg-12">
                   <div className="banner2 mb30">
                     <Link to="/">
+                      <img className="mb-4" src={banner8} alt="thumb" />
                       <img src={banner2} alt="thumb" />
                     </Link>
                   </div>
