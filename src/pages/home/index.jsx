@@ -45,52 +45,50 @@ function Home() {
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-12">
                   <div className="heading">
                     <h2 className="widget-title">Entertrainment News</h2>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/*CAROUSEL START*/}
-              <div className="entertrainment_carousel mb30">
+              {/* <div className="entertrainment_carousel mb30">
                 <div className="entertrainment_item">
                   <div className="row justify-content-center">
                     <EntertainmentNews entertainments={entertainments} />
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/*CAROUSEL END*/}
-              <SportsNews />
-              <div className="banner_area mt50 mb60 xs-mt60">
+              {/* <SportsNews /> */}
+              {/* <div className="banner_area mt50 mb60 xs-mt60">
                 <Link to="/">
                   <img src={banner1} alt="banner1" />
                 </Link>
-              </div>
-              <BusinessNews businessNews={businessNews} />
+              </div> */}
+              {/* <BusinessNews businessNews={businessNews} /> */}
             </div>
-            <div className="col-lg-4">
+            <div className="col-12">
               <div className="row">
-                <div className="col-lg-12">
+                {/* <div className="col-lg-12">
                   <MostShareWidget title="Most shared" />
-                </div>
-                <div className="col-lg-12">
+                </div> */}
+                {/* <div className="col-lg-12">
                   <UpcomingMatches />
-                </div>
-                <div className="col-lg-12">
+                </div> */}
+
+                <div className="col-12">
                   <NewsLetter />
                 </div>
-                <div className="col-lg-12">
-                  <CategoriesWidget />
-                </div>
-                <div className="col-lg-12">
+                {/* <div className="col-lg-12">
                   <div className="banner2 mb30">
                     <Link to="/">
                       <img className="mb-4" src={banner8} alt="thumb" />
                       <img src={banner2} alt="thumb" />
                     </Link>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

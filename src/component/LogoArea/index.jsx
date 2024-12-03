@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import logoDark from "../../assets/img/logo-2.png";
 import tpBanner from "../../assets/img/banner/banner-1.png";
+import banner from "../../assets/img/banner/banner-9.jpg";
 
 const LogoArea = ({ className, dark }) => {
   return (
@@ -20,7 +21,7 @@ const LogoArea = ({ className, dark }) => {
           <div className="col-lg-8 align-self-center">
             <div className="banner1">
               <Link to="#">
-                <img src={tpBanner} alt="banner" />
+                <img src={banner} alt="banner" />
               </Link>
             </div>
           </div>

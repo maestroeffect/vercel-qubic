@@ -5,6 +5,7 @@ import video1 from "../../assets/img/video-post-thumb.jpg";
 import FontAwesome from "../uiStyle/FontAwesome";
 import ModalVideo from "react-modal-video";
 import PopularPosts from "../PopularPosts";
+import CategoriesWidget from "../CategoriesWidget";
 
 const VideoPost = ({ className, dark }) => {
   const [vModal, setvModal] = useState(false);
@@ -53,7 +54,7 @@ const VideoPost = ({ className, dark }) => {
               </div>
             </div>
             <div className="col-lg-4">
-              <PopularPosts />
+                  <CategoriesWidget />
             </div>
           </div>
         </div>
