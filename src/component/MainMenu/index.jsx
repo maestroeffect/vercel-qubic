@@ -23,7 +23,7 @@ const menus = [
   },
   {
     id: 3,
-    linkText: "Awareness Material",
+    linkText: "Cybershield",
     child: false,
     link: "/about",
     // icon: "angle-down",
