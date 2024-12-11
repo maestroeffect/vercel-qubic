@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ProtoTypes from "prop-types";
 import Heading from "../uiStyle/Heading";
 import TrendingNewsSlider from "../TrendingNewsSlider";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
+import useNews from "../RapidApi";
 
 import transm1 from "../../assets/img/gallery-1.jpg";
 import transm2 from "../../assets/img/gallery-2.jpg";
@@ -51,6 +52,15 @@ const trendingNews = [
 ];
 
 const TrendingNews = ({ dark }) => {
+  const { news, loading, error } = useNews();
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while data is being fetched
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>; // Show an error message if fetching fails
+  }
+
   return (
     <>
       <Heading title="Trending News" />
@@ -63,12 +73,15 @@ const TrendingNews = ({ dark }) => {
       <div className="space-30" />
       <div className="row">
         <div className="col-lg-6">
-          {trendingNews.slice(0, 3).map((item, i) => (
+          {news.slice(0, 3).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
                   <div className="img_wrap">
-                    <img src={item.image} alt="thumb" />
+                    <img
+                      src={item.photo_url || "default-image-url.jpg"} // Fallback image URL if photo_url is not present
+                      alt="thumb"
+                    />
                   </div>
                   <span className="tranding">
                     <FontAwesome name="bolt" />
@@ -76,8 +89,8 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category}</Link>
-                    <Link to="/">{item.date}</Link>
+                    <Link to="/">GENERAL</Link>
+                    <Link to="/">"{item.formattedDate}"</Link>
                   </div>
                   <h4>
                     <Link to="/post1">{item.title}</Link>
@@ -100,7 +113,7 @@ const TrendingNews = ({ dark }) => {
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
                   <div className="img_wrap">
-                    <img src={item.image} alt="thumb" />
+                    <img src={item.thumbnail_url} alt="thumb" />
                   </div>
                   <span className="tranding">
                     <FontAwesome name="bolt" />

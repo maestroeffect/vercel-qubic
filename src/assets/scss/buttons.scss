@@ -26,7 +26,6 @@ input.readmore {
     border-color: transparent;
   }
 }
-
 .download_btn {
   .widget-title {
     margin-bottom: 10px;
@@ -34,18 +33,20 @@ input.readmore {
 
   .download_btn_group {
     a.app_btn {
-      position: relative;
-      z-index: 2;
-      display: inline-block;
-      font-size: 12px;
-      padding-left: 39px;
-      border: 1px solid $app_btn_color;
-      padding: 13px 20px 13px 40px;
-      background: #f2f6f8;
-      border-radius: 3px;
-      color: $app_btn_color;
-      line-height: 12px;
-      @include transition(all 0.3s);
+      & {
+        position: relative;
+        z-index: 2;
+        display: inline-block;
+        font-size: 12px;
+        padding-left: 39px;
+        border: 1px solid $app_btn_color;
+        padding: 13px 20px 13px 40px;
+        background: #f2f6f8;
+        border-radius: 3px;
+        color: $app_btn_color;
+        line-height: 12px;
+        @include transition(all 0.3s);
+      }
 
       span {
         display: block;
@@ -76,6 +77,13 @@ input.readmore {
       }
 
       &:hover {
+        & {
+          background: $secondary_color;
+          border-color: $secondary_color;
+          color: $white;
+          @include transition(all 0.3s);
+        }
+
         i {
           color: $white;
           @include transition(all 0.3s);
@@ -85,11 +93,6 @@ input.readmore {
           color: $white;
           @include transition(all 0.3s);
         }
-
-        background: $secondary_color;
-        border-color: $secondary_color;
-        color: $white;
-        @include transition(all 0.3s);
       }
     }
   }
@@ -145,20 +148,22 @@ input.readmore {
       }
 
       i {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        font-size: 20px;
-        text-align: center;
-        height: 30px;
-        width: 30px;
-        color: $secondary_color;
-        line-height: 30px;
-        margin-top: -15px;
-        @include transition(all 0.3s);
-        background: $gradient41;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        & {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          font-size: 20px;
+          text-align: center;
+          height: 30px;
+          width: 30px;
+          color: $secondary_color;
+          line-height: 30px;
+          margin-top: -15px;
+          @include transition(all 0.3s);
+          background: $gradient41;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
 
       &:last-child {
@@ -166,6 +171,13 @@ input.readmore {
       }
 
       &:hover {
+        & {
+          background: $secondary_color;
+          border-color: $secondary_color;
+          color: $white;
+          @include transition(all 0.3s);
+        }
+
         i {
           color: $white;
           @include transition(all 0.3s);
@@ -175,11 +187,6 @@ input.readmore {
           color: $white;
           @include transition(all 0.3s);
         }
-
-        background: $secondary_color;
-        border-color: $secondary_color;
-        color: $white;
-        @include transition(all 0.3s);
       }
     }
   }

@@ -52,7 +52,7 @@ const useWeatherAndDate = () => {
     if (lat && lon) {
       const fetchWeather = async () => {
         try {
-          const apiKey = "ECiTtj39HM1IFg9dqdxlRgxFyas2wtdg";
+          const apiKey = import.meta.env.VITE_WEATHER_API;
           const url = `https://api.tomorrow.io/v4/weather/forecast?location=${lat},${lon}&apikey=${apiKey}`;
 
           const response = await axios.get(url);
@@ -73,7 +73,6 @@ const useWeatherAndDate = () => {
           const cityUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
           const cityResponse = await axios.get(cityUrl);
           setLocation(cityResponse.data.locality || "Unknown location");
-
         } catch (error) {
           console.error("Error fetching weather data:", error);
         }
