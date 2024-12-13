@@ -117,7 +117,7 @@
 
   ul.navbar-nav > li:hover a::before,
   ul.navbar-nav > li.active a::before {
-    border-color: #DB833D;
+    border-color: #f15a25;
     opacity: 1;
     -webkit-transform: scale(1) translateZ(0);
     transform: scale(1) translateZ(0);
@@ -531,7 +531,7 @@
     content: "";
     height: 0;
     width: 100%;
-    background: #DB833D;
+    background: #f15a25;
     bottom: 0;
     left: 0;
     z-index: 2;

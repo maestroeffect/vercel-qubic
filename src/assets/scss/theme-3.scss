@@ -1,20 +1,15 @@
-@import 'fonts';
-@import 'colors';
-@import 'inheritance';
-@import 'mixin';
-@import 'responsive';
-
+@import "fonts";
+@import "colors";
+@import "inheritance";
+@import "mixin";
+@import "responsive";
 
 .theme-3 {
-
-
   /*GLOBAL STYLE*/
-
 
   .container {
     max-width: 1230px;
   }
-
 
   /*OTHERS STYLE*/
 
@@ -42,7 +37,6 @@
       }
     }
   }
-
 
   .user3 {
     position: relative;
@@ -120,9 +114,7 @@
         }
       }
     }
-
   }
-
 
   .type19 {
     .single_post_text {
@@ -130,12 +122,10 @@
         font-size: 17px;
         line-height: 23px;
         font-weight: 400;
-        color: #17222B;
+        color: #17222b;
       }
-
     }
   }
-
 
   .post_type6 {
     .meta {
@@ -198,10 +188,9 @@
       }
     }
 
-
     .more_newss {
       padding-left: 20px;
-      border-left: 1px solid $more_news_border
+      border-left: 1px solid $more_news_border;
     }
 
     .single_footer_nav {
@@ -246,7 +235,6 @@
       margin-bottom: 30px;
     }
 
-
     .twitter_feeds {
       .single_twitter_feed {
         position: relative;
@@ -286,7 +274,6 @@
       }
     }
 
-
     .single_more_news {
       position: relative;
       z-index: 2;
@@ -312,7 +299,6 @@
         left: -22.5px;
         top: 5.5px;
       }
-
     }
 
     .extra_newss {
@@ -339,7 +325,6 @@
 
         a {
           color: $body_color;
-
         }
 
         span.news_counter {
@@ -403,9 +388,7 @@
         line-height: 23px;
         margin-top: 10px;
       }
-
     }
-
 
     .copyright {
       background: $theme3_bg;
@@ -414,7 +397,6 @@
 
       p {
         color: $footer_dark_color;
-
       }
 
       ul {
@@ -457,7 +439,7 @@
         &:last-child {
           margin-left: 20px;
           color: $body_color;
-          opacity: .75;
+          opacity: 0.75;
 
           &:before {
             position: absolute;
@@ -469,14 +451,13 @@
             margin-top: -10px;
             line-height: 20px;
             color: $body_color;
-            opacity: .3;
+            opacity: 0.3;
             text-align: center;
           }
         }
       }
     }
   }
-
 
   .single_post_text {
     .meta5 {
@@ -513,7 +494,6 @@
     }
   }
 
-
   .single_post_text {
     .meta3 {
       margin-bottom: 0;
@@ -546,7 +526,7 @@
         &:last-child {
           margin-left: 20px;
           color: $body_color;
-          opacity: .75;
+          opacity: 0.75;
 
           &:before {
             position: absolute;
@@ -558,7 +538,7 @@
             margin-top: -10px;
             line-height: 20px;
             color: $body_color;
-            opacity: .3;
+            opacity: 0.3;
             text-align: center;
           }
         }
@@ -595,7 +575,6 @@
     }
   }
 
-
   .single_post_text {
     .meta4 {
       margin-top: 0;
@@ -608,11 +587,10 @@
         line-height: 17px;
         font-weight: 500;
         color: $body_color;
-        opacity: .6;
+        opacity: 0.6;
       }
     }
   }
-
 
   .trancarousel_area {
     .nav_style1 .navBtns {
@@ -631,17 +609,16 @@
           margin-left: 7px;
         }
       }
-
     }
 
     p.trand {
       float: left;
       margin-right: 10px;
       padding: 12px 20px;
-      background: #FFE5E5;
+      background: #ffe5e5;
       font-size: 14px;
       font-weight: 500;
-      color: #DB833D;
+      color: #f15a25;
       line-height: 17px;
     }
 
@@ -649,22 +626,21 @@
       padding: 12px;
       font-size: 14px;
       line-height: 17px;
-      opacity: .85;
+      opacity: 0.85;
 
       a {
         color: $body_color;
-        opacity: .85;
+        opacity: 0.85;
         word-break: break-word;
       }
 
       p {
         color: $body_color;
-        opacity: .85;
+        opacity: 0.85;
         word-break: break-word;
       }
     }
   }
-
 
   .nav_style1 {
     .owl-nav {
@@ -681,7 +657,7 @@
         border-radius: 3px;
         border: 1px solid $nav_color;
         color: $nav_color;
-        @include transition(all .3s);
+        @include transition(all 0.3s);
 
         &:last-child {
           margin-left: 14px;
@@ -691,12 +667,11 @@
           background: $secondary_bg;
           border-color: $secondary_bg;
           color: $white;
-          @include transition(all .3s);
+          @include transition(all 0.3s);
         }
       }
     }
   }
-
 
   ul.like_cm {
     margin: 0;
@@ -741,7 +716,6 @@
       }
     }
   }
-
 
   .type14 {
     padding-left: 85px;
@@ -798,7 +772,7 @@
   }
 
   .border_tranding {
-    border: 1px solid $white
+    border: 1px solid $white;
   }
 
   .tranding3 {
@@ -808,7 +782,6 @@
       }
     }
   }
-
 
   .type17 {
     padding-right: 20px;
@@ -828,14 +801,12 @@
     }
   }
 
-
   .type18 {
     .single_post_text {
       padding-top: 20px;
 
       a {
         font-size: 18px;
-
       }
     }
 
@@ -845,7 +816,6 @@
       }
     }
   }
-
 
   span.batch3.date {
     position: absolute;
@@ -870,7 +840,6 @@
       }
     }
   }
-
 
   .type20 {
     .post_img {
@@ -911,13 +880,12 @@
 
         p {
           color: $body_color;
-          opacity: .4;
+          opacity: 0.4;
           font-weight: $wightMedium;
         }
       }
     }
   }
-
 
   ul.meta_share {
     li {
@@ -935,8 +903,6 @@
   }
 
   .post_type21 {
-
-
     .post_img {
       &:after {
         position: absolute;
@@ -956,7 +922,7 @@
 
         li {
           a {
-            color: $white
+            color: $white;
           }
         }
       }
@@ -990,7 +956,7 @@
             margin-right: 0;
 
             &:after {
-              display: none
+              display: none;
             }
           }
 
@@ -1007,8 +973,6 @@
       a {
         font-size: 24px;
         line-height: 32px;
-
-
       }
 
       padding-bottom: 0;
@@ -1022,7 +986,6 @@
       }
     }
   }
-
 
   .type22 {
     padding-left: 120px;
@@ -1071,7 +1034,6 @@
     }
   }
 
-
   .international_news {
     .single_international {
       a {
@@ -1111,10 +1073,9 @@
       color: $secondary_color;
       text-transform: uppercase;
       position: relative;
-      z-index: 2
+      z-index: 2;
     }
   }
-
 
   .view_author_details {
     .view_author {
@@ -1133,7 +1094,6 @@
       font-size: 12px;
     }
   }
-
 
   a.single_social {
     display: inline-block;
@@ -1172,9 +1132,7 @@
       font-size: 11px;
       margin-top: 5px;
     }
-
   }
-
 
   a.social_twitter {
     background: $twitter_bg;
@@ -1184,7 +1142,6 @@
     }
   }
 
-
   a.social_youtube {
     background: $youtube_bg;
 
@@ -1192,7 +1149,6 @@
       background: $youtube_bg2;
     }
   }
-
 
   a.social_instagram {
     background: $instagram_bg;
@@ -1202,7 +1158,6 @@
     }
   }
 
-
   a.social_vimeo {
     background: $vimeo_bg;
 
@@ -1210,7 +1165,6 @@
       background: $vimeo_bg2;
     }
   }
-
 
   a.social_medium {
     background: $medium_bg;
@@ -1230,11 +1184,9 @@
     }
   }
 
-
   .news3bg {
     background: $news3bg;
   }
-
 
   .sociai_style3 {
     a.single_social {
@@ -1243,7 +1195,6 @@
     }
   }
 
-
   .sociai_style3.inner_socail4 {
     a.single_social {
       width: calc(100% * (1 / 2) - 6px);
@@ -1251,12 +1202,10 @@
     }
   }
 
-
   /*================================
       RESPONSIVE CSS
 
   */
-
 
   /*================================
       HEIGH LARGE DEVICE
@@ -1264,9 +1213,7 @@
   */
 
   @media screen and (min-width: extraLarge) {
-
   }
-
 
   /*================================
       EXTRA LARGE DEVICE
@@ -1274,8 +1221,6 @@
   */
 
   @media screen and (max-width: extraLarge) {
-
-
   }
   @media screen and (min-width: $small__laptop) and (max-width: $laptop) {
     .temp_wap p {
@@ -1305,7 +1250,7 @@
       z-index: 2;
       padding-left: 35px;
       margin: 4px 3px;
-      color: #FFFFFF;
+      color: #ffffff;
       overflow: hidden;
       width: 96px;
       line-height: 12px;
@@ -1323,7 +1268,6 @@
     }
   }
 
-
   /*================================
       LARGE MOBILE DEVICE
 
@@ -1340,20 +1284,16 @@
     }
   }
 
-
   /*================================
       MOBILE LANDSCAPE DEVICE
 
   */
 
   @media screen and (max-width: $Medium) {
-
-
     .topbar {
       text-align: center;
       margin-top: 20px;
     }
-
 
     .v3datentemp {
       text-align: center !important;
@@ -1382,10 +1322,7 @@
     .signup_form {
       margin-top: 0;
     }
-
-
   }
-
 
   /*================================
    MOBILE PORTRAIT DEVICE
@@ -1398,7 +1335,6 @@
       line-height: 26px;
     }
   }
-
 
   @media screen and (max-width: $Medium) {
     .type20 .post_img {
@@ -1423,8 +1359,6 @@
       }
     }
   }
-
-
 }
 
 /*Theme area end bracket*/

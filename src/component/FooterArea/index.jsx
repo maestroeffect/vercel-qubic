@@ -6,7 +6,7 @@ import FooterMoreNews from "../FooterMoreNews";
 import TwitterFeed from "../TwitterFeed";
 import FontAwesome from "../uiStyle/FontAwesome";
 
-import flogo from "../../assets/img/logo-free1.png";
+import flogo from "../../assets/img/qubicweblogo.jpeg";
 import FooterNewsCategories from "../FooterNewsCategories";
 
 const FooterArea = ({ className }) => {
@@ -26,7 +26,7 @@ const FooterArea = ({ className }) => {
                   <img src={flogo} alt="logo" />
                 </Link>
               </div>
-              <div className="social2">
+              <div className="Qubicweb">
                 <ul className="inline">
                   <li>
                     <Link to="#">
@@ -51,8 +51,11 @@ const FooterArea = ({ className }) => {
                 </ul>
               </div>
             </div>
-            <div className="col-md-6 col-lg-4 offset-lg-2 align-self-center">
+            <div className="col-md-6 col-lg-4 offset-lg-2 align-self-top">
               <div className="signup_form">
+                <h4 className="text-white py-2">
+                  Subscribe to Our Newsletter!
+                </h4>
                 <form onSubmit={submitHandler}>
                   <input
                     onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +68,7 @@ const FooterArea = ({ className }) => {
                     sign up
                   </button>
                 </form>
-                <p>We hate spam as much as you do</p>
+                <p className="text-white">We hate spam as much as you do</p>
               </div>
             </div>
           </div>

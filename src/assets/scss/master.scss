@@ -227,7 +227,7 @@ body {
 .tp_style_2 {
   .trancarousel_area {
     p.trand {
-      color: #DB833D;
+      color: #f15a25;
       background: #f8dbdb;
     }
   }
@@ -238,7 +238,7 @@ body {
   width: 50px;
   text-align: center;
   line-height: 70px;
-  background: #DB833D;
+  background: #f15a25;
   color: #fff;
   border-radius: 50px;
   position: fixed;
@@ -258,6 +258,22 @@ body {
     bottom: 7%;
     @include transition(all 0.3s);
   }
+}
+
+// .logo-menu-container {
+//   display: flex;
+//   align-items: center; /* Vertically align the logo and menu */
+//   justify-content: space-between; /* Add space between the logo and menu */
+//   padding: 0 20px; /* Optional padding for spacing */
+// }
+
+.logo-menu-container .white_bg {
+  flex-shrink: 0; /* Prevent the logo from shrinking */
+}
+
+.logo-menu-container .main-menu {
+  flex-grow: 1; /* Allow the menu to take remaining space */
+  text-align: right; /* Align the menu to the right */
 }
 
 .logo_area {
@@ -421,7 +437,7 @@ body {
 }
 
 .slider_arrow:hover {
-  background: #DB833D;
+  background: #f15a25;
   color: #fff;
   transition: all 0.3s;
 }
@@ -434,6 +450,7 @@ body {
   position: relative;
   z-index: 2;
   display: inline-block;
+  color: #f15a25;
 }
 
 .about_post_list {
@@ -646,7 +663,7 @@ a.social_medium {
       top: 50%;
       height: 20px;
       width: 3px;
-      background: #DB833D;
+      background: #f15a25;
       transform: translateY(-50%);
     }
 
@@ -1116,7 +1133,7 @@ span.tranding {
     text-align: center;
     line-height: 54px;
     font-size: 16px;
-    background: #DB833D;
+    background: #f15a25;
     color: #ffffff;
     position: absolute;
     left: auto;
@@ -1629,7 +1646,7 @@ span.tranding {
   .cta {
     padding: 70px 0 40px;
 
-    .social2 {
+    .Qubicweb {
       margin-top: 35px;
 
       ul {
@@ -1640,11 +1657,12 @@ span.tranding {
           list-style: none;
 
           a {
-            @extend %social2;
+            @extend %Qubicweb;
+            color: #000000 !important;
 
             &:hover {
               background: $secondary_bg;
-              color: $white;
+              color: $white !important;
             }
           }
         }
@@ -1680,7 +1698,7 @@ span.tranding {
 
   .widget-title2 {
     font-size: $widget_title_font_size;
-    color: $white;
+    color: $secondary_bg;
     font-weight: $wightRegular;
     margin-bottom: 30px;
   }
@@ -1799,7 +1817,7 @@ span.tranding {
     padding: 15px 0;
 
     p {
-      color: $footer_dark_color;
+      color: $primary_bg;
     }
 
     ul {
@@ -1810,11 +1828,11 @@ span.tranding {
         list-style: none;
 
         a {
-          color: $footer_dark_color;
+          color: $primary_bg;
           padding: 0 10px;
 
           &:hover {
-            color: $white;
+            color: $secondary_bg;
           }
         }
       }
@@ -2146,6 +2164,16 @@ a.cbtn3 {
 
 .theme-1 {
   background: $fifth_bg;
+}
+
+// STICKY HEADER
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures it stays above other content */
+  background-color: white; /* Matches the background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
 }
 
 /*================================

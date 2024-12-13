@@ -38,17 +38,19 @@
         border: 0;
       }
 
-      p, a {
+      p,
+      a {
         padding: 10px 20px;
         display: block;
-        color: #4F585E;
+        color: #4f585e;
         cursor: pointer;
         user-select: none;
         transition: all 0.3s ease-in-out 0s;
 
-        &.active, &:hover {
+        &.active,
+        &:hover {
           background: #fff4f4;
-          color: #DB833D;
+          color: #f15a25;
         }
 
         i {
@@ -71,7 +73,7 @@
 
   //themeDark
   &.themeBlue {
-    background: #DB833D;
+    background: #f15a25;
 
     .clox {
       color: #ffffff;
@@ -83,12 +85,14 @@
       li {
         border-color: #68afeb;
 
-        p, a {
+        p,
+        a {
           color: #ffffff;
 
-          &.active, &:hover {
+          &.active,
+          &:hover {
             background: #ffffff;
-            color: #DB833D;
+            color: #f15a25;
           }
         }
       }
@@ -96,7 +100,7 @@
   }
   //themeDark
   &.themeDark {
-    background: #29333C;
+    background: #29333c;
 
     .clox {
       color: #ffffff;
@@ -106,14 +110,16 @@
       color: #ffffff;
 
       li {
-        border-color: #29333C;
+        border-color: #29333c;
 
-        p, a {
+        p,
+        a {
           color: #ffffff;
 
-          &.active, &:hover {
+          &.active,
+          &:hover {
             background: #ffffff;
-            color: #DB833D;
+            color: #f15a25;
           }
         }
       }

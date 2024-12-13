@@ -6,7 +6,7 @@ const useWeatherAndDate = () => {
   const [lon, setLon] = useState(null);
   const [weather, setWeather] = useState(null);
   const [dateTime, setDateTime] = useState("");
-  const [location, setLocation] = useState("Loading...");
+  const [location, setLocation] = useState("...");
 
   // Get the user's geolocation
   useEffect(() => {
@@ -28,23 +28,31 @@ const useWeatherAndDate = () => {
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
-      const options = {
-        weekday: "short",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        // second: "2-digit",
-        // timeZoneName: "short",
-      };
+      const screenWidth = window.innerWidth;
+
+      const options =
+        screenWidth < 900 // Adjust the breakpoint as needed
+          ? {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            }
+          : {
+              weekday: "short",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+            };
+
       setDateTime(now.toLocaleString("en-US", options).replace(" at", ","));
     };
 
     const timer = setInterval(updateDateTime, 1000);
-    updateDateTime(); // Call once immediately to set initial value
+    updateDateTime(); // Initial call
 
-    return () => clearInterval(timer); // Cleanup interval on unmount
+    return () => clearInterval(timer); // Cleanup
   }, []);
 
   // Fetch weather data when latitude and longitude are available

@@ -52,14 +52,14 @@ const trendingNews = [
 ];
 
 const TrendingNews = ({ dark }) => {
-  const { news, loading, error } = useNews();
-  if (loading) {
-    return <div>Loading...</div>; // Show a loading state while data is being fetched
-  }
+  // const { news, loading, error } = useNews();
+  // if (loading) {
+  //   return <div>...</div>; // Show a loading state while data is being fetched
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>; // Show an error message if fetching fails
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>; // Show an error message if fetching fails
+  // }
 
   return (
     <>
@@ -73,13 +73,13 @@ const TrendingNews = ({ dark }) => {
       <div className="space-30" />
       <div className="row">
         <div className="col-lg-6">
-          {news.slice(0, 3).map((item, i) => (
+          {trendingNews.slice(0, 3).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
                   <div className="img_wrap">
                     <img
-                      src={item.photo_url || "default-image-url.jpg"} // Fallback image URL if photo_url is not present
+                      src={item.image || "default-image-url.jpg"} // Fallback image URL if photo_url is not present
                       alt="thumb"
                     />
                   </div>
@@ -89,8 +89,8 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">GENERAL</Link>
-                    <Link to="/">"{item.formattedDate}"</Link>
+                    <Link to="/">{item.category}</Link>
+                    <Link to="/">"{item.date}"</Link>
                   </div>
                   <h4>
                     <Link to="/post1">{item.title}</Link>

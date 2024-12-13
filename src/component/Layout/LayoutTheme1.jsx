@@ -13,8 +13,22 @@ const LayoutTheme1 = ({ children }) => {
       <ScrollTopButton />
       <TopBar className="white_bg" />
       <div className="border_black" />
-      <LogoArea className="white_bg" />
-      <MainMenu />
+      {/* Logo and Main Menu in a single row */}
+      <div className="sticky-header">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-3 flex-grow-0">
+              <LogoArea className="white_bg" />
+            </div>
+            <div className="col-md-9">
+              <div className="d-flex justify-content-end">
+                <MainMenu />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Outlet />
       {children}
       <FooterArea className="primay_bg" />

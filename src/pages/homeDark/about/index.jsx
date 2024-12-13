@@ -44,7 +44,7 @@ function HomeDarkAbout() {
                   </ul>
                 </div>
                 <p>
-                  QuomodoSoft is an investigative reporter for Newspark, based
+                  QuomodoSoft is an investigative reporter for Qubicweb, based
                   in Bangladesh. He started at The Times in 1999 covering Mayor
                   Rudolph W. Giuliani and then the Sept. 11, 2001, attacks.
                 </p>

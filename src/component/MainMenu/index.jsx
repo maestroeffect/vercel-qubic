@@ -192,12 +192,6 @@ const menus = [
   //     },
   //   ],
   // },
-
-  {
-    id: 6,
-    linkText: "Blog",
-    link: "/sports",
-  },
 ];
 const menusDark = [
   {
@@ -406,22 +400,22 @@ const menusDark = [
 const MainMenu = ({ className, dark }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
-// Destructure weather, dateTime, and location from the hook
-const { weather, dateTime, location } = useWeatherAndDate();
+  // Destructure weather, dateTime, and location from the hook
+  const { weather, dateTime, location } = useWeatherAndDate();
 
-// UseEffect to log weather and location when they update
-useEffect(() => {
-  if (weather !== null) {
-    console.log("Current weather:", weather);  // Log the weather
-  }
-}, [weather]);  // This will run whenever weather updates
+  // UseEffect to log weather and location when they update
+  useEffect(() => {
+    if (weather !== null) {
+      console.log("Current weather:", weather); // Log the weather
+    }
+  }, [weather]); // This will run whenever weather updates
 
-// Optionally, log the location when it updates
-useEffect(() => {
-  if (location !== "Loading...") {
-    console.log("Current location:", location);  // Log the location
-  }
-}, [location]);  // This will run whenever location updates
+  // Optionally, log the location when it updates
+  useEffect(() => {
+    if (location !== "...") {
+      console.log("Current location:", location); // Log the location
+    }
+  }, [location]); // This will run whenever location updates
   const arr = dark ? menusDark : menus;
   return (
     <>
@@ -528,11 +522,11 @@ useEffect(() => {
                 </div>
               </nav>
               <div className="col-lg-4 align-self-center">
-                <div className="menu_right">
-                  <div className="users_area">
-                    <ul className="inline">
+                <div className="menu_right d-flex align-items-center justify-content-end">
+                  <div className="users_area d-flex align-items-center">
+                    <ul className="inline d-flex align-items-center mb-0">
                       <li
-                        className="search_btn"
+                        className="search_btn me-3" // Added margin to separate icons
                         onClick={() => setSearchShow(!searchShow)}
                       >
                         <FontAwesome name="search" />
@@ -542,11 +536,16 @@ useEffect(() => {
                       </li>
                     </ul>
                   </div>
-                  <div className="lang d-none d-xl-block">
-                    <ul>
+                  <div className="lang d-none d-xl-block ms-4">
+                    <ul className="d-flex align-items-center">
                       <li>
-                        <Link to="/">
-                          English <FontAwesome name="angle-down" />
+                        <Link to="/" className="d-flex align-items-center">
+                          <span className="mr-2">English</span>
+                          <FontAwesome
+                            name="angle-down"
+                            className="ms-2"
+                          />{" "}
+                          {/* Add spacing */}
                         </Link>
                         <ul>
                           <li>
@@ -562,15 +561,17 @@ useEffect(() => {
                       </li>
                     </ul>
                   </div>
-                  <div className="temp d-none d-lg-block">
-                    <div className="temp_wap">
-                      <div className="temp_icon">
+                  <div className="temp d-none d-lg-block ms-4">
+                    <div className="temp_wap d-flex align-items-center">
+                      <div className="temp_icon me-2">
                         <img src={tempIcon} alt="temp icon" />
                       </div>
-                      <h3 className="temp_count">
-                      {weather !== null ? `${weather}°C` : "Loading..."}
-                      </h3>
-                      <p>{location}</p>
+                      <div>
+                        <h3 className="temp_count mb-0">
+                          {weather !== null ? `${weather}°C` : "..."}
+                        </h3>
+                        <p className="mb-0">{location}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
