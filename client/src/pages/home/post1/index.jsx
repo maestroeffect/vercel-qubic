@@ -21,14 +21,42 @@ import smail1 from "../../../assets/img/post-thumb-2.png";
 import single_post1 from "../../../assets/img/post-thumb-5.png";
 import OurBlogSection from "../../../component/OurBlogSection";
 import BlogComment from "../../../component/BlogComment";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Post1() {
+  const { slug } = useParams();
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
+        const data = await response.json();
+        console.log("Fetched data:", data); // Log the response data
+
+        const post = data.items.find(item => generateSlug(item.title) === slug); // Match by generated slug
+        setPost(post);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+
+    fetchPost();
+  }, [slug]);
+
+  const generateSlug = (title) => {
+    if (typeof title !== 'string') return ''; // Ensure title is a string
+    return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+  };
+
+
   return (
     <>
       <div className="archives post post1">
         <BreadCrumb
           className="shadow5 padding-top-30"
-          title="Archive / post 1"
+          title={`Archive / ${post?.category || 'Unknown Category'} / ${post?.title || 'Post Title'}`}
         />
         <span className="space-30" />
         <div className="container">

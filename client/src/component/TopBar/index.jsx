@@ -7,6 +7,8 @@ import QubicwebFeed from "../RssParser";
 import useWeatherAndDate from "../WeatherDate";
 
 const TopBar = ({ className, dark }) => {
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
   const { weather, dateTime } = useWeatherAndDate();
   const { articles, error } = QubicwebFeed();
 
@@ -48,7 +50,7 @@ const TopBar = ({ className, dark }) => {
                   {articles.map((article, index) => (
                     <div key={index} className="trancarousel_item">
                       <p>
-                        <Link to={article.link}>{article.title}</Link>
+                        <Link to={`/${generateSlug(article.title)}`}>{article.title}</Link>
                       </p>
                     </div>
                   ))}

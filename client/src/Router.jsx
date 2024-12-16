@@ -129,7 +129,7 @@ const router = createBrowserRouter([
         element: <Error />,
       },
       {
-        path: "/post1",
+        path: "/:slug",
         element: <Post1 />,
       },
       {
