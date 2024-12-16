@@ -33,7 +33,7 @@ function Post1() {
       try {
         const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
         const data = await response.json();
-        console.log("Fetched data:", data); // Log the response data
+        console.log("Fetched data:", data); // Log the response dat
 
         const post = data.items.find(item => generateSlug(item.title) === slug); // Match by generated slug
         setPost(post);
