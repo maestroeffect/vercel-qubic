@@ -33,6 +33,8 @@ const QubicwebFeed = () => {
             publishedDate: item.publishedDate || "No published date available",
             updatedDate: item.updatedDate || "No updated date available",
             content: item.content || "No full content available",
+            image: item.image || "No full content available",
+
           }));
 
           // Shuffle the articles array randomly

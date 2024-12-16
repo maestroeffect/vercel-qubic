@@ -36,6 +36,7 @@ app.get("/rss-feed", async (req, res) => {
           updatedDate: entry.updated || "No updated date available",
           content: entry.content || "No full content available", // Full content if available
           source: entry.source || "No full content available",
+          image: entry.image || "No full content available",
         }))
       : [
           {
@@ -50,6 +51,7 @@ app.get("/rss-feed", async (req, res) => {
             updatedDate: entries.updated || "No updated date available",
             content: entries.content || "No full content available", // Full content if available
             source: entries.source || "No full content available",
+            image: entries.image || "No full content available",
           },
         ];
 
