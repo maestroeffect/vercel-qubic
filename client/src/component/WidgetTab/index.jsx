@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProtoTypes from "prop-types";
 import { TabContent, TabPane, Nav, NavItem, Fade } from "reactstrap";
 import classnames from "classnames";
@@ -9,6 +9,7 @@ import thumb2 from "../../assets/img/gallery-2.jpg";
 import thumb3 from "../../assets/img/gallery-3.jpg";
 import thumb4 from "../../assets/img/gallery-4.jpg";
 import thumb5 from "../../assets/img/gallery-5.jpg";
+import QubicwebFeed from "../RssParser";
 
 const data = [
   {
@@ -44,10 +45,17 @@ const data = [
 ];
 
 const WidgetTabPane = ({ arr, a_id, id, dark }) => {
+  const { articles, error } = QubicwebFeed();
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
+  useEffect(() => {
+    console.log("Articel: " + articles)
+
+  }, [articles, error])
   return (
     <Fade in={id === a_id}>
       <div className="widget tab_widgets">
-        {arr.map((item, i) => (
+        {articles.slice(0, 5).map((item, i) => (
           <div key={i}>
             <div className="single_post widgets_small">
               <div className="post_img">
@@ -63,7 +71,7 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
                   <Link to="#">{item.date}</Link>
                 </div>
                 <h4>
-                  <Link to="/post1">{item.title}</Link>
+                  <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
                 </h4>
               </div>
             </div>

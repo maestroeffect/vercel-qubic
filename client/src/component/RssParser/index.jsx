@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
 
+// Function to shuffle the articles array
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+};
+
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState(null);
@@ -18,11 +27,16 @@ const QubicwebFeed = () => {
         if (feedData.items && Array.isArray(feedData.items)) {
           const parsedArticles = feedData.items.map((item) => ({
             title: item.title && typeof item.title === "object" ? item.title._ : item.title,
-            link: item.link, // Correctly use the link from the RSS feed data
+            link: item.link || "No link available",
             contentSnippet: item.contentSnippet || "No summary available.",
+            author: item.author || "No author available",
+            publishedDate: item.publishedDate || "No published date available",
+            updatedDate: item.updatedDate || "No updated date available",
+            content: item.content || "No full content available",
           }));
 
-          setArticles(parsedArticles);
+          // Shuffle the articles array randomly
+          setArticles(shuffleArray(parsedArticles));
         } else {
           throw new Error("Unexpected feed structure: items not found or not an array.");
         }

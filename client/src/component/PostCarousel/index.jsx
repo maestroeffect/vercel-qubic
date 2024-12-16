@@ -9,6 +9,8 @@ import hside6 from "../../assets/img/post-3.jpg";
 import hside1 from "../../assets/img/post-2.jpg";
 import hside2 from "../../assets/img/post-1.jpg";
 import hside3 from "../../assets/img/post-3.jpg";
+import QubicwebFeed from "../RssParser";
+import { useEffect } from "react";
 
 const postSlider = [
   { title: "The home decorations document: photograph of an", body: "People have been infected", image: hside4 },
@@ -20,6 +22,19 @@ const postSlider = [
 ];
 
 const PostCarousel = ({ className }) => {
+  const { articles, error } = QubicwebFeed();
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
+  useEffect(() => {
+    // Log the articles and error to debug
+    console.log("Articles:", articles);
+    console.log("Error:", error);
+  }, [articles, error]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className={className ? className : ""}>
       <div className="container">
@@ -44,7 +59,7 @@ const PostCarousel = ({ className }) => {
                     320: { slidesPerView: 1, spaceBetween: 20 },
                   }}
                 >
-                  {postSlider.map((item, i) => (
+                  {articles.map((item, i) => (
                     <div key={i} className="single_post widgets_small post_type5">
                       <div className="post_img">
                         <div className="img_wrap">
@@ -55,9 +70,9 @@ const PostCarousel = ({ className }) => {
                       </div>
                       <div className="single_post_text">
                         <h4>
-                          <Link to="/post1">{item.title}</Link>
+                          <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 55)}...</Link>
                         </h4>
-                        <p>{item.body}</p>
+                        <p>{item.contentSnippet.slice(0, 30)}...</p>
                       </div>
                     </div>
                   ))}

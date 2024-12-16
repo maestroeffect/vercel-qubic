@@ -31,6 +31,11 @@ app.get("/rss-feed", async (req, res) => {
             entry.link?.[0]?.$.href ||
             "No link available", // Correct link extraction
           contentSnippet: entry.summary || "No summary available.",
+          author: entry.author?.name || "No author available",
+          publishedDate: entry.published || "No published date available",
+          updatedDate: entry.updated || "No updated date available",
+          content: entry.content || "No full content available", // Full content if available
+          source: entry.source || "No full content available",
         }))
       : [
           {
@@ -40,6 +45,11 @@ app.get("/rss-feed", async (req, res) => {
               entries.link?.[0]?.$.href ||
               "No link available", // Correct link extraction
             contentSnippet: entries.summary || "No summary available.",
+            author: entries.author?.name || "No author available",
+            publishedDate: entries.published || "No published date available",
+            updatedDate: entries.updated || "No updated date available",
+            content: entries.content || "No full content available", // Full content if available
+            source: entries.source || "No full content available",
           },
         ];
 

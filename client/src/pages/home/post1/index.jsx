@@ -25,7 +25,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Post1() {
-  const { slug } = useParams();
+  const { slug } = useParams(); // Get slug from URL params
   const [post, setPost] = useState(null);
 
   useEffect(() => {
@@ -33,10 +33,26 @@ function Post1() {
       try {
         const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
         const data = await response.json();
-        // console.log("Fetched data:", data); // Log the response dat
 
-        const post = data.items.find(item => generateSlug(item.title) === slug); // Match by generated slug
-        setPost(post);
+        console.log("Fetched items:", data.items); // Log the fetched items
+        console.log("Slug from URL:", slug); // Log the slug from the URL
+
+        if (data.items && Array.isArray(data.items)) {
+          data.items.forEach(item => {
+            const title = item.title?._ || "Unknown Title";
+            const generatedSlug = generateSlug(title);
+            console.log(`Generated slug for "${title}": ${generatedSlug}`);
+          });
+
+          const post = data.items.find(item => {
+            const title = item.title?._ || "Unknown Title";
+            const generatedSlug = generateSlug(title);
+            console.log(`Comparing: Generated slug "${generatedSlug}" with URL slug "${slug}"`);
+            return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
+          });
+          setPost(post);
+          console.log("Fetched post:", post);
+        }
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -46,17 +62,16 @@ function Post1() {
   }, [slug]);
 
   const generateSlug = (title) => {
-    if (typeof title !== 'string') return ''; // Ensure title is a string
+    if (typeof title !== "string") return ""; // Ensure title is a string
     return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
   };
-
 
   return (
     <>
       <div className="archives post post1">
         <BreadCrumb
           className="shadow5 padding-top-30"
-          title={`Archive / ${post?.category || 'Unknown Category'} / ${post?.title || 'Post Title'}`}
+          title={` ${post?.title?._ || 'No Title'}`}
         />
         <span className="space-30" />
         <div className="container">
@@ -86,13 +101,11 @@ function Post1() {
               <div className="space-30" />
               <div className="single_post_heading">
                 <h1>
-                  Japan’s virus success has puzzled the world. Is its luck
-                  running out?
+                  ${post.title?._}
                 </h1>
                 <div className="space-10" />
                 <p>
-                  The property, complete with 30-seat screening from room, a
-                  100-seat amphitheater and a swimming pond with sandy shower…
+                  {post?.contentSnippet || "No Content"}
                 </p>
               </div>
               <div className="space-40" />
@@ -144,38 +157,7 @@ function Post1() {
               </div>
               <div className="space-20" />
               <p>
-                Entilators will be taken from certain New York hospitals and
-                redistributed to the worst-hit parts of the state under an order
-                to be signed by Governor Andrew Cuomo.
-                <br />
-                <br />
-                New York saw its highest single-day increase in deaths, up by
-                562 to 2,935 - nearly half of all virus-related US deaths
-                recorded yesterday. The White House may advise those in virus
-                hotspots to wear face coverings in public to help stem the
-                spread.\
-                <br />
-                <br />
-                The US now has 245,658 Covid-19 cases.
-                <br />
-                <br />A shortage of several hundred ventilators in New York
-                City, the epicentre of the outbreak in the US, prompted Mr Cuomo
-                to say that he will order the machines be taken from various
-                parts of the state and give them to harder-hit areas.
-                <br />
-                <br />
-                Amid a deepening crisis, top health official{" "}
-                <span className="bold"> Dr Anthony Fauci</span> has said he
-                believes all states should issue stay-at-home orders.
-                <br />
-                <br />
-                “I don’t understand why that’s not happening,” Dr Fauci told CNN
-                on Thursday. “If you look at what’s going on in this country, I
-                just don’t understand why we’re not do ingthat.”
-                <br />
-                <br />
-                “You’ve got to put your foot on the accelerator to bring that
-                number down,” he added, referring to infection and death rates.
+                {post?.contentSnippet || "No Content"}
               </p>
               <div className="space-40" />
               <div className="points">
