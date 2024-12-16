@@ -7,7 +7,7 @@ const QubicwebFeed = () => {
   useEffect(() => {
     const fetchFeed = async () => {
       try {
-        const response = await fetch("https://vercel-qubic-server.vercel.app/");
+        const response = await fetch("https://vercel-qubic-server.vercel.app/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
