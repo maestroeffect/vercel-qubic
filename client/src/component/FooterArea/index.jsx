@@ -6,7 +6,7 @@ import FooterMoreNews from "../FooterMoreNews";
 import TwitterFeed from "../TwitterFeed";
 import FontAwesome from "../uiStyle/FontAwesome";
 
-import flogo from "../../assets/img/qubicweblogo.jpeg";
+import flogo from "../../assets/img/footer_logo.png";
 import FooterNewsCategories from "../FooterNewsCategories";
 
 const FooterArea = ({ className }) => {

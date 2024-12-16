@@ -18,7 +18,7 @@ const QubicwebFeed = () => {
         if (feedData.items && Array.isArray(feedData.items)) {
           const parsedArticles = feedData.items.map((item) => ({
             title: item.title && typeof item.title === "object" ? item.title._ : item.title,
-            link: item.link || "#",
+            link: item.link, // Correctly use the link from the RSS feed data
             contentSnippet: item.contentSnippet || "No summary available.",
           }));
 

@@ -22,16 +22,23 @@ app.get("/rss-feed", async (req, res) => {
 
     console.log("Parsed RSS feed to JSON successfully.");
     const entries = jsonData.feed.entry || [];
+
     const items = Array.isArray(entries)
       ? entries.map((entry) => ({
           title: entry.title || "Untitled Article",
-          link: entry.link?.href || "#",
+          link:
+            entry.link?.$.href ||
+            entry.link?.[0]?.$.href ||
+            "No link available", // Correct link extraction
           contentSnippet: entry.summary || "No summary available.",
         }))
       : [
           {
             title: entries.title || "Untitled Article",
-            link: entries.link?.href || "#",
+            link:
+              entries.link?.$.href ||
+              entries.link?.[0]?.$.href ||
+              "No link available", // Correct link extraction
             contentSnippet: entries.summary || "No summary available.",
           },
         ];
