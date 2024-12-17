@@ -34,20 +34,20 @@ function Post1() {
         const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
         const data = await response.json();
 
-        console.log("Fetched items:", data.items); // Log the fetched items
-        console.log("Slug from URL:", slug); // Log the slug from the URL
+        // console.log("Fetched items:", data.items); // Log the fetched items
+        // console.log("Slug from URL:", slug); // Log the slug from the URL
 
         if (data.items && Array.isArray(data.items)) {
           data.items.forEach(item => {
             const title = item.title?._ || "Unknown Title";
             const generatedSlug = generateSlug(title);
-            console.log(`Generated slug for "${title}": ${generatedSlug}`);
+            // console.log(`Generated slug for "${title}": ${generatedSlug}`);
           });
 
           const post = data.items.find(item => {
             const title = item.title?._ || "Unknown Title";
             const generatedSlug = generateSlug(title);
-            console.log(`Comparing: Generated slug "${generatedSlug}" with URL slug "${slug}"`);
+            // console.log(`Comparing: Generated slug "${generatedSlug}" with URL slug "${slug}"`);
             return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
           });
           setPost(post);
@@ -71,7 +71,7 @@ function Post1() {
       <div className="archives post post1">
         <BreadCrumb
           className="shadow5 padding-top-30"
-          title={` ${post?.title?._ || 'No Title'}`}
+          title={` || 'No Title'`}
         />
         <span className="space-30" />
         <div className="container">
@@ -101,11 +101,12 @@ function Post1() {
               <div className="space-30" />
               <div className="single_post_heading">
                 <h1>
-                  ${post.title?._}
+                  {/* {post.title  post.title._} */}
+                  {/* ${post.title?._} */}
                 </h1>
                 <div className="space-10" />
                 <p>
-                  {post?.contentSnippet || "No Content"}
+                  {post?.contentSnippet.slice(0, 100) || "No Content"}...
                 </p>
               </div>
               <div className="space-40" />

@@ -48,10 +48,6 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
   const { articles, error } = QubicwebFeed();
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
-  useEffect(() => {
-    console.log("Articel: " + articles)
-
-  }, [articles, error])
   return (
     <Fade in={id === a_id}>
       <div className="widget tab_widgets">

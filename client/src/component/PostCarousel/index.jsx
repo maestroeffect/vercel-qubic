@@ -25,12 +25,6 @@ const PostCarousel = ({ className }) => {
   const { articles, error } = QubicwebFeed();
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
-  useEffect(() => {
-    // Log the articles and error to debug
-    console.log("Articles:", articles);
-    console.log("Error:", error);
-  }, [articles, error]);
-
   if (error) {
     return <div>Error: {error}</div>;
   }
