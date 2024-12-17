@@ -16,14 +16,12 @@ const LayoutTheme1 = ({ children }) => {
       {/* Logo and Main Menu in a single row */}
       <div className="sticky-header">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-3 flex-grow-0">
+          <div className="d-flex align-items-center justify-content-between">
+            <div className="flex-shrink-0" style={{ maxWidth: "250px" }}>
               <LogoArea className="white_bg" />
             </div>
-            <div className="col-md-9">
-              <div className="d-flex justify-content-end">
-                <MainMenu />
-              </div>
+            <div className="flex-grow-1 d-flex justify-content-end">
+              <MainMenu />
             </div>
           </div>
         </div>

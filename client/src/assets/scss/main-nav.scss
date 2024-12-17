@@ -1660,17 +1660,16 @@
 }
 
 /* RESPONSIVE CSS */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .main-menu .menu_right {
-    flex-wrap: wrap;
-    justify-content: space-between;
+@media (max-width: 1024px) {
+  .menu_right {
+    display: none !important;
   }
 
-  .main-menu .users_area {
-    margin-top: 0px;
-  }
-
-  .main-menu .navbar-toggler {
+  .navbar-toggler {
     margin-right: 10px;
   }
+}
+
+.navbar-toggler {
+  z-index: 1050; /* Ensure it stays on top */
 }

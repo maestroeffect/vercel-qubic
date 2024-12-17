@@ -31,20 +31,20 @@ const useWeatherAndDate = () => {
       const screenWidth = window.innerWidth;
 
       const options =
-        screenWidth < 900 // Adjust the breakpoint as needed
+        screenWidth < 1260 // Adjust the breakpoint as needed
           ? {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            }
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          }
           : {
-              weekday: "short",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-            };
+            weekday: "short",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          };
 
       setDateTime(now.toLocaleString("en-US", options).replace(" at", ","));
     };

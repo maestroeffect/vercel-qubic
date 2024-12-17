@@ -11,10 +11,24 @@ const shuffleArray = (array) => {
 
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Add "no-scroll" to prevent body scrolling when loading
+    if (loading) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    // Cleanup "no-scroll" class on unmount
+    return () => document.body.classList.remove("no-scroll");
+  }, [loading]);
+
+  useEffect(() => {
     const fetchFeed = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await fetch("https://vercel-qubic-server.vercel.app/rss-feed");
 
@@ -33,8 +47,7 @@ const QubicwebFeed = () => {
             publishedDate: item.publishedDate || "No published date available",
             updatedDate: item.updatedDate || "No updated date available",
             content: item.content || "No full content available",
-            image: item.image || "No full content available",
-
+            image: item.image || "No image available",
           }));
 
           // Shuffle the articles array randomly
@@ -45,13 +58,15 @@ const QubicwebFeed = () => {
       } catch (error) {
         console.error("Error fetching RSS feed:", error);
         setError(error.message);
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
     fetchFeed();
   }, []);
 
-  return { articles, error };
+  return { articles, loading, error }; // Include the loading state in the return value
 };
 
 export default QubicwebFeed;

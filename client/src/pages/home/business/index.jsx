@@ -74,10 +74,10 @@ const businessNews = [
   },
 ];
 
-function Business() {
+function Cybersecurity() {
   return (
     <>
-      <BreadCrumb title="Business" />
+      <BreadCrumb title="Cybersecurity" />
       <div className="archives padding-top-30">
         <div className="container">
           <div className="row">
@@ -87,7 +87,7 @@ function Business() {
                   <div className="col-12 align-self-center">
                     <div className="categories_title">
                       <h5>
-                        Category: <Link to="/">Business</Link>
+                        Category: <Link to="/">Cybersecurity</Link>
                       </h5>
                     </div>
                   </div>
@@ -169,4 +169,4 @@ function Business() {
   );
 }
 
-export default Business;
+export default Cybersecurity;

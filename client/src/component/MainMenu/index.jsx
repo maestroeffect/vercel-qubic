@@ -36,7 +36,7 @@ const menus = [
     submenu: [
       {
         id: 41,
-        link: "/business",
+        link: "/cybersecurity",
         linkText: "Cybersecurity",
       },
       {
@@ -441,76 +441,75 @@ const MainMenu = ({ className, dark }) => {
                     <ul className="nav navbar-nav" id="scroll">
                       {arr.length > 0
                         ? arr.map((item, i) => (
-                            <li
-                              key={i}
-                              className={`
+                          <li
+                            key={i}
+                            className={`
                                                 ${item.child ? "dropdown" : ""}
                                                 nav-item`}
-                            >
-                              {item.child ? (
-                                <NavLink
-                                  onClick={(e) => e.preventDefault()}
-                                  to="/"
-                                  className="menu-dropdown"
-                                  data-toggle="dropdown"
-                                >
-                                  {item.linkText}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              ) : (
-                                <NavLink
-                                  to={item.link}
-                                  className="menu-dropdown"
-                                  data-toggle="dropdown"
-                                >
-                                  {item.linkText}{" "}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              )}
+                          >
+                            {item.child ? (
+                              <NavLink
+                                onClick={(e) => e.preventDefault()}
+                                to="/"
+                                className="menu-dropdown"
+                                data-toggle="dropdown"
+                              >
+                                {item.linkText}
+                                <FontAwesome name={item.icon} />
+                              </NavLink>
+                            ) : (
+                              <NavLink
+                                to={item.link}
+                                className="menu-dropdown"
+                                data-toggle="dropdown"
+                              >
+                                {item.linkText}{" "}
+                                <FontAwesome name={item.icon} />
+                              </NavLink>
+                            )}
 
-                              {item.child ? (
-                                <ul className="dropdown-menu" role="menu">
-                                  {item.submenu.map((sub_item, i) => (
-                                    <li
-                                      key={i}
-                                      className={`${
-                                        sub_item.child
-                                          ? "dropdown-submenu"
-                                          : null
+                            {item.child ? (
+                              <ul className="dropdown-menu" role="menu">
+                                {item.submenu.map((sub_item, i) => (
+                                  <li
+                                    key={i}
+                                    className={`${sub_item.child
+                                      ? "dropdown-submenu"
+                                      : null
                                       }
                                                         `}
-                                    >
-                                      {sub_item.child ? (
-                                        <NavLink
-                                          onClick={(e) => e.preventDefault()}
-                                          to="/"
-                                        >
-                                          {sub_item.linkText}
-                                        </NavLink>
-                                      ) : (
-                                        <NavLink to={sub_item.link}>
-                                          {sub_item.linkText}
-                                        </NavLink>
-                                      )}
-                                      {sub_item.third_menu ? (
-                                        <ul className="dropdown-menu">
-                                          {sub_item.third_menu.map(
-                                            (third_item, i) => (
-                                              <li key={i}>
-                                                <NavLink to={third_item.link}>
-                                                  {third_item.linkText}
-                                                </NavLink>
-                                              </li>
-                                            )
-                                          )}
-                                        </ul>
-                                      ) : null}
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-                            </li>
-                          ))
+                                  >
+                                    {sub_item.child ? (
+                                      <NavLink
+                                        onClick={(e) => e.preventDefault()}
+                                        to="/"
+                                      >
+                                        {sub_item.linkText}
+                                      </NavLink>
+                                    ) : (
+                                      <NavLink to={sub_item.link}>
+                                        {sub_item.linkText}
+                                      </NavLink>
+                                    )}
+                                    {sub_item.third_menu ? (
+                                      <ul className="dropdown-menu">
+                                        {sub_item.third_menu.map(
+                                          (third_item, i) => (
+                                            <li key={i}>
+                                              <NavLink to={third_item.link}>
+                                                {third_item.linkText}
+                                              </NavLink>
+                                            </li>
+                                          )
+                                        )}
+                                      </ul>
+                                    ) : null}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </li>
+                        ))
                         : null}
                     </ul>
                   </div>

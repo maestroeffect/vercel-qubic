@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import gsil1 from "../../assets/img/gallery-post/item-1.jpg";
 import gsil2 from "../../assets/img/gallery-post/item-2.jpg";
 import gsil3 from "../../assets/img/gallery-post/item-3.jpg";
@@ -11,6 +11,7 @@ import sliderImg2 from "../../assets/img/gallery-post.jpg";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
+import QubicwebFeed from "../RssParser";
 
 const thumbs = [gsil1, gsil2, gsil3, gsil4, gsil5, gsil6, gsil7, gsil4, gsil3];
 const postSlider = [
@@ -86,7 +87,12 @@ const postSlider = [
 
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const { articles, error } = QubicwebFeed();
 
+  useEffect(() => {
+    console.log("Articles: " + articles);
+
+  }, [articles, error])
   return (
     <>
       <div className="slider_demo2">
@@ -103,10 +109,10 @@ function ThumbsSwiper() {
             prevEl: ".swiper-button-prev-thumbs",
           }}
         >
-          {postSlider.slice(0, 9).map((item, i) => (
+          {articles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
-                <img src={item.image} alt="thumb" />
+                <img src={sliderImg1} alt="thumb" />
                 <span
                   onClick={() => this.modalHandler(true)}
                   className="tranding"
@@ -121,11 +127,11 @@ function ThumbsSwiper() {
                 </div>
                 <h4>
                   <Link className="play_btn" to="/video_post1">
-                    {item.title}
+                    {item.title.slice(0, 50)}...
                   </Link>
                 </h4>
                 <div className="space-10" />
-                <p className="post-p">{item.body}</p>
+                <p className="post-p">{item.contentSnippet.slice(0, 100)}...</p>
               </div>
             </div>
           ))}

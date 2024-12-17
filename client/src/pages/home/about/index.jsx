@@ -12,7 +12,7 @@ import BannerSection from "../../../component/BannerSection";
 
 // images
 import banner2 from "../../../assets/img/banner/banner-2.jpg";
-import author1 from "../../../assets/img/author.png";
+import author1 from "../../../assets/img/favicon.png";
 import calendar from "../../../assets/img/icon/calendar.png";
 import { entertainments2 } from "../../../data/entertainments";
 
@@ -36,7 +36,7 @@ function About() {
                   </div>
                 </div>
                 <div className="author_content">
-                  <Link to="/">QuomodoSoft</Link>
+                  <Link to="/">QUBICWEB</Link>
                   <ul className="inline">
                     <li>News Writer</li>
                     <li>Since: April 25, 2020</li>

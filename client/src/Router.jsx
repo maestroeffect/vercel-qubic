@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/business",
+        path: "/cybersecurity",
         element: <Business />,
       },
       {

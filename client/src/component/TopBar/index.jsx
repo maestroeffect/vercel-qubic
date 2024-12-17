@@ -5,23 +5,27 @@ import FontAwesome from "../uiStyle/FontAwesome";
 import Slider from "../Slider";
 import QubicwebFeed from "../RssParser";
 import useWeatherAndDate from "../WeatherDate";
+import loadingGif from "../../assets/img/loading.gif";
 
 const TopBar = ({ className, dark }) => {
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   const { weather, dateTime } = useWeatherAndDate();
-  const { articles, error } = QubicwebFeed();
+  const { articles, loading, error } = QubicwebFeed();
 
-  useEffect(() => {
-    // Log the articles and error to debug
-    console.log("Articles:", articles);
-    console.log("Error:", error);
-  }, [articles, error]);
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <img src={loadingGif} alt="Loading..." />
+      </div>
+    );
+  }
+
 
   if (error) {
     return <div>Error: {error}</div>;
   }
-
 
   return (
     <div className={`topbar ${className ? className : ""}`} id="top">
@@ -101,6 +105,18 @@ const TopBar = ({ className, dark }) => {
       </div>
     </div>
   );
+};
+
+
+const styles = {
+  loaderContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    fontSize: "1.5rem",
+    backgroundColor: "#f0f0f0", // Optional: Set background to prevent flashing
+  },
 };
 
 TopBar.propTypes = {
