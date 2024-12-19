@@ -28,8 +28,21 @@ app.get("/rss-feed", async (req, res) => {
       ? entries.map((entry) => {
           let imageUrl = null;
 
-          // Check if 'content' is an object containing a '_'
-          if (typeof entry.content === "object" && entry.content._) {
+          // Check for image in <media:content> tag
+          if (entry["media:content"]) {
+            const mediaContent = entry["media:content"];
+            // If there are multiple media:content elements, we can pick the first one
+            if (Array.isArray(mediaContent) && mediaContent.length > 0) {
+              imageUrl = mediaContent[0].$.url || null;
+            }
+          }
+
+          // If no image URL found in <media:content>, check the 'content' for an image
+          if (
+            !imageUrl &&
+            typeof entry.content === "object" &&
+            entry.content._
+          ) {
             const contentString = entry.content._;
 
             // Regular expression to extract image URLs from the content
@@ -38,6 +51,26 @@ app.get("/rss-feed", async (req, res) => {
             );
 
             imageUrl = contentMatch ? contentMatch[1] : null;
+          }
+
+          // If no image URL found in content, use a placeholder
+          if (!imageUrl) {
+            imageUrl = "No image available"; // Placeholder if no image is found
+          }
+
+          // Log the image URL
+          console.log(`Image URL for entry "${entry.title}": ${imageUrl}`);
+
+          // Add the image URL to the content if not present
+          if (
+            entry.content &&
+            typeof entry.content === "object" &&
+            entry.content._
+          ) {
+            const contentString = entry.content._;
+            if (!contentString.includes(imageUrl)) {
+              entry.content._ = `${contentString} <img src="${imageUrl}" alt="image" />`;
+            }
           }
 
           return {
@@ -51,7 +84,7 @@ app.get("/rss-feed", async (req, res) => {
             publishedDate: entry.published || "No published date available",
             updatedDate: entry.updated || "No updated date available",
             content: entry.content || "No full content available",
-            image: imageUrl || "No full content available", // Set image URL correctly
+            image: imageUrl || "No image available", // Set image URL correctly
           };
         })
       : [
@@ -66,7 +99,7 @@ app.get("/rss-feed", async (req, res) => {
             publishedDate: entries.published || "No published date available",
             updatedDate: entries.updated || "No updated date available",
             content: entries.content || "No full content available",
-            image: entries.image?.[0]?.$.src || "No full content available", // Extract image URL correctly
+            image: entries.image?.[0]?.$.src || "No image available", // Extract image URL correctly
           },
         ];
 
