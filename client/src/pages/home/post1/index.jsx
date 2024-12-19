@@ -68,7 +68,7 @@ function Post1() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://localhost:5000/rss-feed`);
+        const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
         const data = await response.json();
 
         if (data.items && Array.isArray(data.items)) {

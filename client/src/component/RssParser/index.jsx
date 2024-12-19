@@ -17,7 +17,7 @@ const QubicwebFeed = () => {
     const fetchFeed = async () => {
       setLoading(true); // Start loading
       try {
-        const response = await fetch("https://vercel-qubic-server.com/rss-feed");
+        const response = await fetch("https://vercel-qubic-server.vercel.app/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
