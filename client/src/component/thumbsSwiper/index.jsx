@@ -11,7 +11,7 @@ import sliderImg2 from "../../assets/img/gallery-post.jpg";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
-// import QubicwebFeed from "../RssParser";
+import QubicwebFeed from "../RssParser";
 
 const thumbs = [gsil1, gsil2, gsil3, gsil4, gsil5, gsil6, gsil7, gsil4, gsil3];
 const postSlider = [
@@ -87,7 +87,20 @@ const postSlider = [
 
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  // const { articles, error } = QubicwebFeed();
+  const { articles, loading, error } = QubicwebFeed();
+  // Log the full response to see the structure of articles
+
+
+  if (!loading) {
+    console.log("Articles Response:", articles);
+
+  }
+
+  const filteredArticles = articles.filter((item) => {
+    // Replace "desired-source-id" with the actual source ID you want to check
+    return item.source?.id === "https://www.youtube.com/channel/UC0ZTPkdxlAKf-V33tqXwi3Q";
+  });
+  console.log(filteredArticles);
 
   return (
     <>
@@ -105,7 +118,7 @@ function ThumbsSwiper() {
             prevEl: ".swiper-button-prev-thumbs",
           }}
         >
-          {postSlider.slice(0, 9).map((item, i) => (
+          {articles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
                 <img src={sliderImg1} alt="thumb" />

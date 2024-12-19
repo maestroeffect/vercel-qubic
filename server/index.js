@@ -59,7 +59,7 @@ app.get("/rss-feed", async (req, res) => {
           }
 
           // Log the image URL
-          console.log(`Image URL for entry "${entry.title}": ${imageUrl}`);
+          // console.log(`Image URL for entry "${entry.title}": ${imageUrl}`);
 
           // Add the image URL to the content if not present
           if (
@@ -85,6 +85,7 @@ app.get("/rss-feed", async (req, res) => {
             updatedDate: entry.updated || "No updated date available",
             content: entry.content || "No full content available",
             image: imageUrl || "No image available", // Set image URL correctly
+            source: entry.source || "No Source",
           };
         })
       : [
@@ -100,11 +101,17 @@ app.get("/rss-feed", async (req, res) => {
             updatedDate: entries.updated || "No updated date available",
             content: entries.content || "No full content available",
             image: entries.image?.[0]?.$.src || "No image available", // Extract image URL correctly
+            source: entries.source || "No Source", // Extract source name correctly
           },
         ];
 
-    // Respond with parsed items
-    res.json({ items });
+    // Filter out items where the image is either null or "No image available"
+    const filteredItems = items.filter(
+      (item) => item.image !== "No image available" && item.image !== null
+    );
+
+    // Respond with filtered items
+    res.json({ items: filteredItems });
   } catch (error) {
     console.error("Error fetching and parsing RSS feed:", error);
     res.status(500).json({ error: "Failed to fetch or parse RSS feed" });

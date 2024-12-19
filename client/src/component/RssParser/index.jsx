@@ -8,6 +8,7 @@ const shuffleArray = (array) => {
   }
   return array;
 };
+
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
@@ -31,16 +32,13 @@ const QubicwebFeed = () => {
             let imageUrl = null;
 
             // Check if 'content' is an object containing a '_'
-            if (item.content && typeof item.content._ === 'string') {
+            if (item.content && typeof item.content._ === "string") {
               const contentString = item.content._;
 
-              // Updated regex to extract image URLs from the content
+              // Extract image URLs from the content
               const contentMatch = contentString.match(/<img[^>]+src=["']([^"']+)["']/);
 
               imageUrl = contentMatch ? contentMatch[1] : null;
-
-              // Log the image URL to check if it appears
-              console.log('Extracted image URL:', imageUrl);
             }
 
             return {
@@ -52,6 +50,12 @@ const QubicwebFeed = () => {
               updatedDate: item.updatedDate || "No updated date available",
               content: item.content || "No full content available",
               image: imageUrl, // Added image URL to each article
+              source: item.source
+                ? {
+                  id: item.source.id || "No source ID available",
+                  title: item.source.title || "No source title available",
+                }
+                : { id: "No source ID available", title: "No source title available" }, // Extract source
             };
           });
 
@@ -75,4 +79,3 @@ const QubicwebFeed = () => {
 };
 
 export default QubicwebFeed;
-

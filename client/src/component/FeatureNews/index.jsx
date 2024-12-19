@@ -8,6 +8,7 @@ import fnewsImg4 from "../../assets/img/feature-4.jpg";
 import { Link } from "react-router-dom";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
+import QubicwebFeed from "../RssParser";
 
 const news = [
   {
@@ -49,6 +50,10 @@ const news = [
 ];
 
 const FeatureNews = ({ className }) => {
+  const { articles, loading, error } = QubicwebFeed();
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className={`feature_carousel_area mb40 ${className ? className : ""}`}>
       <div className="container">
