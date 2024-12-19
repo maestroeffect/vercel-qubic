@@ -11,6 +11,8 @@ import mostsm4 from "../../assets/img/most-post/most-4.jpg";
 import mostsm5 from "../../assets/img/most-post/most-5.jpg";
 import { mostViewSort } from "../../utils/commonFunctions";
 import Slider from "../Slider";
+import QubicwebFeed from "../RssParser";
+
 
 const mostView = [
   {
@@ -88,6 +90,11 @@ const mostView = [
 ];
 
 const MostView = ({ no_margin, title, dark }) => {
+  const { articles, loading, error } = QubicwebFeed();
+  const filteredArticles = articles.filter((item) => {
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    return sourceId === "https://www.techspot.com/";
+  });
   return (
     <div className={`widget tab_widgets ${no_margin ? "" : "mb30"}`}>
       <h2 className="widget-title">{title ? title : "Most View"}</h2>
@@ -103,12 +110,16 @@ const MostView = ({ no_margin, title, dark }) => {
             rows: 6,
           }}
         >
-          {mostViewSort(mostView).map((item, i) => (
+          {mostViewSort(filteredArticles).map((item, i) => (
             <div key={i} className="single_post2_carousel">
               <div className="single_post widgets_small type8">
                 <div className="post_img">
                   <div className="img_wrap">
-                    <img src={item.image} alt="thumb" />
+                    <img src={item?.image} style={{
+                      width: "80px",
+                      height: "64px",
+                      objectFit: "cover",
+                    }} alt="thumb" />
                   </div>
                   <span className="tranding">
                     <FontAwesome name="bolt" />
@@ -120,14 +131,14 @@ const MostView = ({ no_margin, title, dark }) => {
                     <Link to="/">{item.date}</Link>
                   </div>
                   <h4>
-                    <Link to="/post1">{item.title}</Link>
+                    <Link to="/post1">{item.title.slice(0, 50)}...</Link>
                   </h4>
                 </div>
                 <div className="type8_count">
                   <h2>{item.id}</h2>
                 </div>
               </div>
-              {i + 2 < mostView.length ? (
+              {i + 2 < filteredArticles.length ? (
                 <>
                   <div className="space-15" />
                   {dark ? (

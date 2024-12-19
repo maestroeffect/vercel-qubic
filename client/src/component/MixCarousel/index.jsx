@@ -7,6 +7,8 @@ import ModalVideo from "react-modal-video";
 import black_white1 from "../../assets/img/play-post-1.jpg";
 import black_white2 from "../../assets/img/play-post-2.jpg";
 import Slider from "../Slider";
+import QubicwebFeed from "../../component/RssParser";
+
 
 const mixArray = [
   {
@@ -42,7 +44,7 @@ const mixArray = [
 const MixCarousel = ({ className, dark }) => {
   const [vModal, setvModal] = useState(false);
   const [videoId] = useState("0r6C3z3TEKw");
-
+  const { articles, loading, error } = QubicwebFeed();
   return (
     <div className={`mix_area ${className ? className : ""}`}>
       <div className="container">
@@ -74,12 +76,16 @@ const MixCarousel = ({ className, dark }) => {
                     },
                   }}
                 >
-                  {mixArray.map((item, i) => (
+                  {articles.map((item, i) => (
                     <div key={i} className="single_post post_type6 post_type9">
                       <div className="post_img gradient1">
                         <div className="img_wrap">
                           <Link className="play_btn" to="/">
-                            <img src={item.image} alt="news" />
+                            <img src={item.image} style={{
+                              height: "440px",
+                              width: "1080px",
+                              objectFit: "cover",
+                            }} alt="news" />
                           </Link>
                         </div>
                         <span

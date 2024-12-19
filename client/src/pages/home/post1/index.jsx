@@ -202,7 +202,6 @@ function Post1() {
           <div className="col-md-6 col-lg-4">
             <WidgetTab />
             <WidgetTrendingNews />
-            <NewsLetter />
           </div>
         </div>
         <PostOnePagination slug={slug} />

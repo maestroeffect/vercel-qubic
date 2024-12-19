@@ -30,8 +30,8 @@ function Home() {
             <TrendingNews />
           </div>
           <div className="col-md-12 col-lg-4">
-            <FollowUs title="Follow Us" />
             <MostView />
+            <FollowUs title="Follow Us" />
           </div>
         </div>
       </div>

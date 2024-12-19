@@ -51,8 +51,17 @@ const news = [
 
 const FeatureNews = ({ className }) => {
   const { articles, loading, error } = QubicwebFeed();
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+  articles.forEach((item, index) => {
+    console.log(`Article ${index + 1} Source ID:`, item.source?.id);
+  });
+  const filteredArticles = articles.filter((item) => {
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    return sourceId === "https://www.techspot.com/";
+  });
+
+  console.log("Filtered Articles:", filteredArticles);
 
   return (
     <div className={`feature_carousel_area mb40 ${className ? className : ""}`}>
@@ -93,11 +102,15 @@ const FeatureNews = ({ className }) => {
                   },
                 }}
               >
-                {news.map((item, i) => (
+                {filteredArticles.map((item, i) => (
                   <div key={i} className="single_post post_type6 post_type7">
                     <div className="post_img gradient1">
                       <Link to="/">
-                        <img src={item.image} alt="thumb" />
+                        <img src={item?.image} style={{
+                          width: "255px",
+                          height: "320px",
+                          objectFit: "cover",
+                        }} alt="thumb" />
                       </Link>
                     </div>
                     <div className="single_post_text">

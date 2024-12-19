@@ -97,8 +97,8 @@ function ThumbsSwiper() {
   }
 
   const filteredArticles = articles.filter((item) => {
-    // Replace "desired-source-id" with the actual source ID you want to check
-    return item.source?.id === "https://www.youtube.com/channel/UC0ZTPkdxlAKf-V33tqXwi3Q";
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    return sourceId === "https://techbuild.africa/";
   });
   console.log(filteredArticles);
 
@@ -121,7 +121,11 @@ function ThumbsSwiper() {
           {articles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
-                <img src={sliderImg1} alt="thumb" />
+                <img src={item?.image} style={{
+                  width: "1460px",
+                  height: "500px",
+                  objectFit: "cover",
+                }} alt="thumb" />
                 <span
                   onClick={() => this.modalHandler(true)}
                   className="tranding"

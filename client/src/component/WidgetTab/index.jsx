@@ -57,7 +57,11 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
               <div className="post_img">
                 <div className="img_wrap">
                   <Link to="/">
-                    <img src={item?.image} alt="thumb" />
+                    <img src={item?.image} style={{
+                      width: "80px",
+                      height: "64px",
+                      objectFit: "cover",
+                    }} alt="thumb" />
                   </Link>
                 </div>
               </div>
@@ -67,7 +71,7 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
                   <Link to="#">{item.date}</Link>
                 </div>
                 <h4>
-                  <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
+                  <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
                 </h4>
               </div>
             </div>
