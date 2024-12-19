@@ -11,7 +11,7 @@ import sliderImg2 from "../../assets/img/gallery-post.jpg";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
-import QubicwebFeed from "../RssParser";
+// import QubicwebFeed from "../RssParser";
 
 const thumbs = [gsil1, gsil2, gsil3, gsil4, gsil5, gsil6, gsil7, gsil4, gsil3];
 const postSlider = [
@@ -87,12 +87,8 @@ const postSlider = [
 
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const { articles, error } = QubicwebFeed();
+  // const { articles, error } = QubicwebFeed();
 
-  useEffect(() => {
-    console.log("Articles: " + articles);
-
-  }, [articles, error])
   return (
     <>
       <div className="slider_demo2">
@@ -109,7 +105,7 @@ function ThumbsSwiper() {
             prevEl: ".swiper-button-prev-thumbs",
           }}
         >
-          {articles.slice(0, 9).map((item, i) => (
+          {postSlider.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
                 <img src={sliderImg1} alt="thumb" />
@@ -131,7 +127,7 @@ function ThumbsSwiper() {
                   </Link>
                 </h4>
                 <div className="space-10" />
-                <p className="post-p">{item.contentSnippet.slice(0, 100)}...</p>
+                <p className="post-p">{item.title.slice(0, 100)}...</p>
               </div>
             </div>
           ))}

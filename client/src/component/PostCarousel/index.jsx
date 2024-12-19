@@ -12,22 +12,10 @@ import hside3 from "../../assets/img/post-3.jpg";
 import QubicwebFeed from "../RssParser";
 import { useEffect } from "react";
 
-const postSlider = [
-  { title: "The home decorations document: photograph of an", body: "People have been infected", image: hside4 },
-  { title: "U.S. Response subash says he will label regions by risk of…", body: "People have been infected", image: hside5 },
-  { title: "Stimul package will transform the government fundamentally.", body: "People have been infected", image: hside6 },
-  { title: "U.S. Response subash says he will label regions by risk of…", body: "People have been infected", image: hside1 },
-  { title: "U.S. Response subash says he will label regions by risk of…", body: "People have been infected", image: hside2 },
-  { title: "U.S. Response subash says he will label regions by risk of…", body: "People have been infected", image: hside3 },
-];
-
 const PostCarousel = ({ className }) => {
   const { articles, error } = QubicwebFeed();
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   return (
     <div className={className ? className : ""}>
@@ -64,9 +52,9 @@ const PostCarousel = ({ className }) => {
                       </div>
                       <div className="single_post_text">
                         <h4>
-                          <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 55)}...</Link>
+                          <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
                         </h4>
-                        <p>{item.contentSnippet.slice(0, 30)}...</p>
+                        <p>{item.title.slice(0, 30)}...</p>
                       </div>
                     </div>
                   ))}

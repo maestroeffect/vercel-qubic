@@ -25,7 +25,7 @@ const menus = [
     id: 3,
     linkText: "Cybershield",
     child: false,
-    link: "/about",
+    link: "/cybershield",
     // icon: "angle-down",
   },
   {
@@ -63,67 +63,12 @@ const menus = [
   },
   {
     id: 5,
-    linkText: "Contact",
+    linkText: "Blog",
     child: false,
-    link: "/contact",
+    link: "/archive",
     // icon: "angle-down",
   },
-  // {
-  //   id: 2,
-  //   linkText: "Pages",
-  //   child: true,
-  //   icon: "angle-down",
-  //   submenu: [
-  //     {
-  //       id: 21,
-  //       link: "/about",
-  //       linkText: "About",
-  //     },
-  //     {
-  //       id: 22,
-  //       link: "/archive",
-  //       linkText: "Archive",
-  //     },
-  //     {
-  //       id: 23,
-  //       link: "/contact",
-  //       linkText: "Contact Us",
-  //     },
-  //     {
-  //       id: 24,
-  //       link: "/404",
-  //       linkText: "404",
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: 3,
-  //   linkText: "Posts",
-  //   child: true,
-  //   icon: "angle-down",
-  //   submenu: [
-  //     {
-  //       id: 31,
-  //       child: true,
-  //       linkText: "General Posts",
-  //       third_menu: [
-  //         {
-  //           id: 311,
-  //           link: "/post1",
-  //           linkText: "Post 1",
-  //         },
-  //         {
-  //           id: 312,
-  //           link: "/post2",
-  //           linkText: "Post 2",
-  //         },
-  //         {
-  //           id: 313,
-  //           link: "/post3",
-  //           linkText: "Post 3",
-  //         },
-  //       ],
-  //     },
+
   //     {
   //       id: 32,
   //       child: true,
@@ -548,13 +493,19 @@ const MainMenu = ({ className, dark }) => {
                         </Link>
                         <ul>
                           <li>
+                            <Link to="/">Yoruba</Link>
+                          </li>
+                          <li>
+                            <Link to="/">Hausa</Link>
+                          </li>
+                          <li>
+                            <Link to="/">Igbo</Link>
+                          </li>
+                          <li>
                             <Link to="/">French</Link>
                           </li>
                           <li>
                             <Link to="/">Spanish</Link>
-                          </li>
-                          <li>
-                            <Link to="/">Italian</Link>
                           </li>
                         </ul>
                       </li>
