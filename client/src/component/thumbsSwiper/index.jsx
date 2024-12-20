@@ -176,13 +176,9 @@ function ThumbsSwiper() {
             },
           }}
         >
-          {filteredArticles.slice(0, 9).map((item, i) => (
+          {thumbs.slice(0, 9).map((item, i) => (
             <div key={i} className="single_gallary_item">
-              <img src={item?.image} style={{
-                width: "97px",
-                height: "70px",
-                objectFit: "cover",
-              }} alt="thumb" />
+              <img src={item} alt="thumb" />
             </div>
           ))}
         </Slider>
