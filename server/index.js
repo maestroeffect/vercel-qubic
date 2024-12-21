@@ -2,118 +2,139 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const { parseStringPromise } = require("xml2js");
+const cheerio = require("cheerio"); // Library to parse and scrape HTML
+const axiosRetry = require("axios-retry").default;
 
 const app = express();
 app.use(cors()); // Enable CORS for all routes
 
+// Configure retry mechanism for Axios with increased retries and delay
+axiosRetry(axios, {
+  retries: 5, // Increased retries
+  retryDelay: (retryCount) => retryCount * 2000, // Increased delay between retries
+  shouldResetTimeout: true, // Reset timeout after each retry
+});
+
+// Cache variables
+let cachedFeed = null;
+let lastFetchTime = null;
+
+// Function to scrape the main image from a webpage
+const fetchImageFromLink = async (url) => {
+  try {
+    const response = await axios.get(url);
+    const html = response.data;
+    const $ = cheerio.load(html);
+
+    const possibleImageSelectors = [
+      'meta[property="og:image"]',
+      'meta[name="twitter:image"]',
+      "article img",
+      "img",
+    ];
+
+    for (const selector of possibleImageSelectors) {
+      const imageUrl = $(selector).attr("content") || $(selector).attr("src");
+      if (imageUrl) {
+        return imageUrl; // Return the first valid image URL found
+      }
+    }
+    return null; // No image found
+  } catch (error) {
+    console.error(`Error fetching image from ${url}:`, error.message);
+    return null; // Return null if any error occurs
+  }
+};
+
 // Route to fetch and parse the RSS feed
 app.get("/rss-feed", async (req, res) => {
+  const { refresh } = req.query; // Check for 'refresh' query parameter
+  const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+  const now = Date.now();
+
+  // If 'refresh' is present in the query, clear the cache
+  if (refresh) {
+    cachedFeed = null;
+    lastFetchTime = null;
+    console.log("Cache cleared due to 'refresh' query parameter.");
+  }
+
+  // Serve from cache if available and not expired
+  if (cachedFeed && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
+    console.log("Serving from cache.");
+    return res.json(cachedFeed);
+  }
+
   try {
+    console.time("RSS Fetch");
     console.log("Attempting to fetch RSS feed...");
-    const response = await axios.get("https://qubicbox.com/wprss");
-    console.log("Fetched RSS feed successfully.");
+    const response = await axios.get("https://qubicbox.com/wprss", {
+      timeout: 30000, // Increased timeout to 30 seconds
+      headers: {
+        "Accept-Encoding": "gzip, deflate, br",
+      },
+    });
+    console.timeEnd("RSS Fetch");
 
-    const xmlData = response.data; // The raw XML data
-
-    // Parse the XML to JSON
+    console.time("RSS Parse");
+    const xmlData = response.data;
     const jsonData = await parseStringPromise(xmlData, {
       explicitArray: false,
     });
+    console.timeEnd("RSS Parse");
 
-    console.log("Parsed RSS feed to JSON successfully.");
+    console.time("Process Entries");
+    const entries = jsonData.feed?.entry || [];
 
-    const entries = jsonData.feed.entry || [];
+    const items = await Promise.allSettled(
+      entries.map(async (entry) => {
+        let imageUrl = null;
 
-    const items = Array.isArray(entries)
-      ? entries.map((entry) => {
-          let imageUrl = null;
-
-          // Check for image in <media:content> tag
-          if (entry["media:content"]) {
-            const mediaContent = entry["media:content"];
-            // If there are multiple media:content elements, we can pick the first one
-            if (Array.isArray(mediaContent) && mediaContent.length > 0) {
-              imageUrl = mediaContent[0].$.url || null;
-            }
+        if (entry["media:content"]) {
+          const mediaContent = entry["media:content"];
+          if (Array.isArray(mediaContent) && mediaContent.length > 0) {
+            imageUrl = mediaContent[0].$.url || null;
           }
+        }
 
-          // If no image URL found in <media:content>, check the 'content' for an image
-          if (
-            !imageUrl &&
-            typeof entry.content === "object" &&
-            entry.content._
-          ) {
-            const contentString = entry.content._;
+        if (!imageUrl && typeof entry.content === "object" && entry.content._) {
+          const contentMatch = entry.content._.match(
+            /<img[^>]+src=["']([^"']+)["']/
+          );
+          imageUrl = contentMatch ? contentMatch[1] : null;
+        }
 
-            // Regular expression to extract image URLs from the content
-            const contentMatch = contentString.match(
-              /<img[^>]+src=["']([^"']+)["']/
-            );
+        if (!imageUrl && entry.link?.$.href) {
+          imageUrl = await fetchImageFromLink(entry.link.$.href);
+        }
 
-            imageUrl = contentMatch ? contentMatch[1] : null;
-          }
-
-          // If no image URL found in content, use a placeholder
-          if (!imageUrl) {
-            imageUrl = "No image available"; // Placeholder if no image is found
-          }
-
-          // Log the image URL
-          // console.log(`Image URL for entry "${entry.title}": ${imageUrl}`);
-
-          // Add the image URL to the content if not present
-          if (
-            entry.content &&
-            typeof entry.content === "object" &&
-            entry.content._
-          ) {
-            const contentString = entry.content._;
-            if (!contentString.includes(imageUrl)) {
-              entry.content._ = `${contentString} <img src="${imageUrl}" alt="image" />`;
-            }
-          }
-
-          return {
-            title: entry.title || "Untitled Article",
-            link:
-              entry.link?.$.href ||
-              entry.link?.[0]?.$.href ||
-              "No link available",
-            contentSnippet: entry.summary || "No summary available.",
-            author: entry.author?.name || "No author available",
-            publishedDate: entry.published || "No published date available",
-            updatedDate: entry.updated || "No updated date available",
-            content: entry.content || "No full content available",
-            image: imageUrl || "No image available", // Set image URL correctly
-            source: entry.source || "No Source",
-          };
-        })
-      : [
-          {
-            title: entries.title || "Untitled Article",
-            link:
-              entries.link?.$.href ||
-              entries.link?.[0]?.$.href ||
-              "No link available",
-            contentSnippet: entries.summary || "No summary available.",
-            author: entries.author?.name || "No author available",
-            publishedDate: entries.published || "No published date available",
-            updatedDate: entries.updated || "No updated date available",
-            content: entries.content || "No full content available",
-            image: entries.image?.[0]?.$.src || "No image available", // Extract image URL correctly
-            source: entries.source || "No Source", // Extract source name correctly
-          },
-        ];
-
-    // Filter out items where the image is either null or "No image available"
-    const filteredItems = items.filter(
-      (item) => item.image !== "No image available" && item.image !== null
+        return {
+          title: entry.title || "Untitled Article",
+          link: entry.link?.$.href || "No link available",
+          contentSnippet: entry.summary || "No summary available.",
+          author: entry.author?.name || "No author available",
+          publishedDate: entry.published || "No published date available",
+          updatedDate: entry.updated || "No updated date available",
+          content: entry.content || "No full content available",
+          image: imageUrl || "No image available",
+          source: entry.source || "No Source",
+        };
+      })
     );
 
-    // Respond with filtered items
-    res.json({ items: filteredItems });
+    const validItems = items
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => result.value);
+
+    console.timeEnd("Process Entries");
+
+    // Cache the results
+    cachedFeed = { items: validItems };
+    lastFetchTime = now;
+
+    res.json(cachedFeed);
   } catch (error) {
-    console.error("Error fetching and parsing RSS feed:", error);
+    console.error("Error fetching and parsing RSS feed:", error.message);
     res.status(500).json({ error: "Failed to fetch or parse RSS feed" });
   }
 });

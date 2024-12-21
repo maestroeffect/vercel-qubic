@@ -98,7 +98,7 @@ const MixCarousel = ({ className, dark }) => {
                       <div className="single_post_text">
                         <div className="meta">
                           <Link to="/">{item.category}</Link>
-                          <Link to="#">{item.date}</Link>
+                          <Link to="#">{item.publishedDate}</Link>
                         </div>
                         <h4>
                           <Link to="/video_post1">{item.title}</Link>

@@ -37,7 +37,7 @@ const TrendingNewsSlider = () => {
   });
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://blog.fox-it.com/";
+    return sourceId === "https://news.naijatechguide.com/";
   });
 
   console.log("Filtered Articles:", filteredArticles);
@@ -72,10 +72,10 @@ const TrendingNewsSlider = () => {
           <div key={i} className="single_post post_type3">
             <div className="post_img">
               <div className="img_wrap">
-                <img src={item?.image || trendingNews.image} style={{
+                <img src={item.image || trendingNews.image} style={{
                   width: "700px!important",
-                  height: "300px!important",
-                  objectFit: "fit",
+                  height: "500px!important",
+                  objectFit: "cover",
                 }} alt="thumb" />
               </div>
               <span className="tranding">
@@ -85,7 +85,7 @@ const TrendingNewsSlider = () => {
             <div className="single_post_text">
               <div className="meta3">
                 <Link to="/">{item.category}</Link>
-                <Link to="/">{item.date}</Link>
+                <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>
                 <Link to="/post1">{item.title}</Link>

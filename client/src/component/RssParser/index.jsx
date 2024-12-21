@@ -9,6 +9,13 @@ const shuffleArray = (array) => {
   return array;
 };
 
+// Function to format the date in "Month Day, Year" format
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
@@ -18,47 +25,33 @@ const QubicwebFeed = () => {
     const fetchFeed = async () => {
       setLoading(true); // Start loading
       try {
-        const response = await fetch("https://vercel-qubic-server.vercel.app/rss-feed");
-        // const response = await fetch("http://localhost:5000/rss-feed");
+        // Fetch data from the server
+        const response = await fetch("http://localhost:5000/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const feedData = await response.json();
-        console.log(feedData);
+        console.log("feedData:", feedData);
 
         if (feedData.items && Array.isArray(feedData.items)) {
-          const parsedArticles = feedData.items.map((item) => {
-            let imageUrl = null;
-
-            // Check if 'content' is an object containing a '_'
-            if (item.content && typeof item.content._ === "string") {
-              const contentString = item.content._;
-
-              // Extract image URLs from the content
-              const contentMatch = contentString.match(/<img[^>]+src=["']([^"']+)["']/);
-
-              imageUrl = contentMatch ? contentMatch[1] : null;
-            }
-
-            return {
+          // Map and process the articles, excluding those with "No image available"
+          const parsedArticles = feedData.items
+            .map((item) => ({
               title: item.title && typeof item.title === "object" ? item.title._ : item.title,
               link: item.link || "No link available",
               contentSnippet: item.contentSnippet || "No summary available.",
               author: item.author || "No author available",
-              publishedDate: item.publishedDate || "No published date available",
-              updatedDate: item.updatedDate || "No updated date available",
+              publishedDate: item.publishedDate ? formatDate(item.publishedDate) : "No published date available",
+              updatedDate: item.updatedDate ? formatDate(item.updatedDate) : "No updated date available",
               content: item.content || "No full content available",
-              image: imageUrl, // Added image URL to each article
-              source: item.source
-                ? {
-                  id: item.source.id || "No source ID available",
-                  title: item.source.title || "No source title available",
-                }
-                : { id: "No source ID available", title: "No source title available" }, // Extract source
-            };
-          });
+              image: item.image || "No image available", // Use the image from the server
+              source: item.source || "No Source",
+            }))
+            .filter((item) => item.image !== "No image available"); // Exclude articles with "No image available"
+
+          console.log("ParsedArticles:", parsedArticles);
 
           // Shuffle the articles array randomly
           setArticles(shuffleArray(parsedArticles));

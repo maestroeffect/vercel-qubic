@@ -79,11 +79,11 @@ const FooterArea = ({ className }) => {
           <div className="col-lg-8">
             <div className="row">
               <div className="col-sm-6 col-lg">
-                <div className="single_footer_nav border_white_right">
+                <div className="single_footer_nav ">
                   <FooterNewsCategories />
                 </div>
               </div>
-              <div className="col-sm-6 col-lg">
+              {/* <div className="col-sm-6 col-lg">
                 <div className="single_footer_nav">
                   <h3 className="widget-title2">Living</h3>
                   <div className="row">
@@ -139,7 +139,7 @@ const FooterArea = ({ className }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="space-40" />
             <div className="border_white" />

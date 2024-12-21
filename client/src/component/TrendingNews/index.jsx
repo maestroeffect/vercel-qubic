@@ -14,7 +14,11 @@ import transm6 from "../../assets/img/gallery-5.jpg";
 
 const TrendingNews = ({ dark }) => {
   const { articles, error } = QubicwebFeed();
-
+  const filteredArticles = articles.filter((item) => {
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    return sourceId === "https://news.naijatechguide.com/";
+  });
+  // https://technext24.com/
   return (
     <>
       <Heading title="Trending News" />
@@ -27,7 +31,7 @@ const TrendingNews = ({ dark }) => {
       <div className="space-30" />
       <div className="row">
         <div className="col-lg-6">
-          {articles.slice(0, 3).map((item, i) => (
+          {filteredArticles.slice(0, 3).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
@@ -44,7 +48,7 @@ const TrendingNews = ({ dark }) => {
                 <div className="single_post_text">
                   <div className="meta2">
                     <Link to="/">{item.category || "UNKNOWN"}</Link>
-                    <Link to="/">{item.date || "KAI"}</Link>
+                    <Link to="/">{item.publishedDate || "KAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
                     <Link to={`/post/${item.id}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
@@ -62,7 +66,7 @@ const TrendingNews = ({ dark }) => {
           ))}
         </div>
         <div className="col-lg-6">
-          {articles.slice(3, 6).map((item, i) => (
+          {filteredArticles.slice(3, 6).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">

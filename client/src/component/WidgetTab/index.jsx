@@ -68,7 +68,7 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
               <div className="single_post_text">
                 <div className="meta2 meta_separator1">
                   <Link to="#">{item.category}</Link>
-                  <Link to="#">{item.date}</Link>
+                  <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
                   <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>

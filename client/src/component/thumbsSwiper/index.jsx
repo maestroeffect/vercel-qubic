@@ -92,15 +92,14 @@ function ThumbsSwiper() {
 
 
   if (!loading) {
-    console.log("Articles Response:", articles);
+    // console.log("Articles Response:", articles);
 
   }
 
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://techbuild.africa/";
+    return sourceId === "https://nairametrics.com/category/industries/tech-news/";
   });
-  console.log(filteredArticles);
 
   return (
     <>
@@ -118,7 +117,7 @@ function ThumbsSwiper() {
             prevEl: ".swiper-button-prev-thumbs",
           }}
         >
-          {articles.slice(0, 9).map((item, i) => (
+          {filteredArticles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
                 <img src={item?.image} style={{
@@ -136,7 +135,7 @@ function ThumbsSwiper() {
               <div className="single_post_text">
                 <div className="meta meta_separator1">
                   <Link to="#">{item.category}</Link>
-                  <Link to="#">{item.date}</Link>
+                  <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
                   <Link className="play_btn" to="/video_post1">
@@ -144,7 +143,7 @@ function ThumbsSwiper() {
                   </Link>
                 </h4>
                 <div className="space-10" />
-                <p className="post-p">{item.title.slice(0, 100)}...</p>
+                <p className="post-p">{item?.contentSnippet.slice(0, 100)}...</p>
               </div>
             </div>
           ))}
@@ -176,9 +175,13 @@ function ThumbsSwiper() {
             },
           }}
         >
-          {thumbs.slice(0, 9).map((item, i) => (
+          {filteredArticles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_gallary_item">
-              <img src={item} alt="thumb" />
+              <img src={item.image} style={{
+                width: "95px",
+                height: "70px",
+                objectFit: "cover",
+              }} alt="thumb" />
             </div>
           ))}
         </Slider>

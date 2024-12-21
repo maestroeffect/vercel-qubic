@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
-import ProtoTypes from "prop-types";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import FontAwesome from "../uiStyle/FontAwesome";
 import tempIcon from "../../assets/img/icon/temp.png";
 import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
 import useWeatherAndDate from "../WeatherDate";
+import ProtoTypes from "prop-types";
+
 
 const menus = [
   {
@@ -342,26 +350,69 @@ const menusDark = [
   },
 ];
 
-const MainMenu = ({ className, dark }) => {
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 58,
+  height: 30,
+  padding: 7,
+  '& .MuiSwitch-switchBase': {
+    margin: 1,
+    padding: 0,
+    transform: 'translateX(6px)',
+    '&.Mui-checked': {
+      color: '#fff',
+      transform: 'translateX(22px)',
+      '& .MuiSwitch-thumb:before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          '#fff',
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: '#aab4be',
+        ...theme.applyStyles('dark', {
+          backgroundColor: '#8796A5',
+        }),
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    backgroundColor: '#001e3c',
+    width: 28,
+    height: 28,
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      left: 0,
+      top: 0,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+        '#fff',
+      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+    },
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#003892',
+    }),
+  },
+  '& .MuiSwitch-track': {
+    opacity: 1,
+    backgroundColor: '#aab4be',
+    borderRadius: 20 / 2,
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#8796A5',
+    }),
+  },
+}));
+
+const MainMenu = ({ className, dark, toggleDarkMode }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
-  // Destructure weather, dateTime, and location from the hook
   const { weather, dateTime, location } = useWeatherAndDate();
 
-  // UseEffect to log weather and location when they update
-  useEffect(() => {
-    if (weather !== null) {
-      console.log("Current weather:", weather); // Log the weather
-    }
-  }, [weather]); // This will run whenever weather updates
-
-  // Optionally, log the location when it updates
-  useEffect(() => {
-    if (location !== "...") {
-      console.log("Current location:", location); // Log the location
-    }
-  }, [location]); // This will run whenever location updates
   const arr = dark ? menusDark : menus;
+
   return (
     <>
       <div className={`main-menu ${className ? className : ""}`} id="header">
@@ -389,8 +440,8 @@ const MainMenu = ({ className, dark }) => {
                           <li
                             key={i}
                             className={`
-                                                ${item.child ? "dropdown" : ""}
-                                                nav-item`}
+                                                  ${item.child ? "dropdown" : ""} 
+                                                  nav-item`}
                           >
                             {item.child ? (
                               <NavLink
@@ -412,43 +463,13 @@ const MainMenu = ({ className, dark }) => {
                                 <FontAwesome name={item.icon} />
                               </NavLink>
                             )}
-
                             {item.child ? (
                               <ul className="dropdown-menu" role="menu">
                                 {item.submenu.map((sub_item, i) => (
-                                  <li
-                                    key={i}
-                                    className={`${sub_item.child
-                                      ? "dropdown-submenu"
-                                      : null
-                                      }
-                                                        `}
-                                  >
-                                    {sub_item.child ? (
-                                      <NavLink
-                                        onClick={(e) => e.preventDefault()}
-                                        to="/"
-                                      >
-                                        {sub_item.linkText}
-                                      </NavLink>
-                                    ) : (
-                                      <NavLink to={sub_item.link}>
-                                        {sub_item.linkText}
-                                      </NavLink>
-                                    )}
-                                    {sub_item.third_menu ? (
-                                      <ul className="dropdown-menu">
-                                        {sub_item.third_menu.map(
-                                          (third_item, i) => (
-                                            <li key={i}>
-                                              <NavLink to={third_item.link}>
-                                                {third_item.linkText}
-                                              </NavLink>
-                                            </li>
-                                          )
-                                        )}
-                                      </ul>
-                                    ) : null}
+                                  <li key={i}>
+                                    <NavLink to={sub_item.link}>
+                                      {sub_item.linkText}
+                                    </NavLink>
                                   </li>
                                 ))}
                               </ul>
@@ -470,7 +491,7 @@ const MainMenu = ({ className, dark }) => {
                   <div className="users_area d-flex align-items-center">
                     <ul className="inline d-flex align-items-center mb-0">
                       <li
-                        className="search_btn me-3" // Added margin to separate icons
+                        className="search_btn me-3"
                         onClick={() => setSearchShow(!searchShow)}
                       >
                         <FontAwesome name="search" />
@@ -524,6 +545,18 @@ const MainMenu = ({ className, dark }) => {
                       </div>
                     </div>
                   </div>
+                  <div className="dark-mode-switch ms-4">
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <MaterialUISwitch
+                            checked={dark}
+                            onChange={toggleDarkMode}
+                          />
+                        }
+                      />
+                    </FormGroup>
+                  </div>
                 </div>
               </div>
             </div>
@@ -537,9 +570,10 @@ const MainMenu = ({ className, dark }) => {
   );
 };
 
-export default MainMenu;
-
 MainMenu.propTypes = {
   className: ProtoTypes.string,
   dark: ProtoTypes.bool,
+  toggleDarkMode: ProtoTypes.func.isRequired,
 };
+
+export default MainMenu;

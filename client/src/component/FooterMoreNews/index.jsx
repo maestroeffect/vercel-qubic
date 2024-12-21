@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import mobile from "../../assets/img/icon/mobile.png";
 import speaker from "../../assets/img/icon/speacker.png";
 import envelope from "../../assets/img/icon/evelope.png";
+import QubicwebFeed from "../RssParser";
 
 const news = [
   {
@@ -34,10 +35,11 @@ const news = [
 ];
 
 const FooterMoreNews = () => {
+  const { articles, loading, error } = QubicwebFeed();
   return (
     <div className="extra_newss border_white_left pl-4">
       <h3 className="widget-title2">More news</h3>
-      {news.map((item, i) => (
+      {articles.slice(0, 5).map((item, i) => (
         <div key={i} className="single_extra_news border_white_bottom">
           <p>
             {item.category} <span> / {item.date}</span>

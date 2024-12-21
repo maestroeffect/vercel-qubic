@@ -9,25 +9,25 @@ const FooterNewsCategories = () => {
         <div className="col-lg-6">
           <ul>
             <li>
-              <Link to="/">Politics</Link>
+              <Link to="/">Cybersecurity</Link>
             </li>
             <li>
-              <Link to="/">Business</Link>
+              <Link to="/">Devops</Link>
             </li>
             <li>
-              <Link to="/">TECHNOLOGY</Link>
+              <Link to="/">Software</Link>
             </li>
             <li>
               <Link to="/">Science</Link>
             </li>
             <li>
-              <Link to="/">Health</Link>
+              <Link to="/">Machine Learning</Link>
             </li>
             <li>
-              <Link to="/">Sports</Link>
+              <Link to="/">Development</Link>
             </li>
             <li>
-              <Link to="/">Entertainment</Link>
+              <Link to="/">Artificial Intelligence</Link>
             </li>
           </ul>
         </div>

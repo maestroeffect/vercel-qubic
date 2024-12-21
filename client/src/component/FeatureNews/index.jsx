@@ -54,14 +54,14 @@ const FeatureNews = ({ className }) => {
   // if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   articles.forEach((item, index) => {
-    console.log(`Article ${index + 1} Source ID:`, item.source?.id);
+    // console.log(`Article ${index + 1} Source ID:`, item.source?.id);
   });
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
     return sourceId === "https://www.techspot.com/";
   });
 
-  console.log("Filtered Articles:", filteredArticles);
+  console.log("Filtered Articles (Featured News / Techspot):", filteredArticles);
 
   return (
     <div className={`feature_carousel_area mb40 ${className ? className : ""}`}>
@@ -116,7 +116,7 @@ const FeatureNews = ({ className }) => {
                     <div className="single_post_text">
                       <div className="meta5">
                         <Link to="/">{item.category}</Link>
-                        <Link to="/">{item.date}</Link>
+                        <Link to="/">{item.publishedDate}</Link>
                       </div>
                       <h4>
                         <Link to="/post1">{item.title}</Link>
