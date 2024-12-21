@@ -59,10 +59,10 @@ let lastFetchTime = null;
 const fetchImageFromLink = async (url) => {
   try {
     const response = await axios.get(url, {
+      timeout: 60000, // Increased timeout
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        Referer: url, // Add referer to simulate coming from the same site
       },
     });
     const $ = cheerio.load(response.data);
@@ -79,7 +79,7 @@ const fetchImageFromLink = async (url) => {
     return null;
   } catch (error) {
     console.error(`Error fetching image from ${url}:`, error.message);
-    return "https://example.com/placeholder-image.jpg"; // Fallback image
+    return null; // Fallback if image fetch fails
   }
 };
 
