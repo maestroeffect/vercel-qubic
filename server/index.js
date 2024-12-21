@@ -8,6 +8,14 @@ const axiosRetry = require("axios-retry").default;
 const app = express();
 app.use(cors()); // Enable CORS for all routes
 
+// Serve favicon
+app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
+
+// Root route
+app.get("/", (req, res) => {
+  res.send("Welcome to the Qubic RSS Server!");
+});
+
 // Configure retry mechanism for Axios with increased retries and delay
 axiosRetry(axios, {
   retries: 5, // Increased retries
@@ -20,29 +28,56 @@ let cachedFeed = null;
 let lastFetchTime = null;
 
 // Function to scrape the main image from a webpage
+// const fetchImageFromLink = async (url) => {
+//   try {
+//     const response = await axios.get(url);
+//     const html = response.data;
+//     const $ = cheerio.load(html);
+
+//     const possibleImageSelectors = [
+//       'meta[property="og:image"]',
+//       'meta[name="twitter:image"]',
+//       "article img",
+//       "img",
+//     ];
+
+//     for (const selector of possibleImageSelectors) {
+//       const imageUrl = $(selector).attr("content") || $(selector).attr("src");
+//       if (imageUrl) {
+//         return imageUrl; // Return the first valid image URL found
+//       }
+//     }
+//     return null; // No image found
+//   } catch (error) {
+//     console.error(`Error fetching image from ${url}:`, error.message);
+//     return null; // Return null if any error occurs
+//   }
+// };
+
+// Fetch image with headers
 const fetchImageFromLink = async (url) => {
   try {
-    const response = await axios.get(url);
-    const html = response.data;
-    const $ = cheerio.load(html);
-
-    const possibleImageSelectors = [
+    const response = await axios.get(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      },
+    });
+    const $ = cheerio.load(response.data);
+    const selectors = [
       'meta[property="og:image"]',
       'meta[name="twitter:image"]',
       "article img",
       "img",
     ];
-
-    for (const selector of possibleImageSelectors) {
+    for (const selector of selectors) {
       const imageUrl = $(selector).attr("content") || $(selector).attr("src");
-      if (imageUrl) {
-        return imageUrl; // Return the first valid image URL found
-      }
+      if (imageUrl) return imageUrl;
     }
-    return null; // No image found
+    return null;
   } catch (error) {
     console.error(`Error fetching image from ${url}:`, error.message);
-    return null; // Return null if any error occurs
+    return null;
   }
 };
 
