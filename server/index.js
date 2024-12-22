@@ -106,7 +106,7 @@ app.get("/rss-feed", async (req, res) => {
     console.time("RSS Fetch");
     console.log("Attempting to fetch RSS feed...");
     const response = await axios.get("https://qubicbox.com/wprss", {
-      timeout: 30000, // Increased timeout to 30 seconds
+      timeout: 1120000, // Increased timeout to 30 seconds
       headers: {
         "Accept-Encoding": "gzip, deflate, br",
       },
