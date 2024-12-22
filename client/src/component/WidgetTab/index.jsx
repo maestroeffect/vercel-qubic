@@ -1,52 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProtoTypes from "prop-types";
 import { TabContent, TabPane, Nav, NavItem, Fade } from "reactstrap";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-
-import thumb1 from "../../assets/img/gallery-1.jpg";
-import thumb2 from "../../assets/img/gallery-2.jpg";
-import thumb3 from "../../assets/img/gallery-3.jpg";
-import thumb4 from "../../assets/img/gallery-4.jpg";
-import thumb5 from "../../assets/img/gallery-5.jpg";
 import QubicwebFeed from "../RssParser";
 
-const data = [
-  {
-    image: thumb1,
-    title: "Copa America: Luis Suarez from devastated US",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: thumb2,
-    title: "Nancy Zhang a Chinese busy woman and Dhaka",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: thumb3,
-    title: "U.S. Response subash says he will label regions by risk of…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: thumb4,
-    title: "Venezuela elan govt and opposit the property collect",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: thumb5,
-    title: "Cheap smartphone sensor could help you old food safe",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-];
-
-const WidgetTabPane = ({ arr, a_id, id, dark }) => {
-  const { articles, error } = QubicwebFeed();
-  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+const WidgetTabPane = ({ articles, a_id, id, dark }) => {
+  const generateSlug = (title) =>
+    title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   return (
     <Fade in={id === a_id}>
@@ -57,11 +18,15 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
               <div className="post_img">
                 <div className="img_wrap">
                   <Link to="/">
-                    <img src={item?.image} style={{
-                      width: "80px",
-                      height: "64px",
-                      objectFit: "cover",
-                    }} alt="thumb" />
+                    <img
+                      src={item?.image}
+                      style={{
+                        width: "80px",
+                        height: "64px",
+                        objectFit: "cover",
+                      }}
+                      alt="thumb"
+                    />
                   </Link>
                 </div>
               </div>
@@ -71,7 +36,9 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
+                  <Link to={`/${generateSlug(item.title)}`}>
+                    {item.title.slice(0, 50)}...
+                  </Link>
                 </h4>
               </div>
             </div>
@@ -90,7 +57,7 @@ const WidgetTabPane = ({ arr, a_id, id, dark }) => {
 };
 
 WidgetTabPane.propTypes = {
-  arr: ProtoTypes.array,
+  articles: ProtoTypes.array,
   a_id: ProtoTypes.string,
   id: ProtoTypes.string,
   dark: ProtoTypes.bool,
@@ -98,10 +65,39 @@ WidgetTabPane.propTypes = {
 
 const WidgetTab = ({ className, dark }) => {
   const [activeTab, setActiveTab] = useState("1");
+  const { articles, error } = QubicwebFeed();
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const classifyArticles = () => {
+    const now = new Date();
+    const trending = [];
+    const related = [];
+    const popular = [];
+
+    articles.forEach((article) => {
+      const publishedDate = new Date(article.publishedDate);
+      const diffInDays = (now - publishedDate) / (1000 * 60 * 60 * 24);
+
+      if (diffInDays <= 7) {
+        trending.push(article);
+      } else if (diffInDays <= 30) {
+        related.push(article);
+      } else {
+        popular.push(article);
+      }
+    });
+
+    return { trending, related, popular };
+  };
+
+  const { trending, related, popular } = classifyArticles();
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className={`widget_tab md-mt-30 ${className}`}>
@@ -142,22 +138,22 @@ const WidgetTab = ({ className, dark }) => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="1" arr={data} />
+          <WidgetTabPane dark={dark} a_id={activeTab} id="1" articles={trending} />
         </TabPane>
         <TabPane tabId="2">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="2" arr={data} />
+          <WidgetTabPane dark={dark} a_id={activeTab} id="2" articles={related} />
         </TabPane>
         <TabPane tabId="3">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="3" arr={data} />
+          <WidgetTabPane dark={dark} a_id={activeTab} id="3" articles={popular} />
         </TabPane>
       </TabContent>
     </div>
   );
 };
 
-export default WidgetTab;
-
 WidgetTab.propTypes = {
   className: ProtoTypes.string,
   dark: ProtoTypes.bool,
 };
+
+export default WidgetTab;

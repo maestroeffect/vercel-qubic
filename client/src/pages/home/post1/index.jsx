@@ -9,6 +9,7 @@ import MostShareWidget from "../../../component/MostShareWidget";
 import FollowUs from "../../../component/FollowUs";
 import BannerSection from "../../../component/BannerSection";
 import PostOnePagination from "../../../component/PostOnePagination";
+import QubicwebFeed from "../../../component/RssParser";
 
 // images
 import banner2 from "../../../assets/img/banner/banner-2.jpg";
@@ -26,73 +27,22 @@ import BlogComment from "../../../component/BlogComment";
 function Post1() {
   const { slug } = useParams(); // Get slug from URL params
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const { articles, loading, error } = QubicwebFeed();
   const generateSlug = (title) => {
     if (typeof title !== "string") return ""; // Ensure title is a string
     return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
   };
-
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const response = await fetch(`http://localhost:5000/rss-feed`);
-  //       const data = await response.json();
-
-  //       if (data.items && Array.isArray(data.items)) {
-  //         const post = data.items.find(item => {
-  //           const title = item.title?._ || "Unknown Title";
-  //           const generatedSlug = generateSlug(title);
-  //           return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
-  //         });
-  //         setPost(post);
-  //       } else {
-  //         setError("No items found in the RSS feed.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching post:", error);
-  //       setError("Error fetching post data.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchPost();
-  // }, [slug]);
-
   useEffect(() => {
-    const fetchPost = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
-        const data = await response.json();
+    if (articles.length > 0) {
+      // Find the post matching the slug
+      const matchedPost = articles.find((item) => {
+        const generatedSlug = generateSlug(item.title);
+        return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
+      });
 
-        if (data.items && Array.isArray(data.items)) {
-          const post = data.items.find(item => {
-            const title = item.title?._ || "Unknown Title";
-            const generatedSlug = generateSlug(title);
-            return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
-          });
-          console.log(post); // Log the post data
-          setPost(post);
-        } else {
-          setError("No items found in the RSS feed.");
-        }
-      } catch (error) {
-        console.error("Error fetching post:", error);
-        setError("Error fetching post data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [slug]);
-
+      setPost(matchedPost || null);
+    }
+  }, [articles, slug]);
 
   if (loading) {
     return (
@@ -107,9 +57,13 @@ function Post1() {
     return <div>Error: {error}</div>;
   }
 
+  if (!post) {
+    return <div>No post found for the given slug.</div>;
+  }
+
   return (
     <div className="archives post post1">
-      <BreadCrumb className="shadow5 padding-top-30" title={post?.title?._ || 'No Title'} />
+      <BreadCrumb className="shadow5 padding-top-30" title={post.title || 'No Title'} />
       <span className="space-30" />
       <div className="container">
         <div className="row">
@@ -137,12 +91,12 @@ function Post1() {
             </div>
             <div className="space-30" />
             <div className="single_post_heading">
-              <h1>{post?.title?._ || 'No Title'}</h1>
+              <h1>{post.title || 'No Title'}</h1>
               <div className="space-10" />
-              <p>{post?.contentSnippet.slice(0, 100) || "No Content"}...</p>
+              <p>{post.contentSnippet.slice(0, 100) || "No Content"}...</p>
             </div>
             <div className="space-40" />
-            <img src={post?.image} alt="thumb" />
+            <img src={post.image} alt="thumb" />
             <div className="space-20" />
             <div className="row">
               <div className="col-lg-6 align-self-center">
@@ -152,12 +106,11 @@ function Post1() {
                       <img src={author2} alt="author2" />
                     </div>
                   </div>
-                  <Link to="/">{post?.author}</Link>
+                  <Link to="/">{post.author}</Link>
                   <ul>
                     <li>
-                      <Link to="/">March 26, 2020</Link>
+                      <Link to="/">{post.publishedDate}</Link>
                     </li>
-                    <li>Updated 1:58 p.m. ET</li>
                   </ul>
                 </div>
               </div>

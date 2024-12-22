@@ -37,7 +37,7 @@ function Home() {
       </div>
       <MixCarousel className="half_bg1" />
       <VideoPost className="pt30 half_bg60" />
-      <div className="entertrainments">
+      {/* <div className="entertrainments">
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -49,7 +49,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="space-70" />
 
     </>

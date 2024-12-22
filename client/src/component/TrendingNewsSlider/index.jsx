@@ -6,30 +6,6 @@ import trendbig2 from "../../assets/img/trending-news-2.jpg";
 import Slider from "../Slider";
 import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
 
-const trendingNews = [
-  {
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "There may be no consoles in the future ea exec says",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    image: trendbig1,
-  },
-  {
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    image: trendbig2,
-  },
-  {
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "There may be no consoles in the future ea exec says",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    image: trendbig1,
-  },
-];
 const TrendingNewsSlider = () => {
   const { articles, error } = QubicwebFeed();
   articles.forEach((item, index) => {
