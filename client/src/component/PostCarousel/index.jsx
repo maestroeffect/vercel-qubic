@@ -54,7 +54,7 @@ const PostCarousel = ({ className }) => {
                         <h4>
                           <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
                         </h4>
-                        <p>{item.title.slice(0, 30)}...</p>
+                        <p>{item.title.slice(0, 25)}...</p>
                       </div>
                     </div>
                   ))}

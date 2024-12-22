@@ -6,7 +6,8 @@ import QubicwebFeed from "../RssParser";
 
 const WidgetTrendingNews = ({ dark }) => {
   const { articles, loading, error } = QubicwebFeed();
-
+  const generateSlug = (title) =>
+    title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -48,7 +49,7 @@ const WidgetTrendingNews = ({ dark }) => {
             <Link to="/">{mainArticle.publishedDate || "Unknown Date"}</Link>
           </div>
           <h4>
-            <Link to="/post1">{mainArticle.title || "No Title Available"}</Link>
+            <Link to={`/${generateSlug(mainArticle.title)}`}>{mainArticle.title || "No Title Available"}</Link>
           </h4>
           <div className="space-10" />
           <p className="post-p">

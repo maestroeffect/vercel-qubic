@@ -15,8 +15,8 @@ const TrendingNewsSlider = () => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
     return sourceId === "https://news.naijatechguide.com/";
   });
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
-  console.log("Filtered Articles:", filteredArticles);
 
   return (
     <div className="carousel_post2_type3 nav_style1">
@@ -64,7 +64,7 @@ const TrendingNewsSlider = () => {
                 <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>
-                <Link to="/post1">{item.title}</Link>
+                <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
               </h4>
               <div className="space-10" />
               <p className="post-p">{item?.contentSnippet.slice(0, 125) || "Lorem ipsum"}...</p>

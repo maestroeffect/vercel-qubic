@@ -10,47 +10,11 @@ import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
 import QubicwebFeed from "../RssParser";
 
-const news = [
-  {
-    image: fnewsImg2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    image: fnewsImg3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Copa America: Luis Suarez from devastated US",
-  },
-  {
-    image: fnewsImg4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    image: fnewsImg3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Copa America: Luis Suarez from devastated US",
-  },
-  {
-    image: fnewsImg4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    image: fnewsImg3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Copa America: Luis Suarez from devastated US",
-  },
-];
 
 const FeatureNews = ({ className }) => {
   const { articles, loading, error } = QubicwebFeed();
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
   // if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   articles.forEach((item, index) => {
@@ -119,7 +83,7 @@ const FeatureNews = ({ className }) => {
                         <Link to="/">{item.publishedDate}</Link>
                       </div>
                       <h4>
-                        <Link to="/post1">{item.title}</Link>
+                        <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
                       </h4>
                     </div>
                   </div>

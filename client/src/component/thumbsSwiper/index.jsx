@@ -88,6 +88,7 @@ const postSlider = [
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { articles, loading, error } = QubicwebFeed();
+
   // Log the full response to see the structure of articles
 
 
@@ -100,6 +101,7 @@ function ThumbsSwiper() {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
     return sourceId === "https://nairametrics.com/category/industries/tech-news/";
   });
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   return (
     <>
@@ -138,7 +140,7 @@ function ThumbsSwiper() {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link className="play_btn" to="/video_post1">
+                  <Link className="play_btn" to={`/${generateSlug(item.title)}`}>
                     {item.title.slice(0, 50)}...
                   </Link>
                 </h4>

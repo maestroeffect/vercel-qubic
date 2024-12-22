@@ -19,6 +19,8 @@ const TrendingNews = ({ dark }) => {
     return sourceId === "https://news.naijatechguide.com/";
   });
   // https://technext24.com/
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
   return (
     <>
       <Heading title="Trending News" />
@@ -51,7 +53,7 @@ const TrendingNews = ({ dark }) => {
                     <Link to="/">{item.publishedDate || "KAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={`/post/${item.id}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    <Link to={`/${generateSlug(item.title)}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
                   </h4>
                 </div>
               </div>
@@ -90,7 +92,7 @@ const TrendingNews = ({ dark }) => {
                     <Link to="/">{item.date || "kAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={`/post/${item.id}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    <Link to={`/${generateSlug(item.title)}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
                   </h4>
                 </div>
               </div>
