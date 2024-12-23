@@ -168,11 +168,7 @@ function About() {
             <div className="col-md-6 col-lg-4">
               <WidgetTab />
               <WidgetTrendingNews />
-              <div className="banner2 mb30">
-                <Link to="/">
-                  <img src={banner2} alt="thumb" />
-                </Link>
-              </div>
+
               <MostShareWidget title="Most Share" />
               <NewsLetter />
             </div>
@@ -180,7 +176,6 @@ function About() {
         </div>
       </div>
       <div className="space-70" />
-      <BannerSection />
     </>
   );
 }
