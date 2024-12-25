@@ -1,5 +1,5 @@
 import React from "react";
-import ProtoTypes from "prop-types";
+import PropTypes from "prop-types";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/grid";
@@ -18,29 +18,35 @@ import {
   FreeMode,
 } from "swiper/modules";
 
-function Slider({ children, ...props }) {
+function Slider({ children = [], ...props }) {
   return (
-    <Swiper
-      {...props}
-      modules={[
-        Autoplay,
-        Pagination,
-        Navigation,
-        EffectFade,
-        Grid,
-        Thumbs,
-        FreeMode,
-      ]}
-    >
-      {children.map((child, index) => (
-        <SwiperSlide key={index + "swiper"}>{child}</SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      {children && children.length > 0 ? (
+        <Swiper
+          {...props}
+          modules={[
+            Autoplay,
+            Pagination,
+            Navigation,
+            EffectFade,
+            Grid,
+            Thumbs,
+            FreeMode,
+          ]}
+        >
+          {children.map((child, index) => (
+            <SwiperSlide key={index + "swiper"}>{child}</SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <p>No slides available</p>
+      )}
+    </>
   );
 }
 
 Slider.propTypes = {
-  children: ProtoTypes.node,
+  children: PropTypes.node,
 };
 
 export default Slider;
