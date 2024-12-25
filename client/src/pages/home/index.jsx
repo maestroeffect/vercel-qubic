@@ -14,6 +14,12 @@ import MostShareWidget from "../../component/MostShareWidget";
 import UpcomingMatches from "../../component/UpcomingMatches";
 import NewsLetter from "../../component/NewsLetter";
 import CategoriesWidget from "../../component/CategoriesWidget";
+import { businessNews, entertainments } from "../../data/entertainments";
+import { Link } from "react-router-dom"
+
+import banner1 from "../../assets/img/banner/banner-1.png";
+import banner2 from "../../assets/img/banner/banner-2.jpg";
+
 // import RssFeed from "../../component/RssParser";
 
 // images
@@ -37,6 +43,47 @@ function Home() {
       </div>
       <MixCarousel className="half_bg1" />
       <VideoPost className="pt30 half_bg60" />
+      <div className="entertrainments">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8">
+              <div className="row">
+                <div className="col-12">
+                  <div className="heading">
+                    <h2 className="widget-title">CyberSecurity News</h2>
+                  </div>
+                </div>
+              </div>
+              {/*CAROUSEL START*/}
+              <div className="entertrainment_carousel mb30">
+                <div className="entertrainment_item">
+                  <div className="row justify-content-center">
+                    <EntertainmentNews entertainments={entertainments} />
+                  </div>
+                </div>
+              </div>
+              {/*CAROUSEL END*/}
+              <SportsNews />
+
+              {/* <BusinessNews businessNews={businessNews} /> */}
+            </div>
+            <div className="col-lg-4">
+              <div className="row">
+                <div className="col-lg-12">
+                  <MostShareWidget title="Most share" />
+                </div>
+                <div className="col-lg-12">
+                  <NewsLetter />
+                </div>
+                <div className="col-lg-12">
+                  <CategoriesWidget />
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="space-70" />
 
     </>

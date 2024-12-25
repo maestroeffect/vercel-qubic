@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 import QubicwebFeed from "../RssParser";
 
 const WidgetTabPane = ({ articles, a_id, id, dark }) => {
-  const generateSlug = (title) =>
-    title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
-
   return (
     <Fade in={id === a_id}>
       <div className="widget tab_widgets">
@@ -36,7 +33,7 @@ const WidgetTabPane = ({ articles, a_id, id, dark }) => {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link to={`/${generateSlug(item.title)}`}>
+                  <Link to={`/${item.slug}`}>
                     {item.title.slice(0, 50)}...
                   </Link>
                 </h4>

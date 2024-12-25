@@ -18,7 +18,7 @@ const PostCarousel = ({ className }) => {
 
 
   return (
-    <div className={className ? className : ""}>
+    <div className={` pst_carousel ${className ? className : ""}`}>
       <div className="container">
         <div className="row">
           <div className="col-12">

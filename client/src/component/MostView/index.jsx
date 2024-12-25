@@ -14,87 +14,14 @@ import Slider from "../Slider";
 import QubicwebFeed from "../RssParser";
 
 
-const mostView = [
-  {
-    image: mostsm1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: mostsm2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: mostsm3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Cheap smartphone sensor could help you",
-  },
-  {
-    image: mostsm4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Ratiffe to be Director of nation talent Trump",
-  },
-  {
-    image: mostsm5,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: mostsm1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: mostsm1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: mostsm2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: mostsm3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Cheap smartphone sensor could help you",
-  },
-  {
-    image: mostsm4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Ratiffe to be Director of nation talent Trump",
-  },
-  {
-    image: mostsm5,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: mostsm1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-];
-
 const MostView = ({ no_margin, title, dark }) => {
   const { articles, loading, error } = QubicwebFeed();
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
     return sourceId === "https://www.techspot.com/";
   });
+  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
   return (
     <div className={`widget tab_widgets ${no_margin ? "" : "mb30"}`}>
       <h2 className="widget-title">{title ? title : "Most View"}</h2>
@@ -128,10 +55,10 @@ const MostView = ({ no_margin, title, dark }) => {
                 <div className="single_post_text">
                   <div className="meta2">
                     <Link to="/">{item.category}</Link>
-                    <Link to="/">{item.date}</Link>
+                    <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to="/post1">{item.title.slice(0, 50)}...</Link>
+                    <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
                   </h4>
                 </div>
                 <div className="type8_count">

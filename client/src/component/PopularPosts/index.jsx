@@ -12,6 +12,8 @@ import popularsm5 from "../../assets/img/populer/populer-post-5.jpg";
 
 import "./style.scss";
 import Slider from "../Slider";
+import QubicwebFeed from "../RssParser";
+
 
 const populerPOsts = [
   {
@@ -65,11 +67,28 @@ const populerPOsts = [
     title: "Harbour amid a Slowen the down in singer city",
   },
 ];
-
 const PopularPosts = () => {
+  const { articles, loading, error } = QubicwebFeed();
+
+  const filteredArticles = articles.filter((item) => {
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    const allowedSources = [
+      // video NEWS SOURCES HERE
+      "https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw",
+      "https://www.youtube.com/channel/UCVeW9qkBjo3zosnqUbG7CFw",
+      "https://www.youtube.com/channel/UCgyqtNWZmIxTx3b6OxTSALw",
+      "https://www.youtube.com/channel/UCLDnEn-TxejaDB8qm2AUhHQ",
+      "https://www.youtube.com/channel/UCg--XBjJ50a9tUhTKXVPiqg",
+
+    ]; // Add more links here as needed
+    return allowedSources.includes(sourceId);
+  }).map((item) => ({
+    ...item,
+    category: item.category || "VideoNews", // Append "General" if no category exists
+  }));
   return (
     <div className="popular_carousel_area mb30 md-mt-30">
-      <h2 className="widget-title">Popular Posts</h2>
+      <h2 className="widget-title">Popular Videos</h2>
       <div className="popular_carousel pt-15 multipleRowCarousel nav_style1">
         {/*CAROUSEL START*/}
         <Slider
@@ -83,12 +102,16 @@ const PopularPosts = () => {
             rows: 6,
           }}
         >
-          {mostViewSort(populerPOsts).map((item, i) => (
+          {mostViewSort(filteredArticles).slice(0, 6).map((item, i) => (
             <div key={i} className="single_post type10 widgets_small mb15">
               <div className="post_img">
                 <div className="img_wrap">
                   <Link to="/">
-                    <img src={item.image} alt="thubm" />
+                    <img src={item.image} style={{
+                      width: "100px",
+                      height: "57px",
+                      objectFit: "cover",
+                    }} alt="thubm" />
                   </Link>
                 </div>
                 <span className="tranding tranding_border">{item.id}</span>

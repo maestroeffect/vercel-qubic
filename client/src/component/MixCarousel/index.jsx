@@ -92,7 +92,7 @@ const MixCarousel = ({ className, dark }) => {
                           onClick={() => setvModal(true)}
                           className={`tranding ${i % 2 ? "left" : ""}`}
                         >
-                          <FontAwesome name={item.icon} />
+                          <FontAwesome name="bolt" />
                         </span>
                       </div>
                       <div className="single_post_text">

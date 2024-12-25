@@ -4,8 +4,29 @@ import { Link } from "react-router-dom";
 import sportsbig1 from "../../assets/img/sports-news.jpg";
 import SportsCarousel from "../SportsCarousel";
 import FontAwesome from "../uiStyle/FontAwesome";
+import QubicwebFeed from "../RssParser";
 
 const SportsNews = ({ dark }) => {
+  const { articles, loading, error } = QubicwebFeed();
+  const filteredArticles = articles.filter((item) => {
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    const allowedSources = [
+      // CYBERSECURITY NEWS SOURCES HERE
+      "https://apisecurity.io/",
+      "https://decoded.avast.io/",
+      "https://aws.amazon.com/blogs/security/",
+      "https://www.biometricupdate.com/",
+      "https://bishopfox.com/",
+      "https://newsletter.blockthreat.io/",
+      "https://research.checkpoint.com/",
+      "https://www.csoonline.com/",
+      "https://blog.fox-it.com/",
+    ]; // Add more links here as needed
+    return allowedSources.includes(sourceId);
+  }).map((item) => ({
+    ...item,
+    category: item.category || "Technology", // Append "General" if no category exists
+  }));
   return (
     <div className="row">
       <div className="col-12">
@@ -13,7 +34,7 @@ const SportsNews = ({ dark }) => {
           <div className="row">
             <div className="col-12">
               <div className="heading">
-                <h2 className="widget-title">Sports News</h2>
+                <h2 className="widget-title">Technology News</h2>
               </div>
             </div>
           </div>

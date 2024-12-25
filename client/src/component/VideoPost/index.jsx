@@ -11,11 +11,23 @@ import QubicwebFeed from "../RssParser";
 const VideoPost = ({ className, dark }) => {
   const { articles, loading, error } = QubicwebFeed();
 
-  // Filter articles based on source title
   const filteredArticles = articles.filter((item) => {
-    const sourceTitle = item.source.title?.trim(); // Ensure no leading/trailing spaces
-    return sourceTitle === "HackerSploit";
-  });
+    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
+    const allowedSources = [
+      // NAIJA NEWS SOURCES HERE
+      "https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw",
+      "https://www.youtube.com/channel/UCVeW9qkBjo3zosnqUbG7CFw",
+      "https://www.youtube.com/channel/UCgyqtNWZmIxTx3b6OxTSALw",
+      "https://www.youtube.com/channel/UCLDnEn-TxejaDB8qm2AUhHQ",
+      "https://www.youtube.com/channel/UCg--XBjJ50a9tUhTKXVPiqg",
+
+    ]; // Add more links here as needed
+    return allowedSources.includes(sourceId);
+  }).map((item) => ({
+    ...item,
+    category: item.category || "General", // Append "General" if no category exists
+  }));
+  console.log("Filtered Videos:", filteredArticles);
 
   // Remove the videoId from the link and add the image to each article
   const updatedArticles = filteredArticles.map((item) => {
@@ -66,7 +78,11 @@ const VideoPost = ({ className, dark }) => {
                   <div className="post_img">
                     <div className="img_wrap">
                       <Link to={article.link} className="play_btn">
-                        <img src={article.image} alt={article.title} />
+                        <img src={article.image} style={{
+                          width: "100%",
+                          height: "auto",
+                          objectFit: "cover",
+                        }} alt={article.title} />
                       </Link>
                     </div>
                     <p onClick={() => openModal(article.videoId)} className="youtube_middle">
@@ -90,7 +106,7 @@ const VideoPost = ({ className, dark }) => {
               </div>
             ))}
             <div className="col-lg-4">
-              <CategoriesWidget />
+              <PopularPosts />
             </div>
           </div>
         </div>

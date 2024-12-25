@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "node-cache": "^5.1.2",
+    "p-limit": "^6.2.0",
     "robots-parser": "^3.0.1",
     "xml2js": "^0.6.2"
   },

@@ -47,6 +47,7 @@ const FeatureNews = ({ className }) => {
                 slidesPerView={4}
                 spaceBetween={30}
                 loop={true}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
                 breakpoints={{
                   1024: {
                     slidesPerView: 4,

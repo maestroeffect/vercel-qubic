@@ -64,7 +64,7 @@ const WidgetTrendingNews = ({ dark }) => {
       <div className="space-30" />
 
       {/* Other Articles */}
-      {articles.slice(1, 4).map((item, i) => (
+      {articles.slice(1, 6).map((item, i) => (
         <div key={i} className="single_post widgets_small">
           <div className="post_img">
             <div className="img_wrap">

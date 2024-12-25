@@ -35,11 +35,6 @@ const categories = [
     big_image: category5,
     title: "Artificial Intelligence",
   },
-  {
-    small_img: union,
-    big_image: category6,
-    title: "Trending",
-  },
 ];
 
 const CategoriesWidget = () => {

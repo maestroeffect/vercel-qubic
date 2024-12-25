@@ -17,9 +17,11 @@ const FooterNewsCategories = () => {
             <li>
               <Link to="/">Software</Link>
             </li>
-            <li>
-              <Link to="/">Science</Link>
-            </li>
+
+          </ul>
+        </div>
+        <div className="col-lg-6">
+          <ul>
             <li>
               <Link to="/">Machine Learning</Link>
             </li>
@@ -28,31 +30,6 @@ const FooterNewsCategories = () => {
             </li>
             <li>
               <Link to="/">Artificial Intelligence</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="col-lg-6">
-          <ul>
-            <li>
-              <Link to="/">Education</Link>
-            </li>
-            <li>
-              <Link to="/">Obituaries</Link>
-            </li>
-            <li>
-              <Link to="/">Corrections</Link>
-            </li>
-            <li>
-              <Link to="/">Education</Link>
-            </li>
-            <li>
-              <Link to="/">Today’s Paper</Link>
-            </li>
-            <li>
-              <Link to="/">Corrections</Link>
-            </li>
-            <li>
-              <Link to="/">Foods</Link>
             </li>
           </ul>
         </div>

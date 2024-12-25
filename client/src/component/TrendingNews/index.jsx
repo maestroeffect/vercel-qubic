@@ -16,7 +16,7 @@ const TrendingNews = ({ dark }) => {
   const { articles, error } = QubicwebFeed();
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://news.naijatechguide.com/";
+    return sourceId === "https://www.naijatechguide.com/";
   });
   // https://technext24.com/
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");

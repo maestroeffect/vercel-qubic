@@ -8,6 +8,7 @@ import "./style.scss";
 
 import ThumbsSwiper from "../thumbsSwiper";
 
+
 class PostGallery extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +35,9 @@ class PostGallery extends Component {
     const { className } = this.props;
     const { vModal, videoId } = this.state;
 
+
     return (
+
       <div className={`post_gallary_area mb40 ${className}`}>
         <div className="container">
           <div className="row">

@@ -13,6 +13,8 @@ import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
 import useWeatherAndDate from "../WeatherDate";
 import ProtoTypes from "prop-types";
+import { useTheme } from '../../context/ThemeContext';
+import { useTheme as useMuiTheme } from "@mui/material/styles"; // Import MUI's useTheme hook
 
 
 const menus = [
@@ -36,115 +38,15 @@ const menus = [
     link: "/cybershield",
     // icon: "angle-down",
   },
+
   {
     id: 4,
-    linkText: "Categories",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 41,
-        link: "/cybersecurity",
-        linkText: "Cybersecurity",
-      },
-      {
-        id: 42,
-        link: "/entertainment",
-        linkText: "Software Development",
-      },
-      {
-        id: 43,
-        link: "/features",
-        linkText: "DevOps",
-      },
-      {
-        id: 44,
-        link: "/sports",
-        linkText: "Data Analysis",
-      },
-      {
-        id: 45,
-        link: "/trending",
-        linkText: "Trending",
-      },
-    ],
-  },
-  {
-    id: 5,
     linkText: "Blog",
     child: false,
     link: "/archive",
     // icon: "angle-down",
   },
 
-  //     {
-  //       id: 32,
-  //       child: true,
-  //       linkText: "Video Posts",
-  //       third_menu: [
-  //         {
-  //           id: 321,
-  //           link: "/video_post1",
-  //           linkText: "Video Style 1",
-  //         },
-  //         {
-  //           id: 322,
-  //           link: "/video_post2",
-  //           linkText: "Video Style 2",
-  //         },
-  //         {
-  //           id: 323,
-  //           link: "/video_post3",
-  //           linkText: "Video Style 3",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 33,
-  //       child: true,
-  //       linkText: "Audio Posts",
-  //       third_menu: [
-  //         {
-  //           id: 331,
-  //           link: "/audio_post1",
-  //           linkText: "Audio Style 1",
-  //         },
-  //         {
-  //           id: 332,
-  //           link: "/audio_post2",
-  //           linkText: "Audio Style 2",
-  //         },
-  //         {
-  //           id: 333,
-  //           link: "/audio_post3",
-  //           linkText: "Audio Style 3",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 34,
-  //       child: true,
-  //       linkText: "Sidebars",
-  //       third_menu: [
-  //         {
-  //           id: 341,
-  //           link: "/post1",
-  //           linkText: "Right Sidebar",
-  //         },
-  //         {
-  //           id: 342,
-  //           link: "/left_post2",
-  //           linkText: "Left Sidebar",
-  //         },
-  //         {
-  //           id: 343,
-  //           link: "/post2",
-  //           linkText: "No Sidebar",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ];
 const menusDark = [
   {
@@ -368,15 +270,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: '#aab4be',
-        ...theme.applyStyles('dark', {
-          backgroundColor: '#8796A5',
-        }),
+        backgroundColor: theme.palette.primary.main,
       },
     },
   },
   '& .MuiSwitch-thumb': {
-    backgroundColor: '#001e3c',
+    backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
     width: 28,
     height: 28,
     '&::before': {
@@ -392,27 +291,32 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         '#fff',
       )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
     },
-    ...theme.applyStyles('dark', {
-      backgroundColor: '#003892',
-    }),
+    // ...theme.applyStyles('dark', {
+    //   backgroundColor: '#003892',
+    // }),
   },
   '& .MuiSwitch-track': {
     opacity: 1,
-    backgroundColor: '#aab4be',
+    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
     borderRadius: 20 / 2,
-    ...theme.applyStyles('dark', {
-      backgroundColor: '#8796A5',
-    }),
+    // ...theme.applyStyles('dark', {
+    //   backgroundColor: '#8796A5',
+    // }),
   },
 }));
 
-const MainMenu = ({ className, dark, toggleDarkMode }) => {
+const MainMenu = ({ className }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
   const { weather, dateTime, location } = useWeatherAndDate();
+  const { darkMode, toggleDarkMode } = useTheme(); // Access context values
+  // Access the MUI theme object
+  const muiTheme = useMuiTheme();
 
-  const arr = dark ? menusDark : menus;
-
+  // Check if muiTheme is correctly being accessed
+  // console.log("muiTheme is:", muiTheme);
+  const arr = darkMode ? menus : menus;
+  // console.log(darkMode)
   return (
     <>
       <div className={`main-menu ${className ? className : ""}`} id="header">
@@ -550,10 +454,11 @@ const MainMenu = ({ className, dark, toggleDarkMode }) => {
                       <FormControlLabel
                         control={
                           <MaterialUISwitch
-                            checked={dark}
+                            checked={darkMode}
                             onChange={toggleDarkMode}
                           />
                         }
+
                       />
                     </FormGroup>
                   </div>

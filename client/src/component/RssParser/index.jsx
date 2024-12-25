@@ -9,6 +9,9 @@ const shuffleArray = (array) => {
   return array;
 };
 
+const generateSlug = (title) =>
+  title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
 // Function to format the date in "Month Day, Year" format
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -53,10 +56,15 @@ const QubicwebFeed = () => {
             }))
             .filter((item) => item.image !== "No image available"); // Exclude articles with "No image available"
 
-          console.log("ParsedArticles:", parsedArticles);
+          // console.log("ParsedArticles:", parsedArticles);
+          // Add slug to each article
+          const articlesWithSlugs = parsedArticles.map((article) => ({
+            ...article,
+            slug: generateSlug(article.title),
+          }));
 
           // Shuffle the articles array randomly
-          setArticles(shuffleArray(parsedArticles));
+          setArticles(shuffleArray(articlesWithSlugs));
         } else {
           throw new Error("Unexpected feed structure: items not found or not an array.");
         }

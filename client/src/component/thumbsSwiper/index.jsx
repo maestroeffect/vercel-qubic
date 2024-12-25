@@ -13,77 +13,6 @@ import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
 import QubicwebFeed from "../RssParser";
 
-const thumbs = [gsil1, gsil2, gsil3, gsil4, gsil5, gsil6, gsil7, gsil4, gsil3];
-const postSlider = [
-  {
-    image: sliderImg1,
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg2,
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg2,
-    title: "Copa America: Luis Suarez from devastated US America",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg1,
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg2,
-    title: "Copa America: Luis Suarez from devastated US America",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg1,
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg2,
-    title: "Copa America: Luis Suarez from devastated US America",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg1,
-    title:
-      "Japan’s virus success has puzzled the world. Is its luck running out?",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-  {
-    image: sliderImg2,
-    title: "Copa America: Luis Suarez from devastated US America",
-    body: "The property, complete with 30-seat screening from room, a 100-seat amphitheater and a swimming pond with sandy shower…",
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-  },
-];
 
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -96,12 +25,20 @@ function ThumbsSwiper() {
     // console.log("Articles Response:", articles);
 
   }
-
   const filteredArticles = articles.filter((item) => {
     const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://nairametrics.com/category/industries/tech-news/";
-  });
-  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+    const allowedSources = [
+      // NAIJA NEWS SOURCES HERE
+      "https://nairametrics.com/category/industries/tech-news/",
+      "https://www.sheriffdeputiesltd.com/",
+      "https://techpoint.africa/",
+      "https://www.naijatechguide.com/",
+    ]; // Add more links here as needed
+    return allowedSources.includes(sourceId);
+  }).map((item) => ({
+    ...item,
+    category: item.category || "General", // Append "General" if no category exists
+  }));
 
   return (
     <>
@@ -128,10 +65,10 @@ function ThumbsSwiper() {
                   objectFit: "cover",
                 }} alt="thumb" />
                 <span
-                  onClick={() => this.modalHandler(true)}
+                  // onClick={() => this.modalHandler(true)}
                   className="tranding"
                 >
-                  <FontAwesome name="play" />
+                  <FontAwesome name="globe" />
                 </span>
               </div>
               <div className="single_post_text">
@@ -140,7 +77,7 @@ function ThumbsSwiper() {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link className="play_btn" to={`/${generateSlug(item.title)}`}>
+                  <Link className="play_btn" to={`/${item.slug}`}>
                     {item.title.slice(0, 50)}...
                   </Link>
                 </h4>
