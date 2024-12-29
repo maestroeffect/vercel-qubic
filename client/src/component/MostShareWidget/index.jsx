@@ -2,7 +2,7 @@ import React from "react";
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
-
+import QubicwebFeed from "../RssParser";
 // images
 import { mostViewSort } from "../../utils/commonFunctions";
 import Slider from "../Slider";
@@ -61,6 +61,8 @@ const mostView = [
 ];
 
 const MostShareWidget = ({ title, dark }) => {
+  const { articles, loading, error } = QubicwebFeed();
+
   return (
     <div className="widget tab_widgets mb30">
       <h2 className="widget-title">{title ? title : "Most View"}</h2>
@@ -76,7 +78,7 @@ const MostShareWidget = ({ title, dark }) => {
             rows: 6,
           }}
         >
-          {mostViewSort(mostView).map((item, i) => (
+          {mostViewSort(articles).map((item, i) => (
             <div key={i} className="carousel_items">
               <div className="single_post widgets_small widgets_type4">
                 <div className="post_img number">
@@ -84,12 +86,12 @@ const MostShareWidget = ({ title, dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="#">TECHNOLOGY</Link>
-                    <Link to="#">March 26, 2020</Link>
+                    <Link to="#">{item.category}</Link>
+                    <Link to="#">{item.publishedDate}</Link>
                   </div>
                   <h4>
                     <Link to="/post1">
-                      Nancy zhang a chinese busy woman and dhaka
+                      {item.title.slice(0, 50)}...
                     </Link>
                   </h4>
                   <ul className="inline socail_share">

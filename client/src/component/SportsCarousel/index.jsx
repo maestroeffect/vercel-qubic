@@ -3,85 +3,15 @@ import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
 
-// images
-import sports2 from "../../assets/img/sports/sports-1.jpg";
-import sports3 from "../../assets/img/sports/sports-2.jpg";
-import sports4 from "../../assets/img/sports/sports-3.jpg";
-import sports5 from "../../assets/img/sports/sports-4.jpg";
-import sports6 from "../../assets/img/sports/sports-5.jpg";
-import blog_small1 from "../../assets/img/sports/sports-1.jpg";
-import blog_small2 from "../../assets/img/sports/sports-2.jpg";
-import blog_small3 from "../../assets/img/sports/sports-3.jpg";
-import blog_small4 from "../../assets/img/sports/sports-4.jpg";
-import blog_small5 from "../../assets/img/sports/sports-5.jpg";
-
 import { mostViewSort } from "../../utils/commonFunctions";
 import Slider from "../Slider";
+import QubicwebFeed from "../RssParser";
 
-const mostView = [
-  {
-    image: sports2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: sports3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: sports4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Cheap smartphone sensor could help you",
-  },
-  {
-    image: sports5,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Ratiffe to be Director of nation talent Trump",
-  },
-  {
-    image: sports6,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: blog_small1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: blog_small2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Nancy zhang a chinese busy woman and dhaka",
-  },
-  {
-    image: blog_small3,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "The billionaire Philan thropist read to learn",
-  },
-  {
-    image: blog_small4,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Cheap smartphone sensor could help you",
-  },
-  {
-    image: blog_small5,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Ratiffe to be Director of nation talent Trump",
-  },
-];
 
 const SportsCarousel = ({ dark }) => {
+  const { articles, loading, error } = QubicwebFeed();
+  const techArticles = articles.filter((article) => article.category === "Technology");
+
   return (
     <div className="widget tab_widgets">
       <div className="post_type2_carousel multipleRowCarousel nav_style1">
@@ -96,13 +26,22 @@ const SportsCarousel = ({ dark }) => {
             rows: 6,
           }}
         >
-          {mostViewSort(mostView).map((item, i) => (
+          {mostViewSort(techArticles).slice(0, 4).map((item, i) => (
             <div key={i} className="single_post2_carousel">
               <div className="single_post widgets_small">
                 <div className="post_img">
                   <div className="img_wrap">
                     <Link to="/">
-                      <img src={item.image} alt="thumb" />
+                      <img src={item.image}
+
+                        alt="thumb"
+                        style={{
+                          width: "100px",
+                          height: "65px",
+                          objectFit: "cover"
+
+
+                        }} />
                     </Link>
                   </div>
                   <span className="tranding">
@@ -112,10 +51,10 @@ const SportsCarousel = ({ dark }) => {
                 <div className="single_post_text">
                   <div className="meta2">
                     <Link to="/">{item.category}</Link>
-                    <Link to="/">{item.date}</Link>
+                    <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to="/post1">{item.title}</Link>
+                    <Link to="/post1">{item.title.slice(0, 50)}...</Link>
                   </h4>
                 </div>
               </div>

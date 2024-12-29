@@ -1,10 +1,6 @@
 import React from "react";
 import ProtoTypes from "prop-types";
 import Heading from "../uiStyle/Heading";
-
-import fnewsImg2 from "../../assets/img/feature-2.jpg";
-import fnewsImg3 from "../../assets/img/feature-3.jpg";
-import fnewsImg4 from "../../assets/img/feature-4.jpg";
 import { Link } from "react-router-dom";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
@@ -13,19 +9,14 @@ import QubicwebFeed from "../RssParser";
 
 const FeatureNews = ({ className }) => {
   const { articles, loading, error } = QubicwebFeed();
-  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
 
   // if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   articles.forEach((item, index) => {
-    // console.log(`Article ${index + 1} Source ID:`, item.source?.id);
-  });
-  const filteredArticles = articles.filter((item) => {
-    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://www.techspot.com/";
+
   });
 
-  console.log("Filtered Articles (Featured News / Techspot):", filteredArticles);
 
   return (
     <div className={`feature_carousel_area mb40 ${className ? className : ""}`}>
@@ -67,7 +58,7 @@ const FeatureNews = ({ className }) => {
                   },
                 }}
               >
-                {filteredArticles.map((item, i) => (
+                {articles.map((item, i) => (
                   <div key={i} className="single_post post_type6 post_type7">
                     <div className="post_img gradient1">
                       <Link to="/">
@@ -84,7 +75,7 @@ const FeatureNews = ({ className }) => {
                         <Link to="/">{item.publishedDate}</Link>
                       </div>
                       <h4>
-                        <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
+                        <Link to={`/${item.slug}`}>{item.title.slice(0, 70)}...</Link>
                       </h4>
                     </div>
                   </div>

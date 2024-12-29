@@ -3,19 +3,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
 import Slider from "../Slider";
-import hside4 from "../../assets/img/post-1.jpg";
-import hside5 from "../../assets/img/post-2.jpg";
-import hside6 from "../../assets/img/post-3.jpg";
-import hside1 from "../../assets/img/post-2.jpg";
-import hside2 from "../../assets/img/post-1.jpg";
-import hside3 from "../../assets/img/post-3.jpg";
 import QubicwebFeed from "../RssParser";
-import { useEffect } from "react";
 
 const PostCarousel = ({ className }) => {
   const { articles, error } = QubicwebFeed();
-  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
-
 
   return (
     <div className={` pst_carousel ${className ? className : ""}`}>
@@ -52,7 +43,7 @@ const PostCarousel = ({ className }) => {
                       </div>
                       <div className="single_post_text">
                         <h4>
-                          <Link to={`/${generateSlug(item.title)}`}>{item.title.slice(0, 50)}...</Link>
+                          <Link to={`/${item.slug}`}>{item.title.slice(0, 50)}...</Link>
                         </h4>
                         <p>{item.title.slice(0, 25)}...</p>
                       </div>

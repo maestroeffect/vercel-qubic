@@ -60,7 +60,7 @@ WidgetTabPane.propTypes = {
   dark: ProtoTypes.bool,
 };
 
-const WidgetTab = ({ className, dark }) => {
+const WidgetTab = ({ className }) => {
   const [activeTab, setActiveTab] = useState("1");
   const { articles, error } = QubicwebFeed();
 
@@ -135,13 +135,13 @@ const WidgetTab = ({ className, dark }) => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="1" articles={trending} />
+          <WidgetTabPane a_id={activeTab} id="1" articles={trending} />
         </TabPane>
         <TabPane tabId="2">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="2" articles={related} />
+          <WidgetTabPane a_id={activeTab} id="2" articles={related} />
         </TabPane>
         <TabPane tabId="3">
-          <WidgetTabPane dark={dark} a_id={activeTab} id="3" articles={popular} />
+          <WidgetTabPane a_id={activeTab} id="3" articles={popular} />
         </TabPane>
       </TabContent>
     </div>
@@ -150,7 +150,7 @@ const WidgetTab = ({ className, dark }) => {
 
 WidgetTab.propTypes = {
   className: ProtoTypes.string,
-  dark: ProtoTypes.bool,
+  // dark: ProtoTypes.bool,
 };
 
 export default WidgetTab;

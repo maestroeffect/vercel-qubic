@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ProtoTypes from "prop-types";
 import WidgetTab from "../WidgetTab";
-// import Slider from "react-slick";
-// import "../../../node_modules/slick-carousel/slick/slick.css";
 import ModalVideo from "react-modal-video";
 import "./style.scss";
 

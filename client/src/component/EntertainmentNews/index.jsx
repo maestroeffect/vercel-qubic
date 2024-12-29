@@ -6,28 +6,11 @@ import QubicwebFeed from "../RssParser";
 const EntertainmentNews = ({ entertainments }) => {
   const { articles, loading, error } = QubicwebFeed();
 
-  const filteredArticles = articles.filter((item) => {
-    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    const allowedSources = [
-      // CYBERSECURITY NEWS SOURCES HERE
-      "https://apisecurity.io/",
-      "https://decoded.avast.io/",
-      "https://aws.amazon.com/blogs/security/",
-      "https://www.biometricupdate.com/",
-      "https://bishopfox.com/",
-      "https://newsletter.blockthreat.io/",
-      "https://research.checkpoint.com/",
-      "https://www.csoonline.com/",
-      "https://blog.fox-it.com/",
-    ]; // Add more links here as needed
-    return allowedSources.includes(sourceId);
-  }).map((item) => ({
-    ...item,
-    category: item.category || "Cybersecurity", // Append "General" if no category exists
-  }));
+  const cyberArticles = articles.filter((article) => article.category === "Cybersecurity");
+
   return (
     <>
-      {filteredArticles.slice(0, 4).map((item, i) => (
+      {cyberArticles.slice(0, 4).map((item, i) => (
         <div key={i} className="col-lg-6">
           <div className="single_post post_type3 mb30">
             <div className="post_img">

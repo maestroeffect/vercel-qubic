@@ -9,20 +9,11 @@ import MixCarousel from "../../component/MixCarousel";
 import VideoPost from "../../component/VideoPost";
 import EntertainmentNews from "../../component/EntertainmentNews";
 import SportsNews from "../../component/SportsNews";
-import BusinessNews from "../../component/BusinessNews";
 import MostShareWidget from "../../component/MostShareWidget";
-import UpcomingMatches from "../../component/UpcomingMatches";
 import NewsLetter from "../../component/NewsLetter";
 import CategoriesWidget from "../../component/CategoriesWidget";
-import { businessNews, entertainments } from "../../data/entertainments";
-import { Link } from "react-router-dom"
+import { entertainments } from "../../data/entertainments";
 
-import banner1 from "../../assets/img/banner/banner-1.png";
-import banner2 from "../../assets/img/banner/banner-2.jpg";
-
-// import RssFeed from "../../component/RssParser";
-
-// images
 
 function Home() {
   return (
@@ -62,10 +53,7 @@ function Home() {
                   </div>
                 </div>
               </div>
-              {/*CAROUSEL END*/}
               <SportsNews />
-
-              {/* <BusinessNews businessNews={businessNews} /> */}
             </div>
             <div className="col-lg-4">
               <div className="row">

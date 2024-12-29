@@ -186,6 +186,7 @@ app.get("/rss-feed", async (req, res) => {
               content: entry.content || "No full content available",
               image: imageUrl || "No image available",
               source: entry.source || "No Source",
+              category: entry.category || "No Category",
             };
           })
         )

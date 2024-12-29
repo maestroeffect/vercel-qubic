@@ -8,14 +8,10 @@ import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
 
 const TrendingNewsSlider = () => {
   const { articles, error } = QubicwebFeed();
-  articles.forEach((item, index) => {
-    // console.log(`Article ${index + 1} Source ID:`, item.source?.id);
-  });
-  const filteredArticles = articles.filter((item) => {
-    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    return sourceId === "https://www.naijatechguide.com/";
-  });
-  const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
+  const generalArticles = articles.filter((article) => article.category === "General");
+
+
 
 
   return (
@@ -44,7 +40,7 @@ const TrendingNewsSlider = () => {
           },
         }}
       >
-        {filteredArticles.map((item, i) => (
+        {articles.slice(0, 3).map((item, i) => (
           <div key={i} className="single_post post_type3">
             <div className="post_img">
               <div className="img_wrap">
@@ -64,7 +60,7 @@ const TrendingNewsSlider = () => {
                 <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>
-                <Link to={`/${generateSlug(item.title)}`}>{item.title}</Link>
+                <Link to={`/${item.slug}`}>{item.title}</Link>
               </h4>
               <div className="space-10" />
               <p className="post-p">{item?.contentSnippet.slice(0, 125) || "Lorem ipsum"}...</p>

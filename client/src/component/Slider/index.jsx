@@ -17,33 +17,44 @@ import {
   Thumbs,
   FreeMode,
 } from "swiper/modules";
+import QubicwebFeed from "../RssParser";
+import loadingGif from "../../assets/img/loading.gif"; // Path to your loading GIF
 
 function Slider({ children = [], ...props }) {
+  const { loading } = QubicwebFeed(); // Use loading state from QubicwebFeed
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <img src={loadingGif} alt="Loading..." />
+      </div>
+    );
+  }
+
+  if (!children || children.length === 0) {
+    return null; // Avoid rendering Swiper if there are no slides
+  }
+
   return (
-    <>
-      {children && children.length > 0 ? (
-        <Swiper
-          {...props}
-          modules={[
-            Autoplay,
-            Pagination,
-            Navigation,
-            EffectFade,
-            Grid,
-            Thumbs,
-            FreeMode,
-          ]}
-        >
-          {children.map((child, index) => (
-            <SwiperSlide key={index + "swiper"}>{child}</SwiperSlide>
-          ))}
-        </Swiper>
-      ) : (
-        <p>No slides available</p>
-      )}
-    </>
+    <Swiper
+      {...props}
+      modules={[
+        Autoplay,
+        Pagination,
+        Navigation,
+        EffectFade,
+        Grid,
+        Thumbs,
+        FreeMode,
+      ]}
+    >
+      {children.map((child, index) => (
+        <SwiperSlide key={index + "swiper"}>{child}</SwiperSlide>
+      ))}
+    </Swiper>
   );
 }
+
 
 Slider.propTypes = {
   children: PropTypes.node,

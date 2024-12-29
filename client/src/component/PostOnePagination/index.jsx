@@ -31,7 +31,7 @@ const PostOnePagination = ({ className }) => {
             <p>PREVIOUS NEWS</p>
             {previousNews ? (
               <h3>
-                <Link to={previousNews.link || "/"}>
+                <Link to={`/${previousNews.slug}`}>
                   {previousNews.title || "No Title Available"}
                 </Link>
               </h3>
@@ -47,7 +47,7 @@ const PostOnePagination = ({ className }) => {
             <p>NEXT NEWS</p>
             {nextNews ? (
               <h3>
-                <Link to={nextNews.link || "/"}>
+                <Link to={`/${nextNews.slug}`}>
                   {nextNews.title || "No Title Available"}
                 </Link>
               </h3>

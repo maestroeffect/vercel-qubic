@@ -3,43 +3,8 @@ import ProtoTypes from "prop-types";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
 import ModalVideo from "react-modal-video";
-
-import black_white1 from "../../assets/img/play-post-1.jpg";
-import black_white2 from "../../assets/img/play-post-2.jpg";
 import Slider from "../Slider";
 import QubicwebFeed from "../../component/RssParser";
-
-
-const mixArray = [
-  {
-    icon: "play",
-    image: black_white1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Success is not a good food failure makes you humble",
-  },
-  {
-    icon: "bolt",
-    image: black_white2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Success is not a good food failure makes you humble",
-  },
-  {
-    icon: "play",
-    image: black_white1,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Success is not a good food failure makes you humble",
-  },
-  {
-    icon: "bolt",
-    image: black_white2,
-    category: "TECHNOLOGY",
-    date: "March 26, 2020",
-    title: "Success is not a good food failure makes you humble",
-  },
-];
 
 const MixCarousel = ({ className, dark }) => {
   const [vModal, setvModal] = useState(false);
@@ -101,7 +66,7 @@ const MixCarousel = ({ className, dark }) => {
                           <Link to="#">{item.publishedDate}</Link>
                         </div>
                         <h4>
-                          <Link to="/video_post1">{item.title}</Link>
+                          <Link to={`${item.slug}`}>{item.title}</Link>
                         </h4>
                       </div>
                     </div>

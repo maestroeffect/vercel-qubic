@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from "react";
-import gsil1 from "../../assets/img/gallery-post/item-1.jpg";
-import gsil2 from "../../assets/img/gallery-post/item-2.jpg";
-import gsil3 from "../../assets/img/gallery-post/item-3.jpg";
-import gsil4 from "../../assets/img/gallery-post/item-4.jpg";
-import gsil5 from "../../assets/img/gallery-post/item-5.jpg";
-import gsil6 from "../../assets/img/gallery-post/item-6.jpg";
-import gsil7 from "../../assets/img/gallery-post/item-7.jpg";
-import sliderImg1 from "../../assets/img/gallery-post.jpg";
-import sliderImg2 from "../../assets/img/gallery-post.jpg";
 import Slider from "../Slider";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
@@ -17,28 +8,9 @@ import QubicwebFeed from "../RssParser";
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { articles, loading, error } = QubicwebFeed();
+  // Filter articles to include only those with the category "General"
+  const generalArticles = articles.filter((article) => article.category === "General");
 
-  // Log the full response to see the structure of articles
-
-
-  if (!loading) {
-    // console.log("Articles Response:", articles);
-
-  }
-  const filteredArticles = articles.filter((item) => {
-    const sourceId = item.source?.id?.trim(); // Ensure no leading/trailing spaces
-    const allowedSources = [
-      // NAIJA NEWS SOURCES HERE
-      "https://nairametrics.com/category/industries/tech-news/",
-      "https://www.sheriffdeputiesltd.com/",
-      "https://techpoint.africa/",
-      "https://www.naijatechguide.com/",
-    ]; // Add more links here as needed
-    return allowedSources.includes(sourceId);
-  }).map((item) => ({
-    ...item,
-    category: item.category || "General", // Append "General" if no category exists
-  }));
 
   return (
     <>
@@ -56,7 +28,7 @@ function ThumbsSwiper() {
             prevEl: ".swiper-button-prev-thumbs",
           }}
         >
-          {filteredArticles.slice(0, 9).map((item, i) => (
+          {generalArticles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_post post_type6 xs-mb30">
               <div className="post_img gradient1">
                 <img src={item?.image} style={{
@@ -114,7 +86,7 @@ function ThumbsSwiper() {
             },
           }}
         >
-          {filteredArticles.slice(0, 9).map((item, i) => (
+          {generalArticles.slice(0, 9).map((item, i) => (
             <div key={i} className="single_gallary_item">
               <img src={item.image} style={{
                 width: "95px",
