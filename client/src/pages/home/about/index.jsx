@@ -43,17 +43,25 @@ function About() {
                   </ul>
                 </div>
                 <p>
-                  QuomodoSoft is an investigative reporter for Qubicweb, based
-                  in Bangladesh. He started at The Times in 1999 covering Mayor
-                  Rudolph W. Giuliani and then the Sept. 11, 2001, attacks.
+                  Welcome to Qubicweb, your go-to platform for staying updated with the latest in the ever-evolving world of technology. Qubicweb is a cutting-edge technology news aggregator designed to deliver real-time updates on the newest local and global threats, trends and innovations in the digital security and technology landscape. Whether you're an enthusiast, a professional or just curious about the tech world, Qubicweb ensures you’re always in the know.
                 </p>
+
                 <br />
-                <p>
-                  He is a three-time winner of the Pulitzer Prize for
-                  explanatory reporting, investigative reporting and as part of
-                  team for foreign reporting. He previously worked at The
-                  Bangladesh Post and The Hartford Courant.
-                </p>
+                <h2>What Makes Qubicweb Unique?</h2>
+                <br />
+                <ul>
+                  <li>
+                    <img src={calendar} alt="calendar" />
+                    <span>Real-time updates</span>
+                  </li>
+                  <li>
+                    <span>Language Versatility: At Qubicweb, we understand the importance of accessibility and inclusivity. That’s why our platform lets you seamlessly translate articles into other languages while reading, breaking down language barriers and making technology news accessible to a global audience.
+                    </span>
+                  </li>
+                  <li>
+                    <span>Content Transparency: Qubicweb is not a content creator. Instead, we pull feeds directly from reputable and trusted sources across the web. By linking you to the original articles, we ensure you get accurate information from the experts themselves.</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
