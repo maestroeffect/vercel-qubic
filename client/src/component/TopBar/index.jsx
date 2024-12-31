@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
 import Slider from "../Slider";
 import QubicwebFeed from "../RssParser";
-import useWeatherAndDate from "../WeatherDate";
 import loadingGif from "../../assets/img/loading.gif";
 
 const TopBar = ({ className, dark }) => {
