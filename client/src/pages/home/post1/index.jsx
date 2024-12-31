@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../../component/BreadCrumb";
 import FontAwesome from "../../../component/uiStyle/FontAwesome";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import WidgetTab from "../../../component/WidgetTab";
 import WidgetTrendingNews from "../../../component/WidgetTrendingNews";
 import NewsLetter from "../../../component/NewsLetter";
@@ -21,369 +21,195 @@ import smail1 from "../../../assets/img/post-thumb-2.png";
 import single_post1 from "../../../assets/img/post-thumb-5.png";
 import OurBlogSection from "../../../component/OurBlogSection";
 import BlogComment from "../../../component/BlogComment";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 
 function Post1() {
   const { slug } = useParams(); // Get slug from URL params
   const [post, setPost] = useState(null);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
-        const data = await response.json();
-
-        // console.log("Fetched items:", data.items); // Log the fetched items
-        // console.log("Slug from URL:", slug); // Log the slug from the URL
-
-        if (data.items && Array.isArray(data.items)) {
-          data.items.forEach(item => {
-            const title = item.title?._ || "Unknown Title";
-            const generatedSlug = generateSlug(title);
-            // console.log(`Generated slug for "${title}": ${generatedSlug}`);
-          });
-
-          const post = data.items.find(item => {
-            const title = item.title?._ || "Unknown Title";
-            const generatedSlug = generateSlug(title);
-            // console.log(`Comparing: Generated slug "${generatedSlug}" with URL slug "${slug}"`);
-            return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
-          });
-          setPost(post);
-          console.log("Fetched post:", post);
-        }
-      } catch (error) {
-        console.error("Error fetching post:", error);
-      }
-    };
-
-    fetchPost();
-  }, [slug]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const generateSlug = (title) => {
     if (typeof title !== "string") return ""; // Ensure title is a string
     return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
   };
 
+  // useEffect(() => {
+  //   const fetchPost = async () => {
+  //     setLoading(true);
+  //     setError(null);
+  //     try {
+  //       const response = await fetch(`http://localhost:5000/rss-feed`);
+  //       const data = await response.json();
+
+  //       if (data.items && Array.isArray(data.items)) {
+  //         const post = data.items.find(item => {
+  //           const title = item.title?._ || "Unknown Title";
+  //           const generatedSlug = generateSlug(title);
+  //           return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
+  //         });
+  //         setPost(post);
+  //       } else {
+  //         setError("No items found in the RSS feed.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching post:", error);
+  //       setError("Error fetching post data.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchPost();
+  // }, [slug]);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`https://vercel-qubic-server.vercel.app/rss-feed`);
+        const data = await response.json();
+
+        if (data.items && Array.isArray(data.items)) {
+          const post = data.items.find(item => {
+            const title = item.title?._ || "Unknown Title";
+            const generatedSlug = generateSlug(title);
+            return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
+          });
+          console.log(post); // Log the post data
+          setPost(post);
+        } else {
+          setError("No items found in the RSS feed.");
+        }
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        setError("Error fetching post data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [slug]);
+
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        Loading...
+        {/* <img src={loadingGif} alt="Loading..." /> */}
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <>
-      <div className="archives post post1">
-        <BreadCrumb
-          className="shadow5 padding-top-30"
-          title={` || 'No Title'`}
-        />
-        <span className="space-30" />
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6 col-lg-8">
-              <div className="row">
-                <div className="col-6 align-self-center">
-                  <div className="page_category">
-                    <h4>HEALTH</h4>
-                  </div>
-                </div>
-                <div className="col-6 text-right">
-                  <div className="page_comments">
-                    <ul className="inline">
-                      <li>
-                        <FontAwesome name="comment" />
-                        563
-                      </li>
-                      <li>
-                        <FontAwesome name="fire" />
-                        563
-                      </li>
-                    </ul>
-                  </div>
+    <div className="archives post post1">
+      <BreadCrumb className="shadow5 padding-top-30" title={post?.title?._ || 'No Title'} />
+      <span className="space-30" />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 col-lg-8">
+            <div className="row">
+              <div className="col-6 align-self-center">
+                <div className="page_category">
+                  <h4>HEALTH</h4>
                 </div>
               </div>
-              <div className="space-30" />
-              <div className="single_post_heading">
-                <h1>
-                  {/* {post.title  post.title._} */}
-                  {/* ${post.title?._} */}
-                </h1>
-                <div className="space-10" />
-                <p>
-                  {post?.contentSnippet.slice(0, 100) || "No Content"}...
-                </p>
-              </div>
-              <div className="space-40" />
-              <img src={single_post1} alt="thumb" />
-              <div className="space-20" />
-              <div className="row">
-                <div className="col-lg-6 align-self-center">
-                  <div className="author">
-                    <div className="author_img">
-                      <div className="author_img_wrap">
-                        <img src={author2} alt="author2" />
-                      </div>
-                    </div>
-                    <Link to="/">Shuvas Chandra</Link>
-                    <ul>
-                      <li>
-                        <Link to="/">March 26, 2020</Link>
-                      </li>
-                      <li>Updated 1:58 p.m. ET</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-6 align-self-center">
-                  <div className="author_social inline text-right">
-                    <ul>
-                      <li>
-                        <Link to="/">
-                          <FontAwesome name="instagram" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/">
-                          <FontAwesome name="facebook-f" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/">
-                          <FontAwesome name="youtube" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/">
-                          <FontAwesome name="instagram" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+              <div className="col-6 text-right">
+                <div className="page_comments">
+                  <ul className="inline">
+                    <li>
+                      <FontAwesome name="comment" />
+                      563
+                    </li>
+                    <li>
+                      <FontAwesome name="fire" />
+                      563
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div className="space-20" />
-              <p>
-                {post?.contentSnippet || "No Content"}
-              </p>
-              <div className="space-40" />
-              <div className="points">
-                <ul>
-                  <li>Should more of us wear face masks?</li>
-                  <li>Why some countries wear face masks and others don’t</li>
-                  <li>Coronavirus: Are homemade face masks safe?</li>
-                </ul>
-              </div>
-              <div className="space-40" />
-              <p>
-                The comments from Dr Fauci, who heads the National Institute of
-                Allergy and Infectious Diseases, appeared to contradict those of
-                President Trump, who has consistently dismissed the notion of a
-                nationwide lockdown.
-                <br />
-                <br />
-                “It’s awfully tough to say, ‘close it down.’ We have to have a
-                little bit of flexibility,” Mr Trump said on Wednesday.
-              </p>
-              <div className="space-40" />
-              <h3>What’s the debate over masks?</h3>
-              <div className="space-20" />
-              <p>
-                Both the US Centers for Disease Control (CDC) and the World
-                Health Organization (WHO) are reassessing their guidance on face
-                masks, as experts race to find ways to fight the highly
-                contagious virus.
-                <br />
-                <br />
-                Covid-19 is carried in airborne droplets from people coughing or
-                sneezing, but there is some dispute over how far people should
-                distance themselves from each other, and whether masks are
-                useful when used by the public.
-              </p>
-              <div className="space-40" />
-              <div className="row">
-                <div className="col-md-6">
-                  <img src={smail1} alt="smail1" />
-                </div>
-                <div className="col-md-6">
-                  <p>
-                    The WHO advises that ordinary face masks are only effective
-                    if combined with careful hand-washing and social-distancing,
-                    and so far it does not recommend them generally for healthy
-                    people.
-                    <br />
-                    <br />
-                    However, More and more health experts now say there are
-                    benefits. They argue that the public use of masks can
-                    primarily help by preventing asymptomatic patients - people
-                    who have been infected with Covid-19 but are not aware, and
-                    not displaying any symptoms - from unknowingly spreading the
-                    virus to others.
-                  </p>
-                </div>
-              </div>
-              <div className="space-40" />
-              <p>
-                Masks may also help lower the risk of individuals catching the
-                virus through the droplets from another person’s sneeze or a
-                cough - and people can be taught how put masks on and take them
-                off correctly, they argue.
-                <br />
-                <br />
-                On Thursday New York mayor Bill de Blasio urged all New Yorkers
-                to cover their faces when outside and near others, but not to
-                use surgical masks, which are in short supply.
-                <br />
-                <br />
-                “It could be a scarf. It could be something you create yourself
-                at home. It could be a bandana,” he said. Governor Cuomo weighed
-                in on Friday, saying “i think it’s fair to say that the masks
-                couldn’t hurt unless they gave you a false sense of security.”
-                <br />
-                <br />
-                Meanwhile, residents in Laredo, Texas will now face a $1,000
-                (£816) fine if they fail to cover their noses and mouths while
-                outside, after city officials issued an emergency ordinance to
-                its approximately 250,000 residents this week.
-              </p>
-              <div className="space-40" />
-              <h3>Which states are not in lockdown?</h3>
-              <div className="space-20" />
-              <p>
-                Both the US Centers for Disease Control (CDC) and the World
-                Health Organization (WHO) are reassessing their guidance on face
-                masks, as experts race to find ways to fight the highly
-                contagious virus.
-                <br />
-                <br />
-                Covid-19 is carried in airborne droplets from people coughing or
-                sneezing, but there is some dispute over how far people should
-                distance themselves from each other, and whether masks are
-                useful when used by the public.
-              </p>
-              <div className="space-40" />
-              <img src={big1} alt="big1" />
-              <p className="img_desc">
-                <span>I just had a baby - now I’m going to the frontline.</span>
-              </p>
-              <div className="space-40" />
-              <p>
-                Masks may also help lower the risk of individuals catching the
-                virus through the droplets from another person’s sneeze or a
-                cough - and people can be taught how put masks on and take them
-                off correctly, they argue.
-                <br />
-                <br />
-                On Thursday New York mayor Bill de Blasio urged all New Yorkers
-                to cover their faces when outside and near others, but not to
-                use surgical masks, which are in short supply.
-                <br />
-                <br />
-                Meanwhile, residents in Laredo, Texas will now face a $1,000
-                (£816) fine if they fail to cover their noses and mouths while
-                outside, after city officials issued an emergency ordinance to
-                its approximately 250,000 residents this week.
-              </p>
-              <div className="space-40" />
-              <div className="row">
-                <div className="col-md-5">
-                  <img src={quote_1} alt="quote" />
-                </div>
-                <div className="col-md-7">
-                  <div className="qhote">
-                    <img src={quote} alt="quote" />
-                    <p>
-                      I must explain to you how all this mistake idea denouncing
-                      pleasure and praising pain was born and I will give you a
-                      complete account of the system, and expound the actual
-                      teachings of the great explorer of the truth, the
-                      master-builder of human happiness. .
-                    </p>
-                    <div className="author">
-                      <div className="author_img">
-                        <div className="author_img_wrap">
-                          <img src={author2} alt="author2" />
-                        </div>
-                      </div>
-                      <Link to="/">Shuvas Chandra</Link>
-                      <ul>
-                        <li>Founder at Seative Digital</li>
-                      </ul>
+            </div>
+            <div className="space-30" />
+            <div className="single_post_heading">
+              <h1>{post?.title?._ || 'No Title'}</h1>
+              <div className="space-10" />
+              <p>{post?.contentSnippet.slice(0, 100) || "No Content"}...</p>
+            </div>
+            <div className="space-40" />
+            <img src={post?.image} alt="thumb" />
+            <div className="space-20" />
+            <div className="row">
+              <div className="col-lg-6 align-self-center">
+                <div className="author">
+                  <div className="author_img">
+                    <div className="author_img_wrap">
+                      <img src={author2} alt="author2" />
                     </div>
                   </div>
+                  <Link to="/">{post?.author}</Link>
+                  <ul>
+                    <li>
+                      <Link to="/">March 26, 2020</Link>
+                    </li>
+                    <li>Updated 1:58 p.m. ET</li>
+                  </ul>
                 </div>
               </div>
-              <div className="space-40" />
-              <p>
-                The next day I came back to my team and said, This is what I
-                just heard, we have to get ready, he said. We knew that it
-                wasn’t going to be long before we were going to have to deal
-                with it.
-                <br />
-                <br />
-                Mr. Hogan has also leaned on his wife, Yumi Hogan, a Korean
-                immigrant, who was also at the governor’s convention, which
-                included a dinner at the Korean ambassador’s home. As the first
-                Korean first lady in American history, Ms. Hogan has become
-                something of an icon in South Korea. I just grabbed my wife and
-                said, Look, you speak Korean. You know the president. You know
-                the first lady. You know the ambassador. Let’s talk to them in
-                Korean, and tell them we need their help. Companies in South
-                Korea said would tests.
-              </p>
-              <div className="space-40" />
-              <img src={big2} alt="big2" />
-              <div className="space-40" />
-              <p>
-                In global terms the US has the most Covid-19 cases - more than
-                245,000. And on Thursday the US authorities said more than 1,000
-                had died in the past 24 hours - the highest daily toll so far in
-                the world.
-                <br />
-                <br />
-                Hospitals and morgues in New York are struggling to cope with
-                the pandemic, and New York Governor Andrew Cuomo has warned that
-                New York risks running out of ventilators for patients in six
-                days.
-              </p>
-              <div className="space-40" />
-              <div className="tags">
-                <ul className="inline">
-                  <li className="tag_list">
-                    <FontAwesome name="tag" /> tags
-                  </li>
-                  <li>
-                    <Link to="/">Health</Link>
-                  </li>
-                  <li>
-                    <Link to="/">World</Link>
-                  </li>
-                  <li>
-                    <Link to="/">Corona</Link>
-                  </li>
-                </ul>
+              <div className="col-lg-6 align-self-center">
+                <div className="author_social inline text-right">
+                  <ul>
+                    <li>
+                      <Link to="/">
+                        <FontAwesome name="instagram" />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <FontAwesome name="facebook-f" />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <FontAwesome name="youtube" />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <FontAwesome name="instagram" />
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div className="space-40" />
-              <div className="border_black" />
-              <div className="space-40" />
-              <PostOnePagination />
             </div>
-            <div className="col-md-6 col-lg-4">
-              <WidgetTab />
-              <FollowUs title="Follow Us" />
-              <WidgetTrendingNews />
-              <div className="banner2 mb30">
-                <Link to="/">
-                  <img src={banner2} alt="thumb" />
-                </Link>
-              </div>
-              <MostShareWidget title="Most Share" />
-              <NewsLetter />
-            </div>
+            <div className="space-20" />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: post?.content?._
+                  ? post.content._.replace(/<img[^>]*>/g, "") // Remove <img> tags
+                  : "No Content",
+              }}
+            ></div>
+            <div className="space-40" />
+
+          </div>
+          <div className="col-md-6 col-lg-4">
+            <WidgetTab />
+            <WidgetTrendingNews />
+            <NewsLetter />
           </div>
         </div>
+        <PostOnePagination slug={slug} />
       </div>
-      <div className="space-60" />
       <OurBlogSection />
-      <div className="space-60" />
       <BlogComment />
-      <div className="space-100" />
-      <BannerSection />
-    </>
+    </div>
   );
 }
 

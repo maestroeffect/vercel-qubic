@@ -14,7 +14,7 @@ import MostShareWidget from "../../component/MostShareWidget";
 import UpcomingMatches from "../../component/UpcomingMatches";
 import NewsLetter from "../../component/NewsLetter";
 import CategoriesWidget from "../../component/CategoriesWidget";
-import RssFeed from "../../component/RssParser";
+// import RssFeed from "../../component/RssParser";
 
 // images
 
@@ -52,6 +52,7 @@ function Home() {
         </div>
       </div>
       <div className="space-70" />
+
     </>
   );
 }

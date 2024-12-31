@@ -9,7 +9,7 @@ import thumb2 from "../../assets/img/gallery-2.jpg";
 import thumb3 from "../../assets/img/gallery-3.jpg";
 import thumb4 from "../../assets/img/gallery-4.jpg";
 import thumb5 from "../../assets/img/gallery-5.jpg";
-import QubicwebFeed from "../RssParser";
+// import QubicwebFeed from "../RssParser";
 
 const data = [
   {
@@ -45,13 +45,13 @@ const data = [
 ];
 
 const WidgetTabPane = ({ arr, a_id, id, dark }) => {
-  const { articles, error } = QubicwebFeed();
+  // const { articles, error } = QubicwebFeed();
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   return (
     <Fade in={id === a_id}>
       <div className="widget tab_widgets">
-        {articles.slice(0, 5).map((item, i) => (
+        {data.slice(0, 3).map((item, i) => (
           <div key={i}>
             <div className="single_post widgets_small">
               <div className="post_img">

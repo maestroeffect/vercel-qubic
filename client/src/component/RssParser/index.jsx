@@ -8,23 +8,10 @@ const shuffleArray = (array) => {
   }
   return array;
 };
-
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    // Add "no-scroll" to prevent body scrolling when loading
-    if (loading) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-
-    // Cleanup "no-scroll" class on unmount
-    return () => document.body.classList.remove("no-scroll");
-  }, [loading]);
 
   useEffect(() => {
     const fetchFeed = async () => {
@@ -37,18 +24,36 @@ const QubicwebFeed = () => {
         }
 
         const feedData = await response.json();
+        console.log(feedData);
 
         if (feedData.items && Array.isArray(feedData.items)) {
-          const parsedArticles = feedData.items.map((item) => ({
-            title: item.title && typeof item.title === "object" ? item.title._ : item.title,
-            link: item.link || "No link available",
-            contentSnippet: item.contentSnippet || "No summary available.",
-            author: item.author || "No author available",
-            publishedDate: item.publishedDate || "No published date available",
-            updatedDate: item.updatedDate || "No updated date available",
-            content: item.content || "No full content available",
-            image: item.image || "No image available",
-          }));
+          const parsedArticles = feedData.items.map((item) => {
+            let imageUrl = null;
+
+            // Check if 'content' is an object containing a '_'
+            if (item.content && typeof item.content._ === 'string') {
+              const contentString = item.content._;
+
+              // Updated regex to extract image URLs from the content
+              const contentMatch = contentString.match(/<img[^>]+src=["']([^"']+)["']/);
+
+              imageUrl = contentMatch ? contentMatch[1] : null;
+
+              // Log the image URL to check if it appears
+              console.log('Extracted image URL:', imageUrl);
+            }
+
+            return {
+              title: item.title && typeof item.title === "object" ? item.title._ : item.title,
+              link: item.link || "No link available",
+              contentSnippet: item.contentSnippet || "No summary available.",
+              author: item.author || "No author available",
+              publishedDate: item.publishedDate || "No published date available",
+              updatedDate: item.updatedDate || "No updated date available",
+              content: item.content || "No full content available",
+              image: imageUrl, // Added image URL to each article
+            };
+          });
 
           // Shuffle the articles array randomly
           setArticles(shuffleArray(parsedArticles));
@@ -70,3 +75,4 @@ const QubicwebFeed = () => {
 };
 
 export default QubicwebFeed;
+

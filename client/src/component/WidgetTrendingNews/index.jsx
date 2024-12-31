@@ -61,7 +61,7 @@ const WidgetTrendingNews = ({ dark }) => {
         </div>
       </div>
 
-      {posts.map((item, i) => (
+      {posts.slice(0, 1).map((item, i) => (
         <div key={i}>
           <div className="space-15" />
           {dark ? (

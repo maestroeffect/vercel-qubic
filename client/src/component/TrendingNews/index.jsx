@@ -4,7 +4,7 @@ import Heading from "../uiStyle/Heading";
 import TrendingNewsSlider from "../TrendingNewsSlider";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
-import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
+// import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
 
 import transm1 from "../../assets/img/gallery-1.jpg";
 import transm2 from "../../assets/img/gallery-2.jpg";
@@ -13,7 +13,7 @@ import transm5 from "../../assets/img/gallery-4.jpg";
 import transm6 from "../../assets/img/gallery-5.jpg";
 
 const TrendingNews = ({ dark }) => {
-  const { articles, error } = QubicwebFeed();
+  // const { articles, error } = QubicwebFeed();
 
   return (
     <>
@@ -27,7 +27,7 @@ const TrendingNews = ({ dark }) => {
       <div className="space-30" />
       <div className="row">
         <div className="col-lg-6">
-          {articles.slice(0, 3).map((item, i) => (
+          {/* {articles.slice(0, 3).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
@@ -59,10 +59,10 @@ const TrendingNews = ({ dark }) => {
               )}
               <div className="space-15" />
             </div>
-          ))}
+          ))} */}
         </div>
         <div className="col-lg-6">
-          {articles.slice(3, 6).map((item, i) => (
+          {/* {articles.slice(3, 6).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
@@ -94,7 +94,7 @@ const TrendingNews = ({ dark }) => {
               )}
               <div className="space-15" />
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </>
