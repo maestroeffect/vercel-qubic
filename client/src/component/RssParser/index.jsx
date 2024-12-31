@@ -80,7 +80,7 @@ const QubicwebFeed = () => {
       try {
         // Fetch data from the server
         // const response = await fetch("http://localhost:5000/rss-feed");
-        const response = await fetch("http://nodejs.reasonwithangel.com/rss-feed");
+        const response = await fetch("https://nodejs.reasonwithangel.com/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
