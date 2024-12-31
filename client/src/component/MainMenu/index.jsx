@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import FontAwesome from "../uiStyle/FontAwesome";
-import tempIcon from "../../assets/img/icon/temp.png";
 import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
@@ -436,20 +433,7 @@ const MainMenu = ({ className }) => {
                       </li>
                     </ul>
                   </div>
-                  <div className="temp d-none d-lg-block ms-4">
-                    <div className="temp_wap d-flex align-items-center">
-                      <div className="temp_icon me-2">
-                        <img src={tempIcon} alt="temp icon" />
-                      </div>
-                      <div>
-                        <h3 className="temp_count mb-0">
-                          {weather !== null ? `${weather}°C` : "..."}
-                        </h3>
-                        <p className="mb-0">{location}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="dark-mode-switch ms-4">
+                  <div className="dark-mode-switch ms-4 mt-2 pl-4">
                     <FormGroup>
                       <FormControlLabel
                         control={

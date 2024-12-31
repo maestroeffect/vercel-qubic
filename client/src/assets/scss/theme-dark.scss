@@ -667,4 +667,16 @@
   .bold {
     background: $primary_bg;
   }
+
+  .dark-theme .lang ul li a {
+    color: $white !important;
+  }
+
+  .dark-theme .main-nav {
+    background: #00000000;
+  }
+
+  .dark-theme .lang ul li ul {
+    background: #000000;
+  }
 }

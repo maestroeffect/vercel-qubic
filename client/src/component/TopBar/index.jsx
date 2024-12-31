@@ -10,7 +10,7 @@ import * as React from 'react';
 
 const TopBar = ({ className, dark, toggleDarkMode }) => {
 
-  const { weather, dateTime } = useWeatherAndDate();
+  const { dateTime } = useWeatherAndDate();
   const { articles, loading, error } = QubicwebFeed();
 
 

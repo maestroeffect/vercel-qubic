@@ -69,7 +69,6 @@ const sourceCategories = {
   "https://www.youtube.com/channel/UC0ArlFuFYMpEewyRBzdLHiw": "VideoNews",
   "https://www.youtube.com/channel/UCddiUEpeqJcYeBxX1IVBKvQ": "VideoNews",
 };
-
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
@@ -81,15 +80,13 @@ const QubicwebFeed = () => {
       try {
         // Fetch data from the server
         // const response = await fetch("http://localhost:5000/rss-feed");
-
-        const response = await fetch("https://nodejs.reasonwithangel.com/rss-feed");
+        const response = await fetch("http://nodejs.reasonwithangel.com/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const feedData = await response.json();
-        // console.log("feedData:", feedData);
 
         if (feedData.items && Array.isArray(feedData.items)) {
           // Map and process the articles, excluding those with "No image available"
@@ -98,9 +95,6 @@ const QubicwebFeed = () => {
               const sourceObject = item.source || { id: "Unknown Source", title: "Unknown Title" };
               const sourceUrl = sourceObject.id; // Extract the `id` property
               const sourceTitle = sourceObject.title; // Extract the `title` property
-
-              // console.log("Source URL:", sourceUrl);
-              // console.log("Source Title:", sourceTitle);
 
               return {
                 title: item.title && typeof item.title === "object" ? item.title._ : item.title,
@@ -117,13 +111,13 @@ const QubicwebFeed = () => {
             })
             .filter((item) => item.image !== "No image available"); // Exclude articles with "No image available"
 
-          // Add slug to each article
+          // Add slug to each article and shuffle (optional)
           const articlesWithSlugs = parsedArticles.map((article) => ({
             ...article,
             slug: generateSlug(article.title),
           }));
 
-          // Shuffle the articles array randomly
+          // Shuffle the articles array randomly (optional for faster load)
           setArticles(shuffleArray(articlesWithSlugs));
         } else {
           throw new Error("Unexpected feed structure: items not found or not an array.");

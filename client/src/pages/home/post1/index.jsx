@@ -4,22 +4,11 @@ import FontAwesome from "../../../component/uiStyle/FontAwesome";
 import { Link, useParams } from "react-router-dom";
 import WidgetTab from "../../../component/WidgetTab";
 import WidgetTrendingNews from "../../../component/WidgetTrendingNews";
-import NewsLetter from "../../../component/NewsLetter";
-import MostShareWidget from "../../../component/MostShareWidget";
-import FollowUs from "../../../component/FollowUs";
-import BannerSection from "../../../component/BannerSection";
 import PostOnePagination from "../../../component/PostOnePagination";
 import QubicwebFeed from "../../../component/RssParser";
 
 // images
-import banner2 from "../../../assets/img/banner/banner-2.jpg";
-import big2 from "../../../assets/img/post-thumb-4.png";
 import author2 from "../../../assets/img/comments-1.png";
-import quote from "../../../assets/img/icon/q.png";
-import quote_1 from "../../../assets/img/post-quote.jpg";
-import big1 from "../../../assets/img/post-thumb-3.jpg";
-import smail1 from "../../../assets/img/post-thumb-2.png";
-import single_post1 from "../../../assets/img/post-thumb-5.png";
 import OurBlogSection from "../../../component/OurBlogSection";
 import BlogComment from "../../../component/BlogComment";
 
@@ -29,17 +18,15 @@ function Post1() {
   const [post, setPost] = useState(null);
   const { articles, loading, error } = QubicwebFeed();
   const generateSlug = (title) => {
-    if (typeof title !== "string") return ""; // Ensure title is a string
+    if (typeof title !== "string") return "AHHHH"; // Ensure title is a string
     return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
   };
   useEffect(() => {
     if (articles.length > 0) {
-      // Find the post matching the slug
       const matchedPost = articles.find((item) => {
         const generatedSlug = generateSlug(item.title);
         return decodeURIComponent(generatedSlug).toLowerCase() === decodeURIComponent(slug).toLowerCase();
       });
-
       setPost(matchedPost || null);
     }
   }, [articles, slug]);
@@ -71,7 +58,7 @@ function Post1() {
             <div className="row">
               <div className="col-6 align-self-center">
                 <div className="page_category">
-                  <h4>HEALTH</h4>
+                  <h4>{post.category}</h4>
                 </div>
               </div>
               <div className="col-6 text-right">
