@@ -25,21 +25,6 @@ const categories = [
     big_image: category3,
     title: "DevOps",
   },
-  {
-    small_img: union,
-    big_image: category4,
-    title: "Cybercrime",
-  },
-  {
-    small_img: union,
-    big_image: category5,
-    title: "Artificial Intelligence",
-  },
-  {
-    small_img: union,
-    big_image: category6,
-    title: "Trending",
-  },
 ];
 
 const CategoriesWidget = () => {
