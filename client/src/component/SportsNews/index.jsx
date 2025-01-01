@@ -8,8 +8,17 @@ import QubicwebFeed from "../RssParser";
 
 const SportsNews = ({ dark }) => {
   const { articles, loading, error } = QubicwebFeed();
-  const techArticles = articles.filter((article) => article.category === "Technology");
-
+  const includedCategories = [
+    "TechCabal",
+    "Project Zero",
+    "Techradar",
+    "Troy Hunt",
+    "Technext",
+    "TechCrunch",
+  ];
+  const techArticles = articles.filter((article) =>
+    includedCategories.includes(article.category)
+  );
   return (
     <div className="row">
       <div className="col-12">

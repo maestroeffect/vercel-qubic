@@ -86,7 +86,7 @@ const MostShareWidget = ({ title, dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="#">{item.category}</Link>
+                    <Link to="#">{item.category.slice(0, 10)}</Link>
                     <Link to="#">{item.publishedDate}</Link>
                   </div>
                   <h4>
@@ -108,7 +108,7 @@ const MostShareWidget = ({ title, dark }) => {
                       </Link>
                     </li>
                   </ul>
-                  <div className="space-15" />
+                  {/* <div className="space-15" /> */}
                   {dark ? (
                     <div className="border_white" />
                   ) : (
@@ -116,7 +116,7 @@ const MostShareWidget = ({ title, dark }) => {
                   )}
                 </div>
               </div>
-              <div className="space-15" />
+              {/* <div className="space-15" /> */}
             </div>
           ))}
         </Slider>
