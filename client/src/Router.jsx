@@ -82,6 +82,7 @@ import HomeDarkAudioPost1 from "./pages/homeDark/audio_post1";
 import HomeDarkAudioPost2 from "./pages/homeDark/audio_post2";
 import HomeDarkAudioPost3 from "./pages/homeDark/audio_post3";
 import HomeDarkLeftPost2 from "./pages/homeDark/left_post2";
+import Blog from "./component/Blog";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
       },
       {
         path: "/archive",

@@ -2321,6 +2321,23 @@ a.cbtn3 {
   }
 }
 
+.fixed-dimensions {
+  width: 350px !important;
+  height: 250px !important;
+  object-fit: cover;
+}
+
+.fixed-dimensions-trending {
+  width: 100px !important;
+  height: 65px !important;
+  object-fit: cover;
+}
+.fixed-dimensions-trending2 {
+  width: 80px !important;
+  height: 64px !important;
+  object-fit: cover;
+}
+
 /*================================
 	LARGE MOBILE DEVICE
 

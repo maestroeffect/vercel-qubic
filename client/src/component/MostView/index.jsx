@@ -32,11 +32,7 @@ const MostView = ({ no_margin, title, dark }) => {
               <div className="single_post widgets_small type8">
                 <div className="post_img">
                   <div className="img_wrap">
-                    <img src={item?.image} style={{
-                      width: "80px",
-                      height: "64px",
-                      objectFit: "cover",
-                    }} alt="thumb" />
+                    <img src={item?.image} className="fixed-dimensions-trending2" alt="thumb" />
                   </div>
                   <span className="tranding">
                     <FontAwesome name="bolt" />
@@ -57,13 +53,13 @@ const MostView = ({ no_margin, title, dark }) => {
               </div>
               {i + 2 < articles.length ? (
                 <>
-                  {/* <div className="space-15" /> */}
+                  <div className="space-10" />
                   {dark ? (
                     <div className="border_white" />
                   ) : (
                     <div className="border_black" />
                   )}
-                  {/* <div className="space-15" /> */}
+                  <div className="space-10" />
                 </>
               ) : null}
             </div>

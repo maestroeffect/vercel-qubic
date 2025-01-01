@@ -35,11 +35,7 @@ const TrendingNews = ({ dark }) => {
                   <div className="img_wrap">
                     <img
                       src={item.image || transm1} // Fallback image URL if photo_url is not present
-                      style={{
-                        width: "100px",
-                        height: "77px",
-                        objectFit: "cover",
-                      }}
+                      className="fixed-dimensions-trending"
                       alt="thumb"
                     />
                   </div>
@@ -74,11 +70,7 @@ const TrendingNews = ({ dark }) => {
                 <div className="post_img">
                   <div className="img_wrap">
                     <img
-                      src={item?.image || transm2} style={{
-                        width: "100px",
-                        height: "77px",
-                        objectFit: "cover",
-                      }} // Fallback image URL if photo_url is not present
+                      src={item?.image || transm2} className="fixed-dimensions-trending"
                       alt="thumb"
                     />
                   </div>

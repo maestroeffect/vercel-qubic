@@ -29,7 +29,7 @@ const EntertainmentNews = ({ entertainments }) => {
             <div className="post_img">
               <div className="img_wrap">
                 <Link to="/">
-                  <img src={item.image} alt="thumb" />
+                  <img src={item.image} className="fixed-dimensions" alt="thumb" />
                 </Link>
               </div>
             </div>

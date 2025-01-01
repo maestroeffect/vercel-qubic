@@ -38,7 +38,7 @@ const SportsNews = ({ dark }) => {
                     <div className="single_post post_type3 mb30">
                       <div className="post_img">
                         <Link to="/">
-                          <img src={item.image} alt="sportsbig1" />
+                          <img src={item.image} className="fixed-dimensions" alt="sportsbig1" />
                         </Link>{" "}
                         <span className="tranding">
                           <FontAwesome name="bolt" />

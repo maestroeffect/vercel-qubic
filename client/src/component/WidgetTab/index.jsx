@@ -29,7 +29,7 @@ const WidgetTabPane = ({ articles, a_id, id, dark }) => {
               </div>
               <div className="single_post_text">
                 <div className="meta2 meta_separator1">
-                  <Link to="#">{item.category}</Link>
+                  <Link to="#">{item.category.slice(0, 15)}</Link>
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>

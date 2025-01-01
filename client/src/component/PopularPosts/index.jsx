@@ -56,7 +56,7 @@ const PopularPosts = () => {
             rows: 6,
           }}
         >
-          {mostViewSort(videoArticles).slice(0, 5).map((item, i) => (
+          {mostViewSort(updatedVideoArticles).slice(0, 5).map((item, i) => (
             <div key={i} className="single_post type10 widgets_small mb15">
               <div className="post_img">
                 <div className="img_wrap">
@@ -68,13 +68,13 @@ const PopularPosts = () => {
                     }} alt="thubm" />
                   </Link>
                 </div>
-                <span className="tranding tranding_border" onClick={() => openModal(item.videoId)}>
+                <span className="tranding tranding_border">
                   <FontAwesome name="play" />
                 </span>
               </div>
               <div className="single_post_text">
                 <h4>
-                  <Link to="/">{item.title}</Link>
+                  <Link to="/" onClick={() => openModal(item.videoId)}>{item.title}</Link>
                 </h4>
                 <div className="meta4">
                   <Link to="/">{item.category}</Link>

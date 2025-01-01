@@ -40,7 +40,7 @@ const menus = [
     id: 4,
     linkText: "Blog",
     child: false,
-    link: "/archive",
+    link: "/blog",
     // icon: "angle-down",
   },
 

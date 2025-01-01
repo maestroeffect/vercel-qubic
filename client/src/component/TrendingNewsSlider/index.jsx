@@ -40,15 +40,15 @@ const TrendingNewsSlider = () => {
           },
         }}
       >
-        {articles.slice(0, 3).map((item, i) => (
+        {articles.slice(0, 10).map((item, i) => (
           <div key={i} className="single_post post_type3">
             <div className="post_img">
               <div className="img_wrap">
                 <img src={item.image || trendingNews.image} style={{
-                  width: "700px!important",
-                  height: "500px!important",
+                  width: "350px",
+                  height: "250px",
                   objectFit: "cover",
-                }} alt="thumb" />
+                }} className="fixed-dimensions" alt="thumb" />
               </div>
               <span className="tranding">
                 <FontAwesome name="bolt" />
