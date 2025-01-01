@@ -8,8 +8,16 @@ import QubicwebFeed from "../RssParser";
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { articles, loading, error } = QubicwebFeed();
-  // Filter articles to include only those with the category "General"
-  const generalArticles = articles.filter((article) => article.category === "General");
+
+  const includedCategories = [
+    "Tech News Archives - Nairametrics",
+    "NaijaTechGuide",
+    // "Sheriff Deputies Ltd",
+    "The Verge -  All Posts",
+  ];
+  const generalArticles = articles.filter((article) =>
+    includedCategories.includes(article.category)
+  );
 
 
   return (
@@ -45,7 +53,7 @@ function ThumbsSwiper() {
               </div>
               <div className="single_post_text">
                 <div className="meta meta_separator1">
-                  <Link to="#">{item.category}</Link>
+                  <Link to="#">{item.category.slice(0, 10)}</Link>
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>

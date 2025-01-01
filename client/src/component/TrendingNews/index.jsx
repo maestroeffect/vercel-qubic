@@ -12,6 +12,7 @@ import transm2 from "../../assets/img/gallery-2.jpg";
 
 const TrendingNews = ({ dark }) => {
   const { articles, error } = QubicwebFeed();
+  const generalArticles = articles.filter((article) => article.category === "Engadget");
 
   // https://technext24.com/
 
@@ -27,7 +28,7 @@ const TrendingNews = ({ dark }) => {
       <div className="space-30" />
       <div className="row">
         <div className="col-lg-6">
-          {articles.slice(0, 3).map((item, i) => (
+          {generalArticles.slice(0, 3).map((item, i) => (
             <div key={i + "key"}>
               <div key={i} className="single_post widgets_small">
                 <div className="post_img">
@@ -48,7 +49,7 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category || "UNKNOWN"}</Link>
+                    <Link to="/">{item.category.slice(0, 20) || "UNKNOWN"}</Link>
                     <Link to="/">{item.publishedDate || "KAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
@@ -87,7 +88,7 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category || "UNKNOWN"}</Link>
+                    <Link to="/">{item.category.slice(0, 10) || "UNKNOWN"}</Link>
                     <Link to="/">{item.publishedDate || "kAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">

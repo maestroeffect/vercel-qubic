@@ -24,7 +24,7 @@ const MostView = ({ no_margin, title, dark }) => {
           }}
           slidesPerView={1}
           grid={{
-            rows: 5,
+            rows: 6,
           }}
         >
           {mostViewSort(articles).map((item, i) => (
@@ -44,7 +44,7 @@ const MostView = ({ no_margin, title, dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category}</Link>
+                    <Link to="/">{item.category.slice(0, 10)}</Link>
                     <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
@@ -57,13 +57,13 @@ const MostView = ({ no_margin, title, dark }) => {
               </div>
               {i + 2 < articles.length ? (
                 <>
-                  <div className="space-15" />
+                  {/* <div className="space-15" /> */}
                   {dark ? (
                     <div className="border_white" />
                   ) : (
                     <div className="border_black" />
                   )}
-                  <div className="space-15" />
+                  {/* <div className="space-15" /> */}
                 </>
               ) : null}
             </div>

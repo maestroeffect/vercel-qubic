@@ -13,16 +13,6 @@ const TopBar = ({ className, dark, toggleDarkMode }) => {
   const { dateTime } = useWeatherAndDate();
   const { articles, loading, error } = QubicwebFeed();
 
-
-  if (loading) {
-    return (
-      <div className="loading-overlay">
-        <img src={loadingGif} alt="Loading..." />
-      </div>
-    );
-  }
-
-
   if (error) {
     return <div>Error: {error}</div>;
   }

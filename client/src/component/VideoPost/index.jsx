@@ -9,14 +9,16 @@ import CategoriesWidget from "../CategoriesWidget";
 import QubicwebFeed from "../RssParser";
 
 const VideoPost = ({ className, dark }) => {
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles, videoArticles, loading, error } = QubicwebFeed();
 
-  const videoArticles = articles.filter((article) => article.category === "VideoNews");
 
-  const updatedArticles = videoArticles.map((item) => {
+  console.log("Videos:", videoArticles);
+
+  const updatedVideoArticles = videoArticles.map((item) => {
     let updatedLink = item.link;
     let videoId = null;
 
+    // Check if the link contains a YouTube video ID
     if (updatedLink.includes("v=")) {
       const videoIdMatch = updatedLink.match(/[?&]v=([^&]+)/);
       if (videoIdMatch && videoIdMatch[1]) {
@@ -27,11 +29,10 @@ const VideoPost = ({ className, dark }) => {
     return {
       ...item,
       link: updatedLink,
-      image: item.image || video1,
+      image: item.image || video1, // Fallback to default thumbnail
       videoId,
     };
   });
-
   const [vModal, setvModal] = useState(false);
   const [currentVideoId, setCurrentVideoId] = useState(null);
 
@@ -61,8 +62,8 @@ const VideoPost = ({ className, dark }) => {
         <div className="space-50" />
         <div className={`viceo_posts_wrap ${dark ? "primay_bg" : ""}`}>
           <div className="row">
-            {updatedArticles.length > 0 ? (
-              updatedArticles.slice(0, 1).map((article, index) => (
+            {videoArticles.length > 0 ? (
+              updatedVideoArticles.slice(0, 1).map((article, index) => (
                 <div className="col-lg-8" key={index}>
                   <div className="single_post post_type3 post_type11 margintop-60- xs-mb30">
                     <div className="post_img">

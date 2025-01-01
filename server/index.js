@@ -49,38 +49,11 @@ const fetchImageFromLinkWithCache = async (url) => {
 let cachedFeed = null;
 let lastFetchTime = null;
 
-// Function to scrape the main image from a webpage
-// const fetchImageFromLink = async (url) => {
-//   try {
-//     const response = await axios.get(url);
-//     const html = response.data;
-//     const $ = cheerio.load(html);
-
-//     const possibleImageSelectors = [
-//       'meta[property="og:image"]',
-//       'meta[name="twitter:image"]',
-//       "article img",
-//       "img",
-//     ];
-
-//     for (const selector of possibleImageSelectors) {
-//       const imageUrl = $(selector).attr("content") || $(selector).attr("src");
-//       if (imageUrl) {
-//         return imageUrl; // Return the first valid image URL found
-//       }
-//     }
-//     return null; // No image found
-//   } catch (error) {
-//     console.error(`Error fetching image from ${url}:`, error.message);
-//     return null; // Return null if any error occurs
-//   }
-// };
-
 // Fetch image with headers
 const fetchImageFromLink = async (url) => {
   try {
     const response = await axios.get(url, {
-      timeout: 20000, // Increased timeout
+      timeout: 10000, // Increased timeout
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -99,7 +72,6 @@ const fetchImageFromLink = async (url) => {
     }
     return null;
   } catch (error) {
-    // console.error(`Error fetching image from ${url}:`, error.message);
     return null; // Fallback if image fetch fails
   }
 };
@@ -126,7 +98,7 @@ app.get("/rss-feed", async (req, res) => {
   try {
     console.log("Fetching RSS feed...");
     const response = await axios.get("https://qubicbox.com/wprss", {
-      timeout: 20000, // 30 seconds timeout
+      timeout: 10000, // 10 seconds timeout
       headers: {
         "Accept-Encoding": "gzip, deflate, br",
       },
@@ -170,6 +142,19 @@ app.get("/rss-feed", async (req, res) => {
                 /<img[^>]+src=["']([^"']+)["']/
               );
               imageUrl = contentMatch ? contentMatch[1] : null;
+            }
+
+            if (!imageUrl && entry.link) {
+              const linkHref =
+                typeof entry.link === "string"
+                  ? entry.link
+                  : entry.link.$?.href;
+              if (linkHref) {
+                const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
+                if (videoIdMatch) {
+                  imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
+                }
+              }
             }
 
             if (!imageUrl && entry.link?.$.href) {

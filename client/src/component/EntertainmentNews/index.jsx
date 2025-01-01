@@ -5,9 +5,22 @@ import QubicwebFeed from "../RssParser";
 
 const EntertainmentNews = ({ entertainments }) => {
   const { articles, loading, error } = QubicwebFeed();
-
-  const cyberArticles = articles.filter((article) => article.category === "Cybersecurity");
-
+  const includedCategories = [
+    "API Security News",
+    "Avast Threat Labs",
+    "Phylum Research",
+    // "Cofense Website",
+    "Compass Security Blog",
+    "CyberInsider",
+    "DataDrivenInvestor",
+    "HackerOne",
+    "Krebs on Security",
+    "MacRumors: Mac News and Rumors - All Stories",
+    "Industrial Cyber",
+  ];
+  const cyberArticles = articles.filter((article) =>
+    includedCategories.includes(article.category)
+  );
   return (
     <>
       {cyberArticles.slice(0, 4).map((item, i) => (

@@ -5,10 +5,41 @@ import { mostViewSort } from "../../utils/commonFunctions";
 import "./style.scss";
 import Slider from "../Slider";
 import QubicwebFeed from "../RssParser";
+import ModalVideo from "react-modal-video";
+import { useState } from "react";
+
 
 const PopularPosts = () => {
-  const { articles, loading, error } = QubicwebFeed();
-  const videoArticles = articles.filter((article) => article.category === "VideoNews");
+  const { articles, loading, videoArticles, error } = QubicwebFeed();
+
+  const updatedVideoArticles = videoArticles.map((item) => {
+    let updatedLink = item.link;
+    let videoId = null;
+
+    // Check if the link contains a YouTube video ID
+    if (updatedLink.includes("v=")) {
+      const videoIdMatch = updatedLink.match(/[?&]v=([^&]+)/);
+      if (videoIdMatch && videoIdMatch[1]) {
+        videoId = videoIdMatch[1];
+      }
+    }
+
+    return {
+      ...item,
+      link: updatedLink,
+      image: item.image || video1, // Fallback to default thumbnail
+      videoId,
+    };
+  });
+  const [vModal, setvModal] = useState(false);
+  const [currentVideoId, setCurrentVideoId] = useState(null);
+
+  const openModal = (videoId) => {
+    setCurrentVideoId(videoId);
+    setvModal(true);
+  };
+
+
   return (
     <div className="popular_carousel_area mb30 md-mt-30">
       <h2 className="widget-title">Popular Videos</h2>
@@ -29,7 +60,7 @@ const PopularPosts = () => {
             <div key={i} className="single_post type10 widgets_small mb15">
               <div className="post_img">
                 <div className="img_wrap">
-                  <Link to="/">
+                  <Link to="/" onClick={() => openModal(item.videoId)}>
                     <img src={item.image} style={{
                       width: "100px",
                       height: "57px",
@@ -37,7 +68,9 @@ const PopularPosts = () => {
                     }} alt="thubm" />
                   </Link>
                 </div>
-                <span className="tranding tranding_border">{item.id}</span>
+                <span className="tranding tranding_border">
+                  <FontAwesome name="play" />
+                </span>
               </div>
               <div className="single_post_text">
                 <h4>
@@ -60,6 +93,12 @@ const PopularPosts = () => {
         </div>
         {/*CAROUSEL END*/}
       </div>
+      <ModalVideo
+        channel="youtube"
+        isOpen={vModal}
+        videoId={currentVideoId}
+        onClose={() => setvModal(false)}
+      />
     </div>
   );
 };

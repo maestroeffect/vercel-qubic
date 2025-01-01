@@ -9,7 +9,7 @@ import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
 const TrendingNewsSlider = () => {
   const { articles, error } = QubicwebFeed();
 
-  const generalArticles = articles.filter((article) => article.category === "General");
+  const generalArticles = articles.filter((article) => article.category === "Engadget");
 
 
 
@@ -56,7 +56,7 @@ const TrendingNewsSlider = () => {
             </div>
             <div className="single_post_text">
               <div className="meta3">
-                <Link to="/">{item.category}</Link>
+                <Link to="/">{item.category.slice(0, 20)}</Link>
                 <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>

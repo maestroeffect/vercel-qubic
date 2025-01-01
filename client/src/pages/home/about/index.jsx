@@ -175,10 +175,6 @@ function About() {
             </div>
             <div className="col-md-6 col-lg-4">
               <WidgetTab />
-              <WidgetTrendingNews />
-
-              <MostShareWidget title="Most Share" />
-              <NewsLetter />
             </div>
           </div>
         </div>
