@@ -90,7 +90,7 @@ const MostShareWidget = ({ title, dark }) => {
                     <Link to="#">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to="/post1">
+                    <Link to={`/${item.slug}`}>
                       {item.title.slice(0, 50)}...
                     </Link>
                   </h4>
