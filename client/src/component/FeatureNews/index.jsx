@@ -71,7 +71,7 @@ const FeatureNews = ({ className }) => {
                     </div>
                     <div className="single_post_text">
                       <div className="meta5">
-                        <Link to="/">{item.category.slice(0, 10)}</Link>
+                        <Link to="/">{item.category.slice(0, 20)}</Link>
                         <Link to="/">{item.publishedDate}</Link>
                       </div>
                       <h4>

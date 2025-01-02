@@ -30,6 +30,17 @@
     color: $white;
   }
 
+  .trancarousel_area .trancarousel_item a {
+    color: $white;
+  }
+
+  .trancarousel_area .trancarousel_item {
+    opacity: 1;
+  }
+
+  .logo_area {
+    background: #000000 !important;
+  }
   .box.single_contact_box {
     background: #29333c;
   }
@@ -99,7 +110,7 @@
   /*DEFAULT POST TYPE*/
 
   .widget-title {
-    color: $white;
+    color: #f15a25;
   }
 
   .single_post {
@@ -171,6 +182,7 @@
             @extend %social1;
             opacity: 0.75;
             font-size: 14px;
+            color: $white !important;
           }
         }
       }
@@ -190,6 +202,10 @@
       color: $secondary_color;
       text-transform: uppercase;
     }
+  }
+
+  .viceo_posts_wrap {
+    background: #000000;
   }
 
   .single_post_text {
@@ -444,7 +460,7 @@
         &:last-child {
           margin-left: 20px;
           color: $white;
-          opacity: 0.75;
+          opacity: 1;
 
           &:before {
             position: absolute;
@@ -475,8 +491,8 @@
         z-index: 2;
         line-height: 17px;
         font-weight: 400;
-        color: $white;
-        opacity: 0.6;
+        color: #f15a25;
+        opacity: 1;
       }
     }
   }
@@ -539,6 +555,10 @@
         font-size: 15px;
       }
     }
+  }
+
+  .author_content a {
+    color: #f15a25;
   }
 
   /*TAGS*/
@@ -678,5 +698,17 @@
 
   .dark-theme .lang ul li ul {
     background: #000000;
+  }
+
+  .footer_area1 {
+    background: #3d1608 !important;
+  }
+
+  .fourth_bg {
+    background: #3d1608;
+  }
+
+  .mix_carousel {
+    background: #3d1608;
   }
 }

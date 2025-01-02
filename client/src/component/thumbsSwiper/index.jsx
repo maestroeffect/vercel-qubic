@@ -53,7 +53,7 @@ function ThumbsSwiper() {
               </div>
               <div className="single_post_text">
                 <div className="meta meta_separator1">
-                  <Link to="#">{item.category.slice(0, 10)}</Link>
+                  <Link to="#">{item.category}</Link>
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>

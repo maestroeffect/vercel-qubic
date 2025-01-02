@@ -13,6 +13,9 @@ import MostShareWidget from "../../component/MostShareWidget";
 import NewsLetter from "../../component/NewsLetter";
 import CategoriesWidget from "../../component/CategoriesWidget";
 import { entertainments } from "../../data/entertainments";
+import { Link } from "react-router-dom";
+import banner2 from "../../assets/img/banner/banner-2.jpg";
+import SearchBar from "../../component/SearchBar";
 
 
 function Home() {
@@ -63,9 +66,13 @@ function Home() {
                 <div className="col-lg-12">
                   <NewsLetter />
                 </div>
-                {/* <div className="col-lg-12">
-                  <CategoriesWidget />
-                </div> */}
+                <div className="col-lg-12">
+                  <div className="banner2 mb30">
+                    <Link to="/">
+                      <img src={banner2} alt="thumb" />
+                    </Link>
+                  </div>
+                </div>
 
               </div>
             </div>

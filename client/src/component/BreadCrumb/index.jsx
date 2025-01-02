@@ -10,7 +10,7 @@ const BreadCrumb = (props) => {
         <div className="row">
           <div className="col-12">
             <div className="bridcrumb">
-              <Link to="/">Home</Link> / {title}
+              <Link to="/">The Aggregator</Link> / {title}
             </div>
           </div>
         </div>

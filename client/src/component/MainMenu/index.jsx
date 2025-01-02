@@ -12,6 +12,7 @@ import useWeatherAndDate from "../WeatherDate";
 import ProtoTypes from "prop-types";
 import { useTheme } from '../../context/ThemeContext';
 import { useTheme as useMuiTheme } from "@mui/material/styles"; // Import MUI's useTheme hook
+import SearchBar from '../SearchBar';
 
 
 const menus = [
@@ -390,30 +391,23 @@ const MainMenu = ({ className }) => {
               <div className="col-lg-4 align-self-center">
                 <div className="menu_right d-flex align-items-center justify-content-end">
                   <div className="users_area d-flex align-items-center">
-                    <ul className="inline d-flex align-items-center mb-0">
+                    <SearchBar />
+                    {/* <ul className="inline d-flex align-items-center mb-0">
                       <li
                         className="search_btn me-3"
                         onClick={() => setSearchShow(!searchShow)}
                       >
                         <FontAwesome name="search" />
                       </li>
-                      <li>
-                        <FontAwesome name="user-circle" />
-                      </li>
-                    </ul>
+                    </ul> */}
                   </div>
                   <div className="lang d-none d-xl-block ms-4">
                     <ul className="d-flex align-items-center">
                       <li>
                         <Link to="/" className="d-flex align-items-center">
-                          <span className="mr-2">English</span>
-                          <FontAwesome
-                            name="angle-down"
-                            className="ms-2"
-                          />{" "}
-                          {/* Add spacing */}
+                          <span className="">English</span>
                         </Link>
-                        <ul>
+                        {/* <ul>
                           <li>
                             <Link to="/">Yoruba</Link>
                           </li>
@@ -429,7 +423,7 @@ const MainMenu = ({ className }) => {
                           <li>
                             <Link to="/">Spanish</Link>
                           </li>
-                        </ul>
+                        </ul> */}
                       </li>
                     </ul>
                   </div>

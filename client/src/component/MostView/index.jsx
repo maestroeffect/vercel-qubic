@@ -40,7 +40,7 @@ const MostView = ({ no_margin, title, dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category.slice(0, 10)}</Link>
+                    <Link to="/">{item.category.slice(0, 20)}</Link>
                     <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
