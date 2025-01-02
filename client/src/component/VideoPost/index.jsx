@@ -8,7 +8,7 @@ import PopularPosts from "../PopularPosts";
 import CategoriesWidget from "../CategoriesWidget";
 import QubicwebFeed from "../RssParser";
 
-const VideoPost = ({ className, dark }) => {
+const VideoPost = ({ className }) => {
   const { articles, videoArticles, loading, error } = QubicwebFeed();
 
 
@@ -60,7 +60,8 @@ const VideoPost = ({ className, dark }) => {
           </div>
         </div>
         <div className="space-50" />
-        <div className={`viceo_posts_wrap ${dark ? "primay_bg" : ""}`}>
+        <div className={`viceo_posts_wrap`}>
+          {/* <div className={`viceo_posts_wrap ${dark ? "primay_bg" : ""}`}> */}
           <div className="row">
             {videoArticles.length > 0 ? (
               updatedVideoArticles.slice(0, 1).map((article, index) => (
@@ -85,9 +86,13 @@ const VideoPost = ({ className, dark }) => {
                       </p>
                     </div>
                     <div
-                      className={`single_post_text padding30 ${dark ? "dark-2" : "fourth_bg"
-                        }`}
+                      className={`single_post_text padding30`}
                     >
+
+                      {/* <div
+                        className={`single_post_text padding30 ${dark ? "dark-2" : "fourth_bg"
+                          }`}
+                      > */}
                       <div className="meta3">
                         <Link to="/">{article.category}</Link>
                         <Link to="/">{article.publishedDate}</Link>

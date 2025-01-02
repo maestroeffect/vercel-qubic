@@ -32,9 +32,14 @@ const videoSources = [
   "https://www.youtube.com/channel/UC0ArlFuFYMpEewyRBzdLHiw",
   "https://www.youtube.com/channel/UCddiUEpeqJcYeBxX1IVBKvQ",
 ];
+
+const blogSources = [
+  "https://www.sheriffdeputiesltd.com/"
+];
 const QubicwebFeed = () => {
   const [articles, setArticles] = useState([]); // Articles without video sources
   const [videoArticles, setVideoArticles] = useState([]); // Articles with video sources
+  const [blogArticles, setBlogArticles] = useState([]); // Articles with blog
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null);
 
@@ -43,13 +48,17 @@ const QubicwebFeed = () => {
       setLoading(true); // Start loading
       try {
         // Fetch data from the server
-        const response = await fetch("https://nodejs.reasonwithangel.com/rss-feed");
+        const response = await fetch("http://localhost:5000/rss-feed");
+
+        // const response = await fetch("https://nodejs.reasonwithangel.com/rss-feed");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const feedData = await response.json();
+        console.log("Feed data: ", feedData);
+
 
         if (feedData.items && Array.isArray(feedData.items)) {
           const parsedArticles = feedData.items
@@ -58,7 +67,8 @@ const QubicwebFeed = () => {
               const sourceUrl = sourceObject.title; // Extract the `id` property
               const sourceUrl2 = sourceObject.id; // Extract the `id` property
               const isVideo = videoSources.includes(sourceUrl2); // Check if the source is a video source
-
+              const isBlog = blogSources.includes(sourceUrl2); // Check if the source is a blog source
+              console.log("Source URL:", sourceUrl2, "isVideo:", isVideo, "isBlog:", isBlog);
               return {
                 title: item.title && typeof item.title === "object" ? item.title._ : item.title,
                 link: item.link || "No link available",
@@ -71,12 +81,14 @@ const QubicwebFeed = () => {
                 source: sourceObject,
                 category: sourceUrl || "Uncategorized", // Append category based on source
                 isVideo, // Mark if it's a video article
+                isBlog, // Mark if it's a blog article
               };
             });
 
           // Separate articles with video sources and articles without video sources
           const filteredArticles = parsedArticles.filter((item) => item.image !== "No image available" && !item.isVideo);
           const videoArticlesList = parsedArticles.filter((item) => item.isVideo);
+          const blogArticlesList = parsedArticles.filter((item) => item.isBlog);
 
           // Add slug to each article and shuffle (optional)
           const articlesWithSlugs = filteredArticles.map((article) => ({
@@ -89,8 +101,14 @@ const QubicwebFeed = () => {
             slug: generateSlug(article.title),
           }));
 
+          const blogArticlesWithSlugs = blogArticlesList.map((article) => ({
+            ...article,
+            slug: generateSlug(article.title),
+          }));
+
           setArticles(shuffleArray(articlesWithSlugs));
           setVideoArticles(videoArticlesWithSlugs);
+          setBlogArticles(blogArticlesWithSlugs);
         } else {
           throw new Error("Unexpected feed structure: items not found or not an array.");
         }
@@ -105,7 +123,7 @@ const QubicwebFeed = () => {
     fetchFeed();
   }, []);
 
-  return { articles, videoArticles, loading, error }; // Return both articles and videoArticles
+  return { articles, videoArticles, blogArticles, loading, error }; // Return both articles and videoArticles
 };
 
 export default QubicwebFeed;

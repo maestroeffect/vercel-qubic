@@ -12,7 +12,9 @@ import NewsLetter from '../NewsLetter';
 import QubicwebFeed from '../RssParser';
 
 const Blog = () => {
-    const { articles } = QubicwebFeed();
+    const { blogArticles } = QubicwebFeed();
+    // console.log(blogArticles);
+
     return (
         <div className="archives padding-top-30">
             <div className="container">
@@ -32,7 +34,7 @@ const Blog = () => {
                         </div>
                         <div className="about_posts_tab">
                             <div className="row">
-                                {articles.slice(0, 8).map((item) => (
+                                {blogArticles.slice(0, 8).map((item) => (
                                     <div className="col-lg-12 mb-3" key={item.slug}>
                                         <div className="row g-3 align-items-start  border-top border-bottom">
                                             {/* Image Section */}
@@ -74,10 +76,18 @@ const Blog = () => {
                                                         </span>
                                                     </div>
                                                     <h3 className='py-1'>
-                                                        <Link to={`/${item.slug}`}>{item.title}...</Link>
+                                                        <Link to={item.link}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                window.open(item.link, "_blank", "noopener,noreferrer");
+                                                            }}
+                                                        >{item.title}...</Link>
                                                     </h3>
                                                     <p className="post-p">{item.contentSnippet.slice(0, 130)}...</p>
-                                                    <Link to={item.link} className="readmore">
+                                                    <Link to={item.link} onClick={(e) => {
+                                                        e.preventDefault();
+                                                        window.open(item.link, "_blank", "noopener,noreferrer");
+                                                    }} className="readmore">
                                                         Read More
                                                     </Link>
                                                 </div>
