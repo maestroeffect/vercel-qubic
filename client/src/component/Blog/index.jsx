@@ -81,7 +81,7 @@ const Blog = () => {
                                                                 e.preventDefault();
                                                                 window.open(item.link, "_blank", "noopener,noreferrer");
                                                             }}
-                                                        >{item.title}...</Link>
+                                                        >{item.title.slice(0, 60)}...</Link>
                                                     </h3>
                                                     <p className="post-p">{item.contentSnippet.slice(0, 130)}...</p>
                                                     <Link to={item.link} onClick={(e) => {
@@ -144,7 +144,7 @@ const Blog = () => {
                     </div>
                     <div className="col-md-6 col-lg-3">
                         <WidgetTrendingNews />
-                        <MostShareWidget title="Most Share" />
+                        {/* <MostShareWidget title="Most Share" /> */}
                         {/* <NewsLetter /> */}
                     </div>
                 </div>
