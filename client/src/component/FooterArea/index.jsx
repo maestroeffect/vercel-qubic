@@ -76,9 +76,9 @@ const FooterArea = ({ className }) => {
         <div className="border_white" />
         <div className="space-40" />
         <div className="row justify-content-center">
-          <div className="col-lg-8">
+          <div className="col-lg-12">
             <div className="row">
-              <div className="col-sm-6 col-lg">
+              <div className="col-sm-6 col-lg-12">
                 <div className="single_footer_nav ">
                   <FooterNewsCategories />
                 </div>
@@ -89,48 +89,10 @@ const FooterArea = ({ className }) => {
             <div className="border_white" />
             <div className="space-40" />
             <div className="row">
-              <div className="col-sm-6 col-lg-5">
-                <div className="single_footer_nav border_white_right">
-                  <h3 className="widget-title2">Opinion</h3>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <ul>
-                        <li>
-                          <Link to="/">Today’s Opinion</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Op-Ed Contributing</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Contributing Writers</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Business News</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Collections</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Today’s Paper</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Saturday Review</Link>
-                        </li>
-                        <li>
-                          <Link to="/">Product Review</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-7">
-                <TwitterFeed />
+              <div className="col-sm-6 col-lg-12">
+                <FooterMoreNews />
               </div>
             </div>
-          </div>
-          <div className="col-lg-4">
-            <FooterMoreNews />
           </div>
         </div>
       </div>

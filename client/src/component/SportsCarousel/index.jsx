@@ -35,7 +35,7 @@ const SportsCarousel = ({ dark }) => {
             rows: 6,
           }}
         >
-          {mostViewSort(techArticles).slice(0, 4).map((item, i) => (
+          {mostViewSort(techArticles).slice(0, 5).map((item, i) => (
             <div key={i} className="single_post2_carousel">
               <div className="single_post widgets_small">
                 <div className="post_img">
@@ -63,7 +63,10 @@ const SportsCarousel = ({ dark }) => {
                     <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to="/post1">{item.title.slice(0, 50)}...</Link>
+                    <Link to={item.link} onClick={(e) => {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }}>{item.title.slice(0, 50)}...</Link>
                   </h4>
                 </div>
               </div>

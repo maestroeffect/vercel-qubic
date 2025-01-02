@@ -28,7 +28,10 @@ const EntertainmentNews = ({ entertainments }) => {
           <div className="single_post post_type3 mb30">
             <div className="post_img">
               <div className="img_wrap">
-                <Link to="/">
+                <Link to={item.link} onClick={(e) => {
+                  e.preventDefault();
+                  window.open(item.link, "_blank", "noopener,noreferrer");
+                }}>
                   <img src={item.image} className="fixed-dimensions" alt="thumb" />
                 </Link>
               </div>
@@ -39,7 +42,10 @@ const EntertainmentNews = ({ entertainments }) => {
                 <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>
-                <Link to={`/${item.slug}`}>{item.title}</Link>
+                <Link to={item.link} onClick={(e) => {
+                  e.preventDefault();
+                  window.open(item.link, "_blank", "noopener,noreferrer");
+                }}>{item.title}</Link>
               </h4>
               <div className="space-10" />
               <p className="post-p">{item.contentSnippet.slice(0, 150)}...</p>

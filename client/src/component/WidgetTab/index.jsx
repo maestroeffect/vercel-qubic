@@ -33,7 +33,10 @@ const WidgetTabPane = ({ articles, a_id, id, dark }) => {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link to={`/${item.slug}`}>
+                  <Link to={item.link} onClick={(e) => {
+                    e.preventDefault();
+                    window.open(item.link, "_blank", "noopener,noreferrer");
+                  }}>
                     {item.title.slice(0, 50)}...
                   </Link>
                 </h4>

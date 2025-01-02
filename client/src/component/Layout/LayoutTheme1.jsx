@@ -17,8 +17,11 @@ const LayoutTheme1 = ({ children }) => {
       <TopBar className={darkMode ? "dark-theme" : "white_bg"} />
       <div className={`border_${darkMode ? "white" : "black"}`} />
       {/* Logo and Main Menu in a single row */}
+      <LogoArea className="white_bg" />
+
       <div className={`sticky-header ${darkMode ? "dark-theme" : ""}`}>
-        <div className="container">
+        <MainMenu />
+        {/* <div className="container">
           <div className="d-flex align-items-center justify-content-between">
             <div className="flex-shrink-0" style={{ maxWidth: "250px" }}>
               <LogoArea className={darkMode ? "dark_bg" : "white_bg"} />
@@ -27,7 +30,7 @@ const LayoutTheme1 = ({ children }) => {
               <MainMenu dark={darkMode} toggleDarkMode={toggleDarkMode} />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Outlet />

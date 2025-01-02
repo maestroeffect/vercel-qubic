@@ -37,20 +37,20 @@ const news = [
 const FooterMoreNews = () => {
   const { articles, loading, error } = QubicwebFeed();
   return (
-    <div className="extra_newss border_white_left pl-4">
+    <div className="extra_newss">
       <h3 className="widget-title2">More news</h3>
-      {articles.slice(0, 5).map((item, i) => (
+      {articles.slice(0, 3).map((item, i) => (
         <div key={i} className="single_extra_news border_white_bottom">
           <p>
-            {item.category} <span> / {item.date}</span>
+            {item.category} <span> / {item.publishedDate}</span>
           </p>
-          <Link to="/">{item.title}</Link>
+          <Link to="/">{item.title.slice(0, 150)}...</Link>
           <span className="news_counter">{i + 1}</span>
         </div>
       ))}
-      <div className="space-40" />
-      <div className="border_white_bottom" />
-      <div className="space-40" />
+      {/* <div className="space-40" /> */}
+      {/* <div className="border_white_bottom" /> */}
+      {/* <div className="space-40" />
       <div className="footer_contact">
         <h3 className="widget-title2">Qubicweb news services</h3>
         <div className="single_fcontact">
@@ -71,7 +71,7 @@ const FooterMoreNews = () => {
           </div>
           <Link to="/">Contact Qubicweb news</Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

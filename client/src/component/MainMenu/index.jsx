@@ -17,7 +17,7 @@ import { useTheme as useMuiTheme } from "@mui/material/styles"; // Import MUI's 
 const menus = [
   {
     id: 1,
-    linkText: "Home",
+    linkText: "The Aggregator",
     child: false,
     // icon: "angle-down",
   },

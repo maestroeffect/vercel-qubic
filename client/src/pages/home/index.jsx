@@ -28,7 +28,7 @@ function Home() {
           </div>
           <div className="col-md-12 col-lg-4">
             <MostView />
-            <FollowUs title="Follow Us" />
+            {/* <FollowUs title="Follow Us" /> */}
           </div>
         </div>
       </div>
@@ -63,9 +63,9 @@ function Home() {
                 <div className="col-lg-12">
                   <NewsLetter />
                 </div>
-                <div className="col-lg-12">
+                {/* <div className="col-lg-12">
                   <CategoriesWidget />
-                </div>
+                </div> */}
 
               </div>
             </div>

@@ -89,11 +89,14 @@ const VideoPost = ({ className, dark }) => {
                         }`}
                     >
                       <div className="meta3">
-                        <Link to="/">TECHNOLOGY</Link>
+                        <Link to="/">{article.category}</Link>
                         <Link to="/">{article.publishedDate}</Link>
                       </div>
                       <h4>
-                        <Link to="/post1">{article.title}</Link>
+                        <Link to={article.link} onClick={(e) => {
+                          e.preventDefault();
+                          window.open(item.link, "_blank", "noopener,noreferrer");
+                        }}>{article.title}</Link>
                       </h4>
                     </div>
                   </div>

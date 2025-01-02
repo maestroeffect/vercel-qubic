@@ -43,7 +43,7 @@ const PostCarousel = ({ className }) => {
                       </div>
                       <div className="single_post_text">
                         <h4>
-                          <Link to={`/${item.slug}`}>{item.title.slice(0, 50)}...</Link>
+                          <Link to={item.link}>{item.title.slice(0, 50)}...</Link>
                         </h4>
                         <p>{item.title.slice(0, 25)}...</p>
                       </div>

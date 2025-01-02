@@ -60,7 +60,10 @@ const TrendingNewsSlider = () => {
                 <Link to="/">{item.publishedDate}</Link>
               </div>
               <h4>
-                <Link to={`/${item.slug}`}>{item.title}</Link>
+                <Link to={item.link} onClick={(e) => {
+                  e.preventDefault();
+                  window.open(item.link, "_blank", "noopener,noreferrer");
+                }}>{item.title}</Link>
               </h4>
               <div className="space-10" />
               <p className="post-p">{item?.contentSnippet.slice(0, 125) || "Lorem ipsum"}...</p>

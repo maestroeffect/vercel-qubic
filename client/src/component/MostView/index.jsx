@@ -24,7 +24,7 @@ const MostView = ({ no_margin, title, dark }) => {
           }}
           slidesPerView={1}
           grid={{
-            rows: 6,
+            rows: 8,
           }}
         >
           {mostViewSort(articles).map((item, i) => (
@@ -44,7 +44,10 @@ const MostView = ({ no_margin, title, dark }) => {
                     <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to={`/${item.slug}`}>{item.title.slice(0, 45)}...</Link>
+                    <Link to={item.link} onClick={(e) => {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }}>{item.title.slice(0, 45)}...</Link>
                   </h4>
                 </div>
                 <div className="type8_count">

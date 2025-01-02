@@ -49,7 +49,10 @@ const TrendingNews = ({ dark }) => {
                     <Link to="/">{item.publishedDate || "KAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={`/${item.slug}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    <Link to={item.link} onClick={(e) => {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
                   </h4>
                 </div>
               </div>
@@ -84,7 +87,10 @@ const TrendingNews = ({ dark }) => {
                     <Link to="/">{item.publishedDate || "kAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={`/${item.slug}`}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    <Link to={item.link} onClick={(e) => {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
                   </h4>
                 </div>
               </div>
