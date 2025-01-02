@@ -24,7 +24,7 @@ const MostView = ({ no_margin, title, dark }) => {
           }}
           slidesPerView={1}
           grid={{
-            rows: 8,
+            rows: 4,
           }}
         >
           {mostViewSort(articles).map((item, i) => (

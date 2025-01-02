@@ -15,20 +15,20 @@ const LogoArea = ({ className }) => {
       <div className={`logo_area ${className ? className : ""}`}>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 align-self-center">
+            <div className=" align-self-center">
               <div className="logo">
                 <Link to="/">
                   <img src={darkMode ? logoDark : logo2} alt="logo" />
                 </Link>
               </div>
             </div>
-            <div className="col-lg-6 align-self-center">
+            {/* <div className="col-lg-6 align-self-center">
               <div className="banner1">
                 <Link to="#">
                   <img src={tpBanner} alt="banner" />
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

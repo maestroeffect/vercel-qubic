@@ -75,26 +75,6 @@ const FooterArea = ({ className }) => {
         </div>
         <div className="border_white" />
         <div className="space-40" />
-        <div className="row justify-content-center">
-          <div className="col-lg-12">
-            <div className="row">
-              <div className="col-sm-6 col-lg-12">
-                <div className="single_footer_nav ">
-                  <FooterNewsCategories />
-                </div>
-              </div>
-
-            </div>
-            <div className="space-40" />
-            <div className="border_white" />
-            <div className="space-40" />
-            <div className="row">
-              <div className="col-sm-6 col-lg-12">
-                <FooterMoreNews />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <FooterCopyright />
     </div>

@@ -46,7 +46,7 @@ const TopBar = ({ className, dark, toggleDarkMode }) => {
                       <p>
                         <Link to={article.link} onClick={(e) => {
                           e.preventDefault();
-                          window.open(item.link, "_blank", "noopener,noreferrer");
+                          window.open(article.link, "_blank", "noopener,noreferrer");
                         }}>{article.title}</Link>
                       </p>
                     </div>

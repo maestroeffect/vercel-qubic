@@ -90,7 +90,7 @@ const TrendingNews = ({ dark }) => {
                     <Link to={item.link} onClick={(e) => {
                       e.preventDefault();
                       window.open(item.link, "_blank", "noopener,noreferrer");
-                    }}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    }}>{item.title.length > 50 ? `${item.title.substring(0, 45)}...` : item.title}</Link>
                   </h4>
                 </div>
               </div>

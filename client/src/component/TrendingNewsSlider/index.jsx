@@ -65,7 +65,7 @@ const TrendingNewsSlider = () => {
                   window.open(item.link, "_blank", "noopener,noreferrer");
                 }}>{item.title}</Link>
               </h4>
-              <div className="space-10" />
+              {/* <div className="space-5" /> */}
               <p className="post-p">{item?.contentSnippet.slice(0, 125) || "Lorem ipsum"}...</p>
             </div>
           </div>

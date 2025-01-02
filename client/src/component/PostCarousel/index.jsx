@@ -42,10 +42,17 @@ const PostCarousel = ({ className }) => {
                         </div>
                       </div>
                       <div className="single_post_text">
+                        <div className="meta2">
+                          <Link to="/">{item.category.slice(0, 20)}</Link>
+                          <Link to="/">{item.publishedDate}</Link>
+                        </div>
+                      </div>
+
+                      <div className="single_post_text">
                         <h4>
-                          <Link to={item.link}>{item.title.slice(0, 50)}...</Link>
+                          <Link to={item.link}>{item.title.slice(0, 25)}...</Link>
                         </h4>
-                        <p>{item.title.slice(0, 25)}...</p>
+                        <p>{item.contentSnippet.slice(0, 25)}...</p>
                       </div>
                     </div>
                   ))}

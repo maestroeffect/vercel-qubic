@@ -333,7 +333,7 @@ body {
 }
 
 .logo {
-  max-width: 150px; //change to 250px;
+  max-width: 200px; //change to 250px;
 }
 
 .banner {
@@ -1214,7 +1214,7 @@ span.tranding {
 
           &:before {
             position: absolute;
-            content: "/";
+            content: "--";
             height: 20px;
             width: 10px;
             left: -18px;

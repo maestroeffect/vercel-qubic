@@ -31,6 +31,11 @@ function Home() {
           </div>
           <div className="col-md-12 col-lg-4">
             <MostView />
+            <div className="banner2 mb30">
+              <Link to="/">
+                <img src={banner2} alt="thumb" />
+              </Link>
+            </div>
             {/* <FollowUs title="Follow Us" /> */}
           </div>
         </div>

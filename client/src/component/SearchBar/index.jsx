@@ -12,7 +12,7 @@ const SearchBar = () => {
         <Paper
             component="form"
             sx={{
-                p: '2px 4px', display: 'flex', alignItems: 'center', width: 400,
+                p: '2px 4px', display: 'flex', alignItems: 'center', width: 200,
                 borderBottom: '1px solid #ccc',
             }}
             elevation={0}
@@ -20,8 +20,8 @@ const SearchBar = () => {
         >
 
             <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search News Feeds"
+                sx={{ ml: 0, flex: 1 }}
+                placeholder="Search Feeds"
                 inputProps={{ 'aria-label': 'search news feeds' }}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
