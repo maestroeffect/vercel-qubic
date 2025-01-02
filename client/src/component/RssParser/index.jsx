@@ -15,7 +15,7 @@ const generateSlug = (title) =>
 // Function to format the date in "Month Day, Year" format
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  const options = { year: "short", month: "short", day: "numeric" };
+  const options = { year: "numeric", month: "short", day: "numeric" };
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
 
