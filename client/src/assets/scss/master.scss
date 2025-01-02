@@ -45,8 +45,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;700;800;900&display=swap");
 
 @font-face {
-  font-family: "Made Coachella";
-  src: url("../fonts/MADE-Coachella-Light-PERSONAL-USE.otf") format("truetype");
+  font-family: "HK Grotesk";
+  src: url("../fonts/HKGrotesk-SemiBold.otf") format("truetype");
   font-weight: normal;
   font-size: normal;
 }
@@ -1510,7 +1510,7 @@ span.tranding {
 
         &:before {
           position: absolute;
-          content: "/";
+          content: "";
           height: 20px;
           width: 10px;
           left: -18px;
@@ -1545,7 +1545,7 @@ span.tranding {
 
         &:before {
           position: absolute;
-          content: "/";
+          content: "";
           height: 20px;
           width: 10px;
           left: -18px;
@@ -1583,7 +1583,7 @@ span.tranding {
 
         &:before {
           position: absolute;
-          content: "/";
+          content: "";
           height: 20px;
           width: 10px;
           left: -18px;
@@ -2513,7 +2513,7 @@ a.cbtn3 {
 
           &:before {
             position: absolute;
-            content: "/";
+            content: "";
             height: 20px;
             width: 10px;
             left: -18px;

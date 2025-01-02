@@ -32,9 +32,9 @@ function Home() {
           <div className="col-md-12 col-lg-4">
             <MostView />
             <div className="banner2 mb30">
-              <Link to="/">
+              {/* <Link to="/">
                 <img src={banner2} alt="thumb" />
-              </Link>
+              </Link> */}
             </div>
             {/* <FollowUs title="Follow Us" /> */}
           </div>
@@ -73,9 +73,9 @@ function Home() {
                 </div>
                 <div className="col-lg-12">
                   <div className="banner2 mb30">
-                    <Link to="/">
+                    {/* <Link to="/">
                       <img src={banner2} alt="thumb" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
 

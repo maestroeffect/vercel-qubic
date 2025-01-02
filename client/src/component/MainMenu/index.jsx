@@ -391,23 +391,23 @@ const MainMenu = ({ className }) => {
               <div className="col-lg-4 align-self-center">
                 <div className="menu_right d-flex align-items-center justify-content-end">
                   <div className="users_area d-flex align-items-center">
-                    <SearchBar />
-                    {/* <ul className="inline d-flex align-items-center mb-0">
+                    {/* <SearchBar /> */}
+                    <ul className="inline d-flex align-items-center mb-0">
                       <li
                         className="search_btn me-3"
                         onClick={() => setSearchShow(!searchShow)}
                       >
                         <FontAwesome name="search" />
                       </li>
-                    </ul> */}
+                    </ul>
                   </div>
-                  <div className="lang d-none d-xl-block ms-4">
+                  {/* <div className="lang d-none d-xl-block ms-4">
                     <ul className="d-flex align-items-center">
                       <li>
                         <Link to="/" className="d-flex align-items-center">
                           <span className="">English</span>
                         </Link>
-                        {/* <ul>
+                        <ul>
                           <li>
                             <Link to="/">Yoruba</Link>
                           </li>
@@ -423,10 +423,10 @@ const MainMenu = ({ className }) => {
                           <li>
                             <Link to="/">Spanish</Link>
                           </li>
-                        </ul> */}
+                        </ul>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   <div className="dark-mode-switch ms-4 mt-2 pl-4">
                     <FormGroup>
                       <FormControlLabel
@@ -436,7 +436,7 @@ const MainMenu = ({ className }) => {
                             onChange={toggleDarkMode}
                           />
                         }
-
+                        label={darkMode ? 'Dark Mode' : 'Light Mode'}
                       />
                     </FormGroup>
                   </div>

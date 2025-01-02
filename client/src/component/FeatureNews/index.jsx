@@ -78,7 +78,7 @@ const FeatureNews = ({ className }) => {
                         <Link to={item.link} onClick={(e) => {
                           e.preventDefault();
                           window.open(item.link, "_blank", "noopener,noreferrer");
-                        }}>{item.title.slice(0, 70)}...</Link>
+                        }}>{item.title.slice(0, 50)}...</Link>
                       </h4>
                     </div>
                   </div>

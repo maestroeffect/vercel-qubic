@@ -50,7 +50,10 @@ const PostCarousel = ({ className }) => {
 
                       <div className="single_post_text">
                         <h4>
-                          <Link to={item.link}>{item.title.slice(0, 25)}...</Link>
+                          <Link to={item.link} onClick={(e) => {
+                            e.preventDefault();
+                            window.open(item.link, "_blank", "noopener,noreferrer");
+                          }}>{item.title.slice(0, 25)}...</Link>
                         </h4>
                         <p>{item.contentSnippet.slice(0, 25)}...</p>
                       </div>

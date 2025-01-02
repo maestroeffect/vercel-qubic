@@ -15,7 +15,7 @@ const LogoArea = ({ className }) => {
       <div className={`logo_area ${className ? className : ""}`}>
         <div className="container">
           <div className="row">
-            <div className=" align-self-center">
+            <div className="align-self-center">
               <div className="logo">
                 <Link to="/">
                   <img src={darkMode ? logoDark : logo2} alt="logo" />
