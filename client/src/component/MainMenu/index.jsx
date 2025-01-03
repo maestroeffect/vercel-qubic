@@ -18,30 +18,36 @@ import SearchBar from '../SearchBar';
 const menus = [
   {
     id: 1,
-    linkText: "The Aggregator",
+    linkText: "Digital Brief",
     child: false,
     // icon: "angle-down",
   },
   {
     id: 2,
+    linkText: "Cybershield",
+    child: false,
+    link: "/cybershield",
+    // icon: "angle-down",
+  },
+  {
+    id: 3,
     linkText: "About",
     child: false,
     link: "/about",
     // icon: "angle-down",
   },
   {
-    id: 3,
-    linkText: "Cybershield",
-    child: false,
-    link: "/cybershield",
-    // icon: "angle-down",
-  },
-
-  {
     id: 4,
     linkText: "Blog",
     child: false,
     link: "/blog",
+    // icon: "angle-down",
+  },
+  {
+    id: 5,
+    linkText: "Feed Directory",
+    child: false,
+    link: "/feedDirectory",
     // icon: "angle-down",
   },
 
@@ -322,7 +328,7 @@ const MainMenu = ({ className }) => {
           <FontAwesome name="chevron-double-up" />
         </Link>
         <div className="main-nav clearfix is-ts-sticky">
-          <div className="container">
+          <div className="container p-0">
             <div className="row justify-content-between">
               <nav className="navbar navbar-expand-lg col-lg-8 align-self-center">
                 <div className="site-nav-inner">
@@ -437,6 +443,12 @@ const MainMenu = ({ className }) => {
                           />
                         }
                         label={darkMode ? 'Dark Mode' : 'Light Mode'}
+                        sx={{
+                          '& .MuiFormControlLabel-label': {
+                            fontSize: '0.75rem', // Adjust the font size here
+                            marginLeft: '8px',  // Optional spacing adjustment
+                          },
+                        }}
                       />
                     </FormGroup>
                   </div>

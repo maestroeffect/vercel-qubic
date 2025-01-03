@@ -711,4 +711,18 @@
   .mix_carousel {
     background: #3d1608;
   }
+
+  .copyright {
+    background: #000000 !important;
+    margin-top: 30px;
+    padding: 15px 0;
+
+    p {
+      color: $white !important;
+    }
+
+    ul a {
+      color: $white !important;
+    }
+  }
 }

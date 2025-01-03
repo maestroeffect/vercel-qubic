@@ -19,13 +19,15 @@ const LayoutTheme1 = ({ children }) => {
       {/* Logo and Main Menu in a single row */}
 
       <div className={`sticky-header ${darkMode ? "dark-theme" : ""}`}>
-        <div className="container">
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="flex-shrink-0" >
-              <LogoArea className={darkMode ? "dark_bg" : "white_bg"} />
-            </div>
-            <div className="flex-grow-1 d-flex justify-content-end">
-              <MainMenu dark={darkMode} toggleDarkMode={toggleDarkMode} />
+        <div className="row">
+          <div className="container">
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="col-lg-3 p-0 m-0" >
+                <LogoArea className={darkMode ? "dark_bg" : "white_bg"} />
+              </div>
+              <div className="col-lg-9 p-0 flex-grow-1 justify-content-end">
+                <MainMenu dark={darkMode} toggleDarkMode={toggleDarkMode} />
+              </div>
             </div>
           </div>
         </div>

@@ -6,8 +6,7 @@ import QubicwebFeed from "../RssParser";
 
 const WidgetTrendingNews = ({ dark }) => {
   const { articles, loading, error } = QubicwebFeed();
-  const generateSlug = (title) =>
-    title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -21,7 +20,7 @@ const WidgetTrendingNews = ({ dark }) => {
   }
 
   // Get the first article for the main display
-  const mainArticle = articles[0];
+  // const mainArticle = articles[0];
   // console.log(mainArticle);
 
   return (
@@ -29,42 +28,46 @@ const WidgetTrendingNews = ({ dark }) => {
       <h2 className="widget-title">Trending News</h2>
 
       {/* Main Article */}
-      <div className="single_post post_type3">
-        <div className="post_img">
-          <div className="img_wrap">
-            <img
-              src={mainArticle?.image || ""}
-              alt="Main Article"
-              style={{ objectFit: "cover", width: "350px", height: "250px" }}
+      {articles.slice(0, 2).map((item, i) => (
+        <div key={i} className="single_post post_type3">
+          <div className="post_img">
+            <div className="img_wrap">
+              <img
+                src={item?.image || ""}
+                alt="Main Article"
+                style={{ objectFit: "cover", width: "350px", height: "250px" }}
 
-            />
+              />
+            </div>
+            <span className="tranding">
+              <FontAwesome name="bolt" />
+            </span>
           </div>
-          <span className="tranding">
-            <FontAwesome name="bolt" />
-          </span>
-        </div>
-        <div className="single_post_text">
-          <div className="meta3">
-            <Link to="/">{mainArticle.category || "Uncategorized"}</Link>
-            <Link to="/">{mainArticle.publishedDate || "Unknown Date"}</Link>
+          <div className="single_post_text">
+            <div className="meta3">
+              <Link to="/">{item.category || "Uncategorized"}</Link>
+              <Link to="/">{item.publishedDate || "Unknown Date"}</Link>
+            </div>
+            <h4>
+              <Link to={item.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(item.link, "_blank", "noopener,noreferrer");
+                }}>{item.title.slice(0, 45) || "No Title Available"}...</Link>
+            </h4>
+            <div className="space-10" />
+            <p className="post-p">
+              {item.contentSnippet.slice(0, 100) || "No description available."}...
+            </p>
           </div>
-          <h4>
-            <Link to={`/${generateSlug(mainArticle.title)}`}>{mainArticle.title || "No Title Available"}</Link>
-          </h4>
-          <div className="space-10" />
-          <p className="post-p">
-            {mainArticle.contentSnippet.slice(0, 100) || "No description available."}...
-          </p>
+          <div className="space-15" />
+          {dark ? <div className="border_white" /> : <div className="border_black" />}
+          <div className="space-30" />
+
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="space-15" />
-      {dark ? <div className="border_white" /> : <div className="border_black" />}
-      <div className="space-30" />
-
+      ))}
       {/* Other Articles */}
-      {articles.slice(1, 6).map((item, i) => (
+      {/* {articles.slice(1, 6).map((item, i) => (
         <div key={i} className="single_post widgets_small">
           <div className="post_img">
             <div className="img_wrap">
@@ -88,7 +91,7 @@ const WidgetTrendingNews = ({ dark }) => {
             </h4>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

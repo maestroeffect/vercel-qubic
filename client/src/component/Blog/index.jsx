@@ -61,13 +61,13 @@ const Blog = () => {
                                                         <span className="d-flex align-items-center mr-3">
                                                             <FontAwesome name="user" style={{ color: "#F15A25", marginRight: "8px" }} />
                                                             <Link to="/" className="text-decoration-none">
-                                                                Sheriff Deputies
+                                                                {item.category}
                                                             </Link>
                                                         </span>
                                                         <span className="d-flex align-items-center mr-3">
                                                             <FontAwesome name="briefcase" style={{ color: "#F15A25", marginRight: "8px" }} />
                                                             <Link to="/" className="text-decoration-none">
-                                                                {item.category.slice(0, 10)}
+                                                                Featured Posts
                                                             </Link>
                                                         </span>
                                                         <span className="d-flex align-items-center">
