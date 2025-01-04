@@ -445,7 +445,7 @@ const MainMenu = ({ className }) => {
                         label={darkMode ? 'Dark Mode' : 'Light Mode'}
                         sx={{
                           '& .MuiFormControlLabel-label': {
-                            fontSize: '1rem', // Adjust the font size here
+                            fontSize: '0.85rem', // Adjust the font size here
                             fontWeight: 'bold',
                             marginLeft: '8px',  // Optional spacing adjustment
                             fontFamily: 'Garamond, serif', // Ensure Garamond font is applied
