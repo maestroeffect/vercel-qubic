@@ -50,7 +50,10 @@ const SportsNews = ({ dark }) => {
                           <Link to="/">{item.publishedDate}</Link>
                         </div>
                         <h4>
-                          <Link to={`/${item.slug}`}>
+                          <Link to={item.link} onClick={(e) => {
+                            e.preventDefault();
+                            window.open(item.link, "_blank", "noopener,noreferrer");
+                          }}>
                             {item.title.slice(0, 100)}...
                           </Link>
                         </h4>
@@ -59,7 +62,10 @@ const SportsNews = ({ dark }) => {
                           {item.contentSnippet.slice(0, 100)}...
                         </p>
                         <div className="space-20" />
-                        <Link to={item.link} className="readmore">
+                        <Link to={item.link} onClick={(e) => {
+                          e.preventDefault();
+                          window.open(item.link, "_blank", "noopener,noreferrer");
+                        }} className="readmore">
                           Read More
                         </Link>
                       </div>

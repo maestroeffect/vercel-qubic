@@ -10,7 +10,9 @@ const app = express();
 
 const pLimit = require("p-limit").default;
 const NodeCache = require("node-cache");
+
 const imageCache = new NodeCache({ stdTTL: 3600 }); // Cache images for 1 hour
+const feedCache = new NodeCache({ stdTTL: 3600 }); // Cache feed for 1 hour
 
 // Concurrency limiter
 const limit = pLimit(30); // Set concurrency limit to 10
@@ -53,7 +55,7 @@ let lastFetchTime = null;
 const fetchImageFromLink = async (url) => {
   try {
     const response = await axios.get(url, {
-      timeout: 10000, // Increased timeout
+      timeout: 5000, // Increased timeout
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -79,7 +81,7 @@ const fetchImageFromLink = async (url) => {
 // Route to fetch and parse the RSS feed
 app.get("/rss-feed", async (req, res) => {
   const { refresh } = req.query;
-  const CACHE_DURATION = 30 * 60 * 1000; // 15 minutes
+  const CACHE_DURATION = 60 * 60 * 1000; // 60 minutes
   const now = Date.now();
 
   // If 'refresh' is present in the query, clear the cache
@@ -98,7 +100,7 @@ app.get("/rss-feed", async (req, res) => {
   try {
     console.log("Fetching RSS feed...");
     const response = await axios.get("https://qubicbox.com/wprss", {
-      timeout: 10000, // 10 seconds timeout
+      timeout: 5000, // 10 seconds timeout
       headers: {
         "Accept-Encoding": "gzip, deflate, br",
       },

@@ -71,21 +71,15 @@ function About() {
             <br /> */}
             <h2>Why Qubicweb?</h2>
             <br />
-            <p className="">
+            <p>
               In an era where information is abundant but time is scarce, Qubicweb stands out by curating technology news from diverse sources and presenting it in a streamlined, user-friendly format.
-              <ul>
-                <li>
-                  Real-time updates: Stay ahead with the latest insights in tech and cybersecurity.
-                </li>
-                <li>
-                  Credible sources: Access news from verified and authoritative websites.
-                </li>
-                <li>
-                  Ease of use: Simplify your browsing experience with our intuitive interface.
-                </li>
-              </ul>
-              {/* <br /> */}
             </p>
+            <ul>
+              <li>Real-time updates: Stay ahead with the latest insights in tech and cybersecurity.</li>
+              <li>Credible sources: Access news from verified and authoritative websites.</li>
+              <li>Ease of use: Simplify your browsing experience with our intuitive interface.</li>
+            </ul>
+
 
             <h2>Advertising</h2>
             <br />
@@ -97,48 +91,43 @@ function About() {
 
             <h2>A Qubicbox Product</h2>
             <p>
-              Qubicweb is a proud product of Qubicbox, a brand dedicated to building innovative web solutions tailored to solve real-world problems for small businesses and individuals. Qubicbox empowers users with tools that simplify life and foster informed decision-making. Learn more about Qubicbox and its groundbreaking products at <Link to="https://Qubicweb.com">Qubicweb.com</Link>.
+              Qubicweb is a proud product of Qubicbox, a brand dedicated to building innovative web solutions tailored to solve real-world problems for small businesses and individuals. Qubicbox empowers users with tools that simplify life and foster informed decision-making. Learn more about Qubicbox and its groundbreaking products at <Link to="https://qubicbox.com">Qubicbox.com</Link>.
             </p>
             <br />
             <h2>Sister Sites</h2>
             <p>
               Qubicweb is part of the Qubicbox ecosystem, which includes:
-              <ol>
-                <li>
-                  <Link>Qubicbox</Link>: A versatile platform offering cybersecurity services, web development advisory, and tools designed to empower small businesses in the digital space.
-                </li>
-                <li>
-                  <Link>Qlutterbox</Link>: A web application designed to facilitate the sale of items, offering individuals a secure and user-friendly platform to declutter and earn from unwanted goods. The platform is managed by registered agents who assist in advertising and verifying transactions, leveraging social media APIs for seamless postings.
-                </li>
-                <li>
-                  <Link>Qubictry</Link>: An online directory for artisans, connecting skilled professionals with customers in need of their services, thereby fostering growth and visibility for local artisans.
-                </li>
-              </ol>
             </p>
+            <ul>
+              <li>
+                <Link>Qubicbox</Link>: A versatile platform offering cybersecurity services, web development advisory, and tools designed to empower small businesses in the digital space.
+              </li>
+              <li>
+                <Link>Qlutterbox</Link>: A web application designed to facilitate the sale of items, offering individuals a secure and user-friendly platform to declutter and earn from unwanted goods. The platform is managed by registered agents who assist in advertising and verifying transactions, leveraging social media APIs for seamless postings.
+              </li>
+              <li>
+                <Link>Qubictry</Link>: An online directory for artisans, connecting skilled professionals with customers in need of their services, thereby fostering growth and visibility for local artisans.
+              </li>
+            </ul>
+
             <p>
-              {/* Interaction Within the Ecosystem */}
-
               The platforms in the Qubicbox ecosystem complement each other to deliver value across diverse domains:
-              <ol>
-
-                <li>
-                  Qubicweb enhances awareness by aggregating real-time technology news, including cybersecurity trends and digital innovations. This keeps users of Qlutterbox and Qubictry informed about threats and opportunities in the digital space, ensuring their interactions remain secure and efficient.
-                </li>
-
-                <li>
-                  ⁠Qlutterbox empowers small businesses and individuals, including artisans listed on Qubictry, by providing an additional revenue stream through the sale of fairly used items. This creates an avenue for artisans to declutter their spaces while generating income.
-                </li>
-                <li>
-                  ⁠Qubictry connects artisans who may benefit from the web development advisory and cybersecurity services provided by Qubicbox, enabling them to create secure online profiles or platforms to showcase their skills and attract more clients.
-                </li>
-
-                <li>
-                  Qubicbox acts as the backbone, ensuring robust digital security for all platforms, while also supporting businesses listed on Qlutterbox and Qubictry with tools to strengthen their digital presence and protect their data.
-                </li>
-              </ol>
-
-              Together, these platforms form a cohesive ecosystem that fosters innovation, growth, and security, enabling users to navigate and excel in today’s digital and physical marketplaces.
             </p>
+            <ul>
+              <li>
+                Qubicweb enhances awareness by aggregating real-time technology news, including cybersecurity trends and digital innovations. This keeps users of Qlutterbox and Qubictry informed about threats and opportunities in the digital space, ensuring their interactions remain secure and efficient.
+              </li>
+              <li>
+                Qlutterbox empowers small businesses and individuals, including artisans listed on Qubictry, by providing an additional revenue stream through the sale of fairly used items. This creates an avenue for artisans to declutter their spaces while generating income.
+              </li>
+              <li>
+                Qubictry connects artisans who may benefit from the web development advisory and cybersecurity services provided by Qubicbox, enabling them to create secure online profiles or platforms to showcase their skills and attract more clients.
+              </li>
+              <li>
+                Qubicbox acts as the backbone, ensuring robust digital security for all platforms, while also supporting businesses listed on Qlutterbox and Qubictry with tools to strengthen their digital presence and protect their data.
+              </li>
+            </ul>
+
             <br />
             <h2>Join the Qubicweb Community</h2>
             <p>

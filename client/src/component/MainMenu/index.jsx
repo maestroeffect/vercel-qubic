@@ -355,7 +355,7 @@ const MainMenu = ({ className }) => {
                               <NavLink
                                 onClick={(e) => e.preventDefault()}
                                 to="/"
-                                className="menu-dropdown"
+                                className="menu-dropdown fw-bold"
                                 data-toggle="dropdown"
                               >
                                 {item.linkText}
@@ -364,7 +364,7 @@ const MainMenu = ({ className }) => {
                             ) : (
                               <NavLink
                                 to={item.link}
-                                className="menu-dropdown"
+                                className="menu-dropdown fw-bold"
                                 data-toggle="dropdown"
                               >
                                 {item.linkText}{" "}
@@ -445,8 +445,10 @@ const MainMenu = ({ className }) => {
                         label={darkMode ? 'Dark Mode' : 'Light Mode'}
                         sx={{
                           '& .MuiFormControlLabel-label': {
-                            fontSize: '0.75rem', // Adjust the font size here
+                            fontSize: '1rem', // Adjust the font size here
+                            fontWeight: 'bold',
                             marginLeft: '8px',  // Optional spacing adjustment
+                            fontFamily: 'Garamond, serif', // Ensure Garamond font is applied
                           },
                         }}
                       />
