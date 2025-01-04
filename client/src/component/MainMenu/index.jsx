@@ -330,7 +330,7 @@ const MainMenu = ({ className }) => {
         <div className="main-nav clearfix is-ts-sticky">
           <div className="container p-0">
             <div className="row justify-content-between">
-              <nav className="navbar navbar-expand-lg col-lg-8 align-self-center">
+              <nav className="navbar navbar-expand-lg col-lg-8  p-0 align-self-center">
                 <div className="site-nav-inner">
                   <button
                     className="navbar-toggler"
