@@ -45,7 +45,7 @@ const menus = [
   },
   {
     id: 5,
-    linkText: "Feed Directory",
+    linkText: "Digital Directory",
     child: false,
     link: "/feedDirectory",
     // icon: "angle-down",
