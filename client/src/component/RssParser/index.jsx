@@ -41,6 +41,7 @@ const QubicwebFeed = () => {
   const [videoArticles, setVideoArticles] = useState([]); // Articles with video sources
   const [blogArticles, setBlogArticles] = useState([]); // Articles with blog
   const [loading, setLoading] = useState(true); // Track loading state
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -68,15 +69,12 @@ const QubicwebFeed = () => {
               const sourceUrl2 = sourceObject.id; // Extract the `id` property
               const isVideo = videoSources.includes(sourceUrl2); // Check if the source is a video source
               const isBlog = blogSources.includes(sourceUrl2); // Check if the source is a blog source
-              console.log("Source URL:", sourceUrl2, "isVideo:", isVideo, "isBlog:", isBlog);
+              // console.log("Source URL:", sourceUrl2, "isVideo:", isVideo, "isBlog:", isBlog);
               return {
                 title: item.title && typeof item.title === "object" ? item.title._ : item.title,
                 link: item.link || "No link available",
                 contentSnippet: item.contentSnippet || "No summary available.",
-                author: item.author || "No author available",
                 publishedDate: item.publishedDate ? formatDate(item.publishedDate) : "No published date available",
-                updatedDate: item.updatedDate ? formatDate(item.updatedDate) : "No updated date available",
-                content: item.content || "No full content available",
                 image: item.image || "No image available",
                 source: sourceObject,
                 category: sourceUrl || "Uncategorized", // Append category based on source

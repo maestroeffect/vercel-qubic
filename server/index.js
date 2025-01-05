@@ -2,31 +2,22 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const { parseStringPromise } = require("xml2js");
-const cheerio = require("cheerio"); // Library to parse and scrape HTML
+const cheerio = require("cheerio");
 const axiosRetry = require("axios-retry").default;
 const path = require("path");
-
-const app = express();
-
 const pLimit = require("p-limit").default;
 const NodeCache = require("node-cache");
 
+const app = express();
+const limit = pLimit(30);
 const imageCache = new NodeCache({ stdTTL: 3600 }); // Cache images for 1 hour
-const feedCache = new NodeCache({ stdTTL: 3600 }); // Cache feed for 1 hour
 
-// Concurrency limiter
-const limit = pLimit(30); // Set concurrency limit to 10
-
-app.use(cors()); // Enable CORS for all routes
-
-// Serve favicon
+app.use(cors());
 app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
-
 // Root route
 app.get("/", (req, res) => {
   res.send("Welcome to the Qubic RSS Server!");
 });
-
 // Configure retry mechanism for Axios with increased retries and delay
 axiosRetry(axios, {
   retries: 5, // Increased retries
@@ -47,7 +38,6 @@ const fetchImageFromLinkWithCache = async (url) => {
   return imageUrl;
 };
 
-// Cache variables
 let cachedFeed = null;
 let lastFetchTime = null;
 
@@ -77,30 +67,12 @@ const fetchImageFromLink = async (url) => {
     return null; // Fallback if image fetch fails
   }
 };
-
-// Route to fetch and parse the RSS feed
-app.get("/rss-feed", async (req, res) => {
-  const { refresh } = req.query;
-  const CACHE_DURATION = 60 * 60 * 1000; // 60 minutes
-  const now = Date.now();
-
-  // If 'refresh' is present in the query, clear the cache
-  if (refresh) {
-    cachedFeed = null;
-    lastFetchTime = null;
-    console.log("Cache cleared due to 'refresh' query parameter.");
-  }
-
-  // Serve from cache if available and not expired
-  if (cachedFeed && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
-    console.log("Serving from cache.");
-    return res.json(cachedFeed);
-  }
-
+// Function to fetch and cache the RSS feed
+const fetchAndCacheFeed = async () => {
   try {
-    console.log("Fetching RSS feed...");
-    const response = await axios.get("https://qubicbox.com/wprss", {
-      timeout: 5000, // 10 seconds timeout
+    console.log("Fetching RSS feed in background...");
+    const response = await axios.get("https://qubicbox.com/feed/wprss", {
+      timeout: 5000,
       headers: {
         "Accept-Encoding": "gzip, deflate, br",
       },
@@ -110,56 +82,39 @@ app.get("/rss-feed", async (req, res) => {
     const jsonData = await parseStringPromise(xmlData, {
       explicitArray: false,
     });
-
     const entries = jsonData.feed?.entry || [];
+    console.log(`Total entries fetched from RSS feed: ${entries.length}`);
 
-    // Process entries in batches
     const BATCH_SIZE = 50;
     const processedItems = [];
     for (let i = 0; i < entries.length; i += BATCH_SIZE) {
       const batch = entries.slice(i, i + BATCH_SIZE);
+      // console.log(
+      //   `Processing batch ${i / BATCH_SIZE + 1}: ${batch.length} entries`
+      // );
       const results = await Promise.allSettled(
         batch.map((entry) =>
           limit(async () => {
             let imageUrl = null;
 
-            // Check for YouTube-specific thumbnail
+            // Process image URLs
             if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
               imageUrl = entry["media:group"]["media:thumbnail"].$.url;
-            }
-
-            if (entry["media:content"]) {
+            } else if (entry["media:content"]) {
               const mediaContent = entry["media:content"];
               if (Array.isArray(mediaContent) && mediaContent.length > 0) {
                 imageUrl = mediaContent[0].$.url || null;
               }
-            }
-
-            if (
-              !imageUrl &&
+            } else if (
               typeof entry.content === "object" &&
-              entry.content._
+              entry.content._ &&
+              entry.content._.match(/<img[^>]+src=["']([^"']+)["']/)
             ) {
               const contentMatch = entry.content._.match(
                 /<img[^>]+src=["']([^"']+)["']/
               );
               imageUrl = contentMatch ? contentMatch[1] : null;
-            }
-
-            if (!imageUrl && entry.link) {
-              const linkHref =
-                typeof entry.link === "string"
-                  ? entry.link
-                  : entry.link.$?.href;
-              if (linkHref) {
-                const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
-                if (videoIdMatch) {
-                  imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
-                }
-              }
-            }
-
-            if (!imageUrl && entry.link?.$.href) {
+            } else if (entry.link?.$.href) {
               imageUrl = await fetchImageFromLinkWithCache(entry.link.$.href);
             }
 
@@ -167,9 +122,7 @@ app.get("/rss-feed", async (req, res) => {
               title: entry.title || "Untitled Article",
               link: entry.link?.$.href || "No link available",
               contentSnippet: entry.summary || "No summary available.",
-              author: entry.author?.name || "No author available",
               publishedDate: entry.published || "No published date available",
-              updatedDate: entry.updated || "No updated date available",
               content: entry.content || "No full content available",
               image: imageUrl || "No image available",
               source: entry.source || "No Source",
@@ -179,23 +132,63 @@ app.get("/rss-feed", async (req, res) => {
         )
       );
 
-      processedItems.push(
-        ...results
-          .filter((result) => result.status === "fulfilled")
-          .map((result) => result.value)
+      const fulfilledItems = results.filter(
+        (result) => result.status === "fulfilled"
       );
+      const rejectedItems = results.filter(
+        (result) => result.status === "rejected"
+      );
+
+      // console.log(
+      //   `Batch ${i / BATCH_SIZE + 1} - Fulfilled: ${fulfilledItems.length}, Rejected: ${rejectedItems.length}`
+      // );
+      // if (rejectedItems.length > 0) {
+      //   console.error(
+      //     `Rejected items in batch ${i / BATCH_SIZE + 1}:`,
+      //     rejectedItems.map((result) => result.reason)
+      //   );
+      // }
+
+      processedItems.push(...fulfilledItems.map((result) => result.value));
     }
+    console.log(`Total processed items: ${processedItems.length}`);
 
     // Cache the results
     cachedFeed = { items: processedItems };
-    lastFetchTime = now;
-
-    res.json(cachedFeed);
+    lastFetchTime = Date.now();
+    console.log("RSS feed successfully cached.");
   } catch (error) {
-    console.error("Error fetching and parsing RSS feed:", error.message);
-    res.status(500).json({ error: "Failed to fetch or parse RSS feed" });
+    console.error("Error fetching RSS feed:", error.message);
+  }
+};
+
+// Schedule feed fetching every hour
+setInterval(fetchAndCacheFeed, 60 * 60 * 1000); // 1 hour
+fetchAndCacheFeed(); // Initial fetch
+
+// Route to serve the cached RSS feed
+app.get("/rss-feed", (req, res) => {
+  const { refresh } = req.query;
+
+  if (refresh) {
+    console.log("Manual refresh triggered.");
+    fetchAndCacheFeed(); // Trigger a manual fetch in the background
+    return res.json({
+      message: "Manual refresh triggered. Serving cached feed.",
+      lastFetchTime: lastFetchTime
+        ? new Date(lastFetchTime).toISOString()
+        : "No fetch has occurred yet.",
+      cachedFeed,
+    });
+  }
+  if (cachedFeed) {
+    console.log("Serving cached feed.");
+    res.json(cachedFeed);
+  } else {
+    res.status(503).json({ error: "Feed is not yet cached. Try again later." });
   }
 });
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
