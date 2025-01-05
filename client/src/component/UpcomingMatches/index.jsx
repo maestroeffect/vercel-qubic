@@ -98,7 +98,7 @@ const UpcomingMatches = ({ dark }) => {
                 className="CircularProgressbarSt"
                 styles={buildStyles({
                   trailColor: "rgb(233, 234, 238)",
-                  pathColor: "#F15A25",
+                  pathColor: "#F15A24",
                   strokeLinecap: "round",
                   pathTransitionDuration: 0.5,
                   rotation: 0.5,

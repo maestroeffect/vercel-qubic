@@ -74,7 +74,7 @@
 
   ul.navbar-nav > li:hover a::before,
   ul.navbar-nav > li.active a::before {
-    border-color: #f15a25;
+    border-color: #f15a24;
     opacity: 1;
     -webkit-transform: scale(1) translateZ(0);
     transform: scale(1) translateZ(0);
@@ -267,7 +267,7 @@
   .dropdown-menu > .active > a:focus,
   .dropdown-menu > .active > .dropdown-menu > .active > a {
     background: #17222b;
-    color: #f15a25;
+    color: #f15a24;
   }
 
   .dropdown-menu > li > a:hover,
@@ -549,7 +549,7 @@
     content: "";
     height: 0;
     width: 100%;
-    background: #f15a25;
+    background: #f15a24;
     bottom: 0;
     left: 0;
     z-index: 2;
