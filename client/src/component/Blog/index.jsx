@@ -59,19 +59,19 @@ const Blog = () => {
                                                     {/* Meta Section */}
                                                     <div className="d-flex align-items-center flex-wrap gap-3">
                                                         <span className="d-flex align-items-center mr-3">
-                                                            <FontAwesome name="user" style={{ color: "#F15A24", marginRight: "8px" }} />
+                                                            <FontAwesome name="user" style={{ color: "#E9752C", marginRight: "8px" }} />
                                                             <Link to="/" className="text-decoration-none">
                                                                 {item.category}
                                                             </Link>
                                                         </span>
                                                         <span className="d-flex align-items-center mr-3">
-                                                            <FontAwesome name="briefcase" style={{ color: "#F15A24", marginRight: "8px" }} />
+                                                            <FontAwesome name="briefcase" style={{ color: "#E9752C", marginRight: "8px" }} />
                                                             <Link to="/" className="text-decoration-none">
                                                                 Featured Posts
                                                             </Link>
                                                         </span>
                                                         <span className="d-flex align-items-center">
-                                                            <FontAwesome name="calendar" style={{ color: "#F15A24", marginRight: "8px" }} />
+                                                            <FontAwesome name="calendar" style={{ color: "#E9752C", marginRight: "8px" }} />
                                                             <span>{item.publishedDate}</span>
                                                         </span>
                                                     </div>
