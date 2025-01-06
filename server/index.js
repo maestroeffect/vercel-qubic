@@ -118,6 +118,19 @@ const fetchAndCacheFeed = async () => {
               imageUrl = await fetchImageFromLinkWithCache(entry.link.$.href);
             }
 
+            if (!imageUrl && entry.link) {
+              const linkHref =
+                typeof entry.link === "string"
+                  ? entry.link
+                  : entry.link.$?.href;
+              if (linkHref) {
+                const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
+                if (videoIdMatch) {
+                  imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
+                }
+              }
+            }
+
             return {
               title: entry.title || "Untitled Article",
               link: entry.link?.$.href || "No link available",
