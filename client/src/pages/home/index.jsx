@@ -1,9 +1,7 @@
-import React from "react";
 import PostCarousel from "../../component/PostCarousel";
 import PostGallery from "../../component/PostGallery";
 import FeatureNews from "../../component/FeatureNews";
 import TrendingNews from "../../component/TrendingNews";
-import FollowUs from "../../component/FollowUs";
 import MostView from "../../component/MostView";
 import MixCarousel from "../../component/MixCarousel";
 import VideoPost from "../../component/VideoPost";
@@ -11,15 +9,13 @@ import EntertainmentNews from "../../component/EntertainmentNews";
 import SportsNews from "../../component/SportsNews";
 import MostShareWidget from "../../component/MostShareWidget";
 import NewsLetter from "../../component/NewsLetter";
-import CategoriesWidget from "../../component/CategoriesWidget";
 import { entertainments } from "../../data/entertainments";
-import { Link } from "react-router-dom";
-import banner2 from "../../assets/img/banner/banner-2.jpg";
-import SearchBar from "../../component/SearchBar";
+// import FeedComponent from "../../component/FeedComponent";
 
 
 function Home() {
   return (
+    // <FeedComponent />
     <>
       <PostCarousel className="fifth_bg" />
       <PostGallery className="fifth_bg" />

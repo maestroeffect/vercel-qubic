@@ -1,3 +1,293 @@
+// const express = require("express");
+// const cors = require("cors");
+// const axios = require("axios");
+// const { parseStringPromise } = require("xml2js");
+// const cheerio = require("cheerio");
+// const axiosRetry = require("axios-retry").default;
+// const path = require("path");
+// const pLimit = require("p-limit").default;
+// const NodeCache = require("node-cache");
+// const fs = require("fs");
+
+// const app = express();
+// const limit = pLimit(30);
+// const imageCache = new NodeCache({ stdTTL: 3600 }); // Cache images for 1 hour
+// const cacheFilePath = path.join(__dirname, "feedCache.json");
+
+// let cachedFeed = null;
+// let lastFetchTime = null;
+
+// // Load cache from disk
+// const loadCacheFromFile = () => {
+//   if (fs.existsSync(cacheFilePath)) {
+//     try {
+//       const data = fs.readFileSync(cacheFilePath, "utf8");
+//       cachedFeed = JSON.parse(data);
+//       console.log("Cache successfully loaded from disk.");
+//     } catch (error) {
+//       console.error("Error loading cache from disk:", error.message);
+//     }
+//   }
+// };
+
+// // Save cache to disk
+// const saveCacheToFile = () => {
+//   if (cachedFeed) {
+//     try {
+//       fs.writeFileSync(cacheFilePath, JSON.stringify(cachedFeed, null, 2));
+//       console.log("Cache successfully saved to disk.");
+//     } catch (error) {
+//       console.error("Error saving cache to disk:", error.message);
+//     }
+//   }
+// };
+
+// // Basic Authentication credentials
+// const BASIC_AUTH_USERNAME = "qubicwebserver";
+// const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
+
+// // Basic Authentication middleware
+// const basicAuthMiddleware = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   if (!authHeader) {
+//     // If no Authorization header, prompt for credentials
+//     return res
+//       .set("WWW-Authenticate", 'Basic realm="Restricted"')
+//       .status(401)
+//       .json({ error: "Authorization required" });
+//   }
+
+//   const [type, credentials] = authHeader.split(" ");
+//   if (type !== "Basic" || !credentials) {
+//     return res.status(401).json({ error: "Invalid authorization format" });
+//   }
+
+//   const [username, password] = Buffer.from(credentials, "base64")
+//     .toString("utf-8")
+//     .split(":");
+
+//   if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
+//     return next();
+//   }
+
+//   return res.status(401).json({ error: "Invalid username or password" });
+// };
+
+// // Middleware to check if the request is internal (from the server itself)
+// const internalRequestMiddleware = (req, res, next) => {
+//   if (req.headers["internal-request"] === "true") {
+//     return next(); // Allow internal requests without authentication
+//   }
+//   return basicAuthMiddleware(req, res, next); // Apply Basic Authentication for external requests
+// };
+
+// app.use(cors());
+// app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
+
+// // Root route
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the Qubic RSS Server!");
+// });
+
+// // Configure retry mechanism for Axios with increased retries and delay
+// axiosRetry(axios, {
+//   retries: 5,
+//   retryDelay: (retryCount) => retryCount * 2000,
+//   shouldResetTimeout: true,
+// });
+
+// // Fetch image with caching and concurrency control
+// const fetchImageFromLinkWithCache = async (url) => {
+//   if (imageCache.has(url)) {
+//     return imageCache.get(url);
+//   }
+
+//   const imageUrl = await fetchImageFromLink(url);
+//   if (imageUrl) {
+//     imageCache.set(url, imageUrl);
+//   }
+//   return imageUrl;
+// };
+
+// // Fetch image with headers
+// const fetchImageFromLink = async (url) => {
+//   try {
+//     const response = await axios.get(url, {
+//       timeout: 5000,
+//       headers: {
+//         "User-Agent":
+//           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+//       },
+//     });
+//     const $ = cheerio.load(response.data);
+//     const selectors = [
+//       'meta[property="og:image"]',
+//       'meta[name="twitter:image"]',
+//       "article img",
+//       "img",
+//     ];
+//     for (const selector of selectors) {
+//       const imageUrl = $(selector).attr("content") || $(selector).attr("src");
+//       if (imageUrl) return imageUrl;
+//     }
+//     return null;
+//   } catch (error) {
+//     return null;
+//   }
+// };
+
+// // Fetch and cache the RSS feed
+// const fetchAndCacheFeed = async () => {
+//   try {
+//     console.log("Fetching RSS feed in background...");
+//     const response = await axios.get("https://qubicbox.com/feed/wprss", {
+//       timeout: 5000,
+//       headers: {
+//         "Accept-Encoding": "gzip, deflate, br",
+//       },
+//     });
+
+//     const xmlData = response.data;
+//     const jsonData = await parseStringPromise(xmlData, {
+//       explicitArray: false,
+//     });
+//     const entries = jsonData.feed?.entry || [];
+//     console.log(`Total entries fetched from RSS feed: ${entries.length}`);
+
+//     const BATCH_SIZE = 50;
+//     const processedItems = [];
+//     for (let i = 0; i < entries.length; i += BATCH_SIZE) {
+//       const batch = entries.slice(i, i + BATCH_SIZE);
+//       // console.log(
+//       //   `Processing batch ${i / BATCH_SIZE + 1}: ${batch.length} entries`
+//       // );
+//       const results = await Promise.allSettled(
+//         batch.map((entry) =>
+//           limit(async () => {
+//             let imageUrl = null;
+
+//             // Process image URLs
+//             if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
+//               imageUrl = entry["media:group"]["media:thumbnail"].$.url;
+//             } else if (entry["media:content"]) {
+//               const mediaContent = entry["media:content"];
+//               if (Array.isArray(mediaContent) && mediaContent.length > 0) {
+//                 imageUrl = mediaContent[0].$.url || null;
+//               }
+//             } else if (
+//               typeof entry.content === "object" &&
+//               entry.content._ &&
+//               entry.content._.match(/<img[^>]+src=["']([^"']+)["']/)
+//             ) {
+//               const contentMatch = entry.content._.match(
+//                 /<img[^>]+src=["']([^"']+)["']/
+//               );
+//               imageUrl = contentMatch ? contentMatch[1] : null;
+//             } else if (entry.link?.$.href) {
+//               imageUrl = await fetchImageFromLinkWithCache(entry.link.$.href);
+//             }
+
+//             if (!imageUrl && entry.link) {
+//               const linkHref =
+//                 typeof entry.link === "string"
+//                   ? entry.link
+//                   : entry.link.$?.href;
+//               if (linkHref) {
+//                 const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
+//                 if (videoIdMatch) {
+//                   imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
+//                 }
+//               }
+//             }
+
+//             return {
+//               title: entry.title || "Untitled Article",
+//               link: entry.link?.$.href || "No link available",
+//               contentSnippet: entry.summary || "No summary available.",
+//               publishedDate: entry.published || "No published date available",
+//               content: entry.content || "No full content available",
+//               image: imageUrl || "No image available",
+//               source: entry.source || "No Source",
+//               category: entry.category || "No Category",
+//             };
+//           })
+//         )
+//       );
+
+//       const fulfilledItems = results.filter(
+//         (result) => result.status === "fulfilled"
+//       );
+//       const rejectedItems = results.filter(
+//         (result) => result.status === "rejected"
+//       );
+
+//       processedItems.push(...fulfilledItems.map((result) => result.value));
+//     }
+//     console.log(`Total processed items: ${processedItems.length}`);
+
+//     cachedFeed = { items: processedItems };
+//     lastFetchTime = Date.now();
+//     console.log("RSS feed successfully cached.");
+
+//     // Save to disk
+//     saveCacheToFile();
+//   } catch (error) {
+//     console.error("Error fetching RSS feed:", error.message);
+//   }
+// };
+
+// // Schedule feed fetching every hour
+// setInterval(fetchAndCacheFeed, 60 * 60 * 1000);
+// fetchAndCacheFeed();
+
+// // Route to serve the cached RSS feed
+// // Route to serve the cached RSS feed
+// app.get("/rss-feed", internalRequestMiddleware, (req, res) => {
+//   // Set headers to prevent caching of credentials
+//   res.setHeader(
+//     "Cache-Control",
+//     "no-store, no-cache, must-revalidate, proxy-revalidate"
+//   );
+//   res.setHeader("Pragma", "no-cache");
+//   res.setHeader("Expires", "0");
+
+//   const { refresh } = req.query;
+
+//   if (refresh) {
+//     console.log("Manual refresh triggered.");
+//     fetchAndCacheFeed();
+//     return res.json({
+//       message: "Manual refresh triggered. Serving cached feed.",
+//       lastFetchTime: lastFetchTime
+//         ? new Date(lastFetchTime).toISOString()
+//         : "No fetch has occurred yet.",
+//       cachedFeed,
+//     });
+//   }
+
+//   if (cachedFeed) {
+//     console.log("Serving cached feed.");
+//     res.json(cachedFeed);
+//   } else {
+//     res.status(503).json({ error: "Feed is not yet cached. Try again later." });
+//   }
+// });
+
+// // Load cache when the server starts
+// loadCacheFromFile();
+
+// // Save cache when the server shuts down
+// process.on("exit", saveCacheToFile);
+// process.on("SIGINT", () => {
+//   saveCacheToFile();
+//   process.exit();
+// });
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
+
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
@@ -7,185 +297,199 @@ const axiosRetry = require("axios-retry").default;
 const path = require("path");
 const pLimit = require("p-limit").default;
 const NodeCache = require("node-cache");
+const fs = require("fs");
 
 const app = express();
 const limit = pLimit(30);
 const imageCache = new NodeCache({ stdTTL: 3600 }); // Cache images for 1 hour
-
-app.use(cors());
-app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
-// Root route
-app.get("/", (req, res) => {
-  res.send("Welcome to the Qubic RSS Server!");
-});
-// Configure retry mechanism for Axios with increased retries and delay
-axiosRetry(axios, {
-  retries: 5, // Increased retries
-  retryDelay: (retryCount) => retryCount * 2000, // Increased delay between retries
-  shouldResetTimeout: true, // Reset timeout after each retry
-});
-
-// Fetch image with caching and concurrency control
-const fetchImageFromLinkWithCache = async (url) => {
-  if (imageCache.has(url)) {
-    return imageCache.get(url);
-  }
-
-  const imageUrl = await fetchImageFromLink(url);
-  if (imageUrl) {
-    imageCache.set(url, imageUrl);
-  }
-  return imageUrl;
-};
+const cacheFilePath = path.join(__dirname, "feedCache.json");
 
 let cachedFeed = null;
 let lastFetchTime = null;
 
-// Fetch image with headers
-const fetchImageFromLink = async (url) => {
-  try {
-    const response = await axios.get(url, {
-      timeout: 5000, // Increased timeout
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-      },
-    });
-    const $ = cheerio.load(response.data);
-    const selectors = [
-      'meta[property="og:image"]',
-      'meta[name="twitter:image"]',
-      "article img",
-      "img",
-    ];
-    for (const selector of selectors) {
-      const imageUrl = $(selector).attr("content") || $(selector).attr("src");
-      if (imageUrl) return imageUrl;
+// Load cache from disk
+const loadCacheFromFile = () => {
+  if (fs.existsSync(cacheFilePath)) {
+    try {
+      const data = fs.readFileSync(cacheFilePath, "utf8");
+      cachedFeed = JSON.parse(data);
+      console.log("Cache successfully loaded from disk.");
+    } catch (error) {
+      console.error("Error loading cache from disk:", error.message);
     }
-    return null;
-  } catch (error) {
-    return null; // Fallback if image fetch fails
   }
 };
-// Function to fetch and cache the RSS feed
+
+// Save cache to disk
+const saveCacheToFile = () => {
+  if (cachedFeed) {
+    try {
+      fs.writeFileSync(cacheFilePath, JSON.stringify(cachedFeed, null, 2));
+      console.log("Cache successfully saved to disk.");
+    } catch (error) {
+      console.error("Error saving cache to disk:", error.message);
+    }
+  }
+};
+
+// Basic Authentication credentials
+const BASIC_AUTH_USERNAME = "qubicwebserver";
+const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
+
+// Basic Authentication middleware
+const basicAuthMiddleware = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) {
+    return res
+      .set("WWW-Authenticate", 'Basic realm="Restricted"')
+      .status(401)
+      .json({ error: "Authorization required" });
+  }
+
+  const [type, credentials] = authHeader.split(" ");
+  if (type !== "Basic" || !credentials) {
+    return res.status(401).json({ error: "Invalid authorization format" });
+  }
+
+  const [username, password] = Buffer.from(credentials, "base64")
+    .toString("utf-8")
+    .split(":");
+
+  if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
+    return next();
+  }
+
+  return res.status(401).json({ error: "Invalid username or password" });
+};
+
+// Middleware to check if the request is internal (from the server itself)
+const internalRequestMiddleware = (req, res, next) => {
+  if (req.headers["internal-request"] === "true") {
+    return next(); // Allow internal requests without authentication
+  }
+  return basicAuthMiddleware(req, res, next); // Apply Basic Authentication for external requests
+};
+
+app.use(cors());
+app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
+
+// Root route
+app.get("/", (req, res) => {
+  res.send("Welcome to the Qubic RSS Server!");
+});
+
+// Configure retry mechanism for Axios with increased retries and delay
+axiosRetry(axios, {
+  retries: 5,
+  retryDelay: (retryCount) => retryCount * 2000,
+  shouldResetTimeout: true,
+});
+
+// Fetch and process RSS feed data
+const processFeedData = async (feedData) => {
+  const videoSources = [
+    "https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA",
+    "https://www.youtube.com/channel/UCVeW9qkBjo3zosnqUbG7CFw",
+    "https://www.youtube.com/channel/UClcE-kVhqyiHCcjYwcpfj9w",
+    "https://www.youtube.com/channel/UCLDnEn-TxejaDB8qm2AUhHQ",
+    "https://www.youtube.com/channel/UC9x0AN7BWHpCDHSm9NiJFJQ",
+    "https://www.youtube.com/channel/UCg--XBjJ50a9tUhTKXVPiqg",
+    "https://www.youtube.com/channel/UC0vBXGSyV14uvJ4hECDOl0Q",
+    "https://www.youtube.com/channel/UChIZGfcnjHI0DG4nweWEduw",
+    "https://www.youtube.com/channel/UC0ArlFuFYMpEewyRBzdLHiw",
+    "https://www.youtube.com/channel/UCddiUEpeqJcYeBxX1IVBKvQ",
+  ];
+  const blogSources = ["https://www.sheriffdeputiesltd.com/"];
+
+  if (feedData.items && Array.isArray(feedData.items)) {
+    return feedData.items.map((item) => {
+      const sourceObject = item.source || {
+        id: "Unknown Source",
+        title: "Unknown Title",
+      };
+      const sourceUrl2 = sourceObject.id;
+      const isVideo = videoSources.includes(sourceUrl2);
+      const isBlog = blogSources.includes(sourceUrl2);
+
+      const title =
+        item.title && typeof item.title === "object"
+          ? item.title._
+          : item.title;
+      const validTitle = typeof title === "string" ? title : "Untitled";
+
+      return {
+        title: validTitle,
+        link: item.link || "No link available",
+        contentSnippet: item.contentSnippet || "No summary available.",
+        publishedDate: item.publishedDate
+          ? formatDate(item.publishedDate)
+          : "No published date available",
+        image: item.image || "No image available",
+        source: sourceObject,
+        category: sourceObject.title || "Uncategorized",
+        isVideo,
+        isBlog,
+      };
+    });
+  } else {
+    throw new Error(
+      "Unexpected feed structure: items not found or not an array."
+    );
+  }
+};
+
+// Helper functions
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
+// Fetch and cache the RSS feed
 const fetchAndCacheFeed = async () => {
   try {
     console.log("Fetching RSS feed in background...");
-    const response = await axios.get("https://qubicbox.com/feed/wprss", {
-      timeout: 5000,
+    const response = await axios.get("http://localhost:5000/rss-feed", {
       headers: {
-        "Accept-Encoding": "gzip, deflate, br",
+        Authorization: `Basic ${Buffer.from(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`).toString("base64")}`,
       },
     });
 
-    const xmlData = response.data;
-    const jsonData = await parseStringPromise(xmlData, {
-      explicitArray: false,
-    });
-    const entries = jsonData.feed?.entry || [];
-    console.log(`Total entries fetched from RSS feed: ${entries.length}`);
-
-    const BATCH_SIZE = 50;
-    const processedItems = [];
-    for (let i = 0; i < entries.length; i += BATCH_SIZE) {
-      const batch = entries.slice(i, i + BATCH_SIZE);
-      // console.log(
-      //   `Processing batch ${i / BATCH_SIZE + 1}: ${batch.length} entries`
-      // );
-      const results = await Promise.allSettled(
-        batch.map((entry) =>
-          limit(async () => {
-            let imageUrl = null;
-
-            // Process image URLs
-            if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
-              imageUrl = entry["media:group"]["media:thumbnail"].$.url;
-            } else if (entry["media:content"]) {
-              const mediaContent = entry["media:content"];
-              if (Array.isArray(mediaContent) && mediaContent.length > 0) {
-                imageUrl = mediaContent[0].$.url || null;
-              }
-            } else if (
-              typeof entry.content === "object" &&
-              entry.content._ &&
-              entry.content._.match(/<img[^>]+src=["']([^"']+)["']/)
-            ) {
-              const contentMatch = entry.content._.match(
-                /<img[^>]+src=["']([^"']+)["']/
-              );
-              imageUrl = contentMatch ? contentMatch[1] : null;
-            } else if (entry.link?.$.href) {
-              imageUrl = await fetchImageFromLinkWithCache(entry.link.$.href);
-            }
-
-            if (!imageUrl && entry.link) {
-              const linkHref =
-                typeof entry.link === "string"
-                  ? entry.link
-                  : entry.link.$?.href;
-              if (linkHref) {
-                const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
-                if (videoIdMatch) {
-                  imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
-                }
-              }
-            }
-
-            return {
-              title: entry.title || "Untitled Article",
-              link: entry.link?.$.href || "No link available",
-              contentSnippet: entry.summary || "No summary available.",
-              publishedDate: entry.published || "No published date available",
-              content: entry.content || "No full content available",
-              image: imageUrl || "No image available",
-              source: entry.source || "No Source",
-              category: entry.category || "No Category",
-            };
-          })
-        )
-      );
-
-      const fulfilledItems = results.filter(
-        (result) => result.status === "fulfilled"
-      );
-      const rejectedItems = results.filter(
-        (result) => result.status === "rejected"
-      );
-
-      // console.log(
-      //   `Batch ${i / BATCH_SIZE + 1} - Fulfilled: ${fulfilledItems.length}, Rejected: ${rejectedItems.length}`
-      // );
-      // if (rejectedItems.length > 0) {
-      //   console.error(
-      //     `Rejected items in batch ${i / BATCH_SIZE + 1}:`,
-      //     rejectedItems.map((result) => result.reason)
-      //   );
-      // }
-
-      processedItems.push(...fulfilledItems.map((result) => result.value));
+    if (!response.data || !response.data.items) {
+      throw new Error("Invalid feed data");
     }
-    console.log(`Total processed items: ${processedItems.length}`);
 
-    // Cache the results
+    const processedItems = await processFeedData(response.data);
+
     cachedFeed = { items: processedItems };
     lastFetchTime = Date.now();
     console.log("RSS feed successfully cached.");
+
+    saveCacheToFile();
   } catch (error) {
     console.error("Error fetching RSS feed:", error.message);
   }
 };
 
 // Schedule feed fetching every hour
-setInterval(fetchAndCacheFeed, 60 * 60 * 1000); // 1 hour
-fetchAndCacheFeed(); // Initial fetch
+setInterval(fetchAndCacheFeed, 60 * 60 * 1000);
+fetchAndCacheFeed();
 
 // Route to serve the cached RSS feed
-app.get("/rss-feed", (req, res) => {
+app.get("/rss-feed", internalRequestMiddleware, (req, res) => {
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
   const { refresh } = req.query;
 
   if (refresh) {
     console.log("Manual refresh triggered.");
-    fetchAndCacheFeed(); // Trigger a manual fetch in the background
+    fetchAndCacheFeed();
     return res.json({
       message: "Manual refresh triggered. Serving cached feed.",
       lastFetchTime: lastFetchTime
@@ -194,12 +498,23 @@ app.get("/rss-feed", (req, res) => {
       cachedFeed,
     });
   }
+
   if (cachedFeed) {
     console.log("Serving cached feed.");
     res.json(cachedFeed);
   } else {
     res.status(503).json({ error: "Feed is not yet cached. Try again later." });
   }
+});
+
+// Load cache when the server starts
+loadCacheFromFile();
+
+// Save cache when the server shuts down
+process.on("exit", saveCacheToFile);
+process.on("SIGINT", () => {
+  saveCacheToFile();
+  process.exit();
 });
 
 const PORT = process.env.PORT || 5000;

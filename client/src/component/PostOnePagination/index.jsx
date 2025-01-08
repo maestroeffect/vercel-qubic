@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import QubicwebFeed from "../RssParser";
 
 const PostOnePagination = ({ className }) => {
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles, loading, error } = useSelector((state) => state.feed);
 
   if (loading) {
     return <div>Loading...</div>;

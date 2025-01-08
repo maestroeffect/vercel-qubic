@@ -1,17 +1,16 @@
-import React from "react";
+// import React from "react";
 import ProtoTypes from "prop-types";
 import Heading from "../uiStyle/Heading";
 import TrendingNewsSlider from "../TrendingNewsSlider";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
-import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
-
+import { useSelector } from "react-redux";
 import transm1 from "../../assets/img/gallery-1.jpg";
 import transm2 from "../../assets/img/gallery-2.jpg";
 
 
 const TrendingNews = ({ dark }) => {
-  const { articles, error } = QubicwebFeed();
+  const { articles } = useSelector((state) => state.feed);
   const generalArticles = articles.filter((article) => article.category === "Engadget");
 
   // https://technext24.com/

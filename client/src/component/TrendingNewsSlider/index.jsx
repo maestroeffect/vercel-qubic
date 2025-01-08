@@ -1,15 +1,12 @@
-import React from "react";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
-import trendbig1 from "../../assets/img/trending-news-1.jpg";
-import trendbig2 from "../../assets/img/trending-news-2.jpg";
 import Slider from "../Slider";
-import QubicwebFeed from "../RssParser"; // Import your QubicwebFeed component
+import { useSelector } from "react-redux";
 
 const TrendingNewsSlider = () => {
-  const { articles, error } = QubicwebFeed();
+  const { articles } = useSelector((state) => state.feed);
 
-  const generalArticles = articles.filter((article) => article.category === "Engadget");
+  // const generalArticles = articles.filter((article) => article.category === "Engadget");
 
 
 
@@ -44,7 +41,7 @@ const TrendingNewsSlider = () => {
           <div key={i} className="single_post post_type3">
             <div className="post_img">
               <div className="img_wrap">
-                <img src={item.image || trendingNews.image} style={{
+                <img src={item.image} style={{
                   width: "350px",
                   height: "250px",
                   objectFit: "cover",

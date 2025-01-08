@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
@@ -8,11 +7,8 @@ import FontAwesome from "../uiStyle/FontAwesome";
 import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
 import SidebarMenu from "../SidebarMenu";
-import useWeatherAndDate from "../WeatherDate";
 import ProtoTypes from "prop-types";
 import { useTheme } from '../../context/ThemeContext';
-import { useTheme as useMuiTheme } from "@mui/material/styles"; // Import MUI's useTheme hook
-import SearchBar from '../SearchBar';
 
 
 const menus = [
@@ -52,209 +48,7 @@ const menus = [
   },
 
 ];
-const menusDark = [
-  {
-    id: 1,
-    linkText: "Home",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 11,
-        link: "/",
-        linkText: "Home 1",
-      },
-      {
-        id: 12,
-        link: "/dark",
-        linkText: "Home Dark",
-      },
-      {
-        id: 13,
-        new: true,
-        link: "/home-two",
-        linkText: "Home 2",
-      },
-      {
-        id: 14,
-        link: "/home-three",
-        linkText: "Home 3",
-      },
-    ],
-  },
-  {
-    id: 2,
-    linkText: "Pages",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 21,
-        link: "/dark/about",
-        linkText: "About",
-      },
-      {
-        id: 22,
-        link: "/dark/archive",
-        linkText: "Archive",
-      },
-      {
-        id: 23,
-        link: "/dark/contact",
-        linkText: "Contact Us",
-      },
-      {
-        id: 24,
-        link: "/dark/404",
-        linkText: "404",
-      },
-    ],
-  },
-  {
-    id: 3,
-    linkText: "Posts",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 31,
-        child: true,
-        linkText: "General Posts",
-        third_menu: [
-          {
-            id: 311,
-            link: "/dark/post1",
-            linkText: "Post 1",
-          },
-          {
-            id: 312,
-            link: "/dark/post2",
-            linkText: "Post 2",
-          },
-          {
-            id: 313,
-            link: "/dark/post3",
-            linkText: "Post 3",
-          },
-        ],
-      },
-      {
-        id: 32,
-        child: true,
-        linkText: "Video Posts",
-        third_menu: [
-          {
-            id: 321,
-            link: "/dark/video_post1",
-            linkText: "Video Style 1",
-          },
-          {
-            id: 322,
-            link: "/dark/video_post2",
-            linkText: "Video Style 2",
-          },
-          {
-            id: 323,
-            link: "/dark/video_post3",
-            linkText: "Video Style 3",
-          },
-        ],
-      },
-      {
-        id: 33,
-        child: true,
-        linkText: "Audio Posts",
-        third_menu: [
-          {
-            id: 331,
-            link: "/dark/audio_post1",
-            linkText: "Audio Style 1",
-          },
-          {
-            id: 332,
-            link: "/dark/audio_post2",
-            linkText: "Audio Style 2",
-          },
-          {
-            id: 333,
-            link: "/dark/audio_post3",
-            linkText: "Audio Style 3",
-          },
-        ],
-      },
-      {
-        id: 34,
-        child: true,
-        linkText: "Sidebars",
-        third_menu: [
-          {
-            id: 341,
-            link: "/dark/post1",
-            linkText: "Right Sidebar",
-          },
-          {
-            id: 342,
-            link: "/dark/left_post2",
-            linkText: "Left Sidebar",
-          },
-          {
-            id: 343,
-            link: "/dark/post2",
-            linkText: "No Sidebar",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 4,
-    linkText: "Categories",
-    child: true,
-    icon: "angle-down",
-    submenu: [
-      {
-        id: 41,
-        link: "/dark/business",
-        linkText: "Business",
-      },
-      {
-        id: 42,
-        link: "/dark/entertainment",
-        linkText: "Entertainment",
-      },
-      {
-        id: 43,
-        link: "/dark/features",
-        linkText: "Features",
-      },
-      {
-        id: 44,
-        link: "/dark/sports",
-        linkText: "Sports",
-      },
-      {
-        id: 45,
-        link: "/dark/trending",
-        linkText: "Trending",
-      },
-    ],
-  },
-  {
-    id: 5,
-    linkText: "World",
-    link: "/dark/world",
-  },
-  {
-    id: 6,
-    linkText: "Sports",
-    link: "/dark/sports",
-  },
-  {
-    id: 7,
-    linkText: "Contact",
-    link: "/dark/contact",
-  },
-];
+
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 58,
@@ -312,10 +106,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const MainMenu = ({ className }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
-  const { weather, dateTime, location } = useWeatherAndDate();
   const { darkMode, toggleDarkMode } = useTheme(); // Access context values
   // Access the MUI theme object
-  const muiTheme = useMuiTheme();
 
   // Check if muiTheme is correctly being accessed
   // console.log("muiTheme is:", muiTheme);

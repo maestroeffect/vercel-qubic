@@ -49,9 +49,9 @@ const QubicwebFeed = () => {
       setLoading(true); // Start loading
       try {
         // Fetch data from the server
-        // const response = await fetch("http://localhost:5000/rss-feed");
+        const response = await fetch("http://localhost:5000/rss-feed");
 
-        const response = await fetch("https://server.qubicweb.com/rss-feed");
+        // const response = await fetch("https://server.qubicweb.com/rss-feed");
         // const response = await fetch("https://nodejs.reasonwithangel.com/rss-feed");
 
         if (!response.ok) {
@@ -59,7 +59,7 @@ const QubicwebFeed = () => {
         }
 
         const feedData = await response.json();
-        console.log("Feed data: ", feedData);
+        // console.log("Feed data: ", feedData);
 
 
         if (feedData.items && Array.isArray(feedData.items)) {

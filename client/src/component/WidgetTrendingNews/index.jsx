@@ -1,19 +1,12 @@
-import React from "react";
+// import React from "react";
 import ProtoTypes from "prop-types";
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
-import QubicwebFeed from "../RssParser";
+// import QubicwebFeed from "../RssParser";
+import { useSelector } from "react-redux";
 
 const WidgetTrendingNews = ({ dark }) => {
-  const { articles, loading, error } = QubicwebFeed();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const { articles } = useSelector((state) => state.feed);
 
   if (!articles || articles.length === 0) {
     return <div>No articles available.</div>;

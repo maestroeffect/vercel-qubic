@@ -1,15 +1,11 @@
-import React from "react";
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
-import logo from "../../assets/img/logo.png";
 import logo2 from "../../assets/img/qubicweblogo.jpg";
 import logoDark from "../../assets/img/footer_logo.png";
-import tpBanner from "../../assets/img/banner/banner-1.png";
-import banner from "../../assets/img/banner/banner-9.jpg";
 import { useTheme } from "../../context/ThemeContext";  // Import the context;
 
 const LogoArea = ({ className }) => {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode } = useTheme();
   return (
     <>
       <div className={`logo_area ${className ? className : ""}`}>
