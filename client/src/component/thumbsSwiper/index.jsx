@@ -87,7 +87,7 @@ const postSlider = [
 
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  // const { articles, error } = QubicwebFeed();
+  // const { articles, error } = useSelector((state) => state.feed);
 
   return (
     <>

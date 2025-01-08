@@ -10,7 +10,7 @@ const TopBar = ({ className, dark }) => {
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   const { weather, dateTime } = useWeatherAndDate();
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles, loading, error } = useSelector((state) => state.feed);
 
 
   if (loading) {

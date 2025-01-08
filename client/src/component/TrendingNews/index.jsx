@@ -13,7 +13,7 @@ import transm5 from "../../assets/img/gallery-4.jpg";
 import transm6 from "../../assets/img/gallery-5.jpg";
 
 const TrendingNews = ({ dark }) => {
-  // const { articles, error } = QubicwebFeed();
+  // const { articles, error } = useSelector((state) => state.feed);
 
   return (
     <>

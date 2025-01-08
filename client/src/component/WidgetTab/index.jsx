@@ -45,7 +45,7 @@ const data = [
 ];
 
 const WidgetTabPane = ({ arr, a_id, id, dark }) => {
-  // const { articles, error } = QubicwebFeed();
+  // const { articles, error } = useSelector((state) => state.feed);
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
   return (

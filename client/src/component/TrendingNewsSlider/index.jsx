@@ -31,7 +31,7 @@ const trendingNews = [
   },
 ];
 const TrendingNewsSlider = () => {
-  // const { articles, error } = QubicwebFeed();
+  // const { articles, error } = useSelector((state) => state.feed);
   return (
     <div className="carousel_post2_type3 nav_style1">
       <Slider

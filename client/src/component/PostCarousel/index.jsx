@@ -13,7 +13,7 @@ import QubicwebFeed from "../RssParser";
 import { useEffect } from "react";
 
 const PostCarousel = ({ className }) => {
-  const { articles, error } = QubicwebFeed();
+  const { articles, error } = useSelector((state) => state.feed);
   const generateSlug = (title) => title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 
 
