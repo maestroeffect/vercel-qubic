@@ -130,7 +130,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Async thunk to fetch feed data
 export const fetchFeed = createAsyncThunk("feed/fetchFeed", async () => {
-    const response = await fetch("http://localhost:5000/rss-feed", {
+    const response = await fetch("https://server.qubicweb.com/rss-feed", {
         headers: {
             Authorization: `Basic ${btoa("qubicwebserver:Tintinnabulation123@")}`,
         },
