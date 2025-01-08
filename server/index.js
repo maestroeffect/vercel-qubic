@@ -450,7 +450,7 @@ const formatDate = (dateString) => {
 const fetchAndCacheFeed = async () => {
   try {
     console.log("Fetching RSS feed in background...");
-    const response = await axios.get("http://localhost:5000/rss-feed", {
+    const response = await axios.get("https://server.qubicweb.com/rss-feed", {
       headers: {
         Authorization: `Basic ${Buffer.from(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`).toString("base64")}`,
       },
