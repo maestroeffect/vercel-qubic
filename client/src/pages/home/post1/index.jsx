@@ -16,7 +16,7 @@ import BlogComment from "../../../component/BlogComment";
 function Post1() {
   const { slug } = useParams(); // Get slug from URL params
   const [post, setPost] = useState(null);
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles, loading, error } = useSelector((state) => state.feed);
   const generateSlug = (title) => {
     if (typeof title !== "string") return "AHHHH"; // Ensure title is a string
     return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");

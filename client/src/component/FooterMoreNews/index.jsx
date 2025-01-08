@@ -35,7 +35,7 @@ const news = [
 ];
 
 const FooterMoreNews = () => {
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles, loading, error } = useSelector((state) => state.feed);
   return (
     <div className="extra_newss">
       <h3 className="widget-title2">More news</h3>

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -17,19 +16,19 @@ import {
   Thumbs,
   FreeMode,
 } from "swiper/modules";
-import QubicwebFeed from "../RssParser";
-import loadingGif from "../../assets/img/loading.gif"; // Path to your loading GIF
+// import QubicwebFeed from "../RssParser";
+// import loadingGif from "../../assets/img/loading.gif"; // Path to your loading GIF
 
 function Slider({ children = [], ...props }) {
-  const { loading } = QubicwebFeed(); // Use loading state from QubicwebFeed
+  // const { loading } = useSelector((state) => state.feed); // Use loading state from QubicwebFeed
 
-  if (loading) {
-    return (
-      <div className="loading-overlay">
-        <img src={loadingGif} alt="Loading..." />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loading-overlay">
+  //       <img src={loadingGif} alt="Loading..." />
+  //     </div>
+  //   );
+  // }
 
   if (!children || children.length === 0) {
     return null; // Avoid rendering Swiper if there are no slides

@@ -1,10 +1,11 @@
-import React from "react";
+// import React from "react";
 import ProtoTypes from "prop-types";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import QubicwebFeed from "../RssParser";
+import WithLoadingAndError from "../LoadErrorHandle";
 
-const EntertainmentNews = ({ entertainments }) => {
-  const { articles, loading, error } = QubicwebFeed();
+const EntertainmentNews = () => {
+  const { articles } = useSelector((state) => state.feed);
   const includedCategories = [
     "API Security News",
     "Avast Threat Labs",
@@ -22,38 +23,40 @@ const EntertainmentNews = ({ entertainments }) => {
     includedCategories.includes(article.category)
   );
   return (
-    <>
-      {cyberArticles.slice(0, 4).map((item, i) => (
-        <div key={i} className="col-lg-6">
-          <div className="single_post post_type3 mb30">
-            <div className="post_img">
-              <div className="img_wrap">
-                <Link to={item.link} onClick={(e) => {
-                  e.preventDefault();
-                  window.open(item.link, "_blank", "noopener,noreferrer");
-                }}>
-                  <img src={item.image} className="fixed-dimensions" alt="thumb" />
-                </Link>
+    <WithLoadingAndError>
+      <>
+        {cyberArticles.slice(0, 4).map((item, i) => (
+          <div key={i} className="col-lg-6">
+            <div className="single_post post_type3 mb30">
+              <div className="post_img">
+                <div className="img_wrap">
+                  <Link to={item.link} onClick={(e) => {
+                    e.preventDefault();
+                    window.open(item.link, "_blank", "noopener,noreferrer");
+                  }}>
+                    <img src={item.image} className="fixed-dimensions" alt="thumb" />
+                  </Link>
+                </div>
               </div>
-            </div>
-            <div className="single_post_text">
-              <div className="meta3">
-                <Link to="/">{item.category}</Link>
-                <Link to="/">{item.publishedDate}</Link>
+              <div className="single_post_text">
+                <div className="meta3">
+                  <Link to="/">{item.category}</Link>
+                  <Link to="/">{item.publishedDate}</Link>
+                </div>
+                <h4>
+                  <Link to={item.link} onClick={(e) => {
+                    e.preventDefault();
+                    window.open(item.link, "_blank", "noopener,noreferrer");
+                  }}>{item.title}</Link>
+                </h4>
+                <div className="space-10" />
+                <p className="post-p">{item.contentSnippet.slice(0, 150)}...</p>
               </div>
-              <h4>
-                <Link to={item.link} onClick={(e) => {
-                  e.preventDefault();
-                  window.open(item.link, "_blank", "noopener,noreferrer");
-                }}>{item.title}</Link>
-              </h4>
-              <div className="space-10" />
-              <p className="post-p">{item.contentSnippet.slice(0, 150)}...</p>
             </div>
           </div>
-        </div>
-      ))}
-    </>
+        ))}
+      </>
+    </WithLoadingAndError>
   );
 };
 

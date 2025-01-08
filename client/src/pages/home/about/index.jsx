@@ -1,21 +1,12 @@
-import React, { useState } from "react";
 import BreadCrumb from "../../../component/BreadCrumb";
-import FontAwesome from "../../../component/uiStyle/FontAwesome";
 import { Link } from "react-router-dom";
 import WidgetTab from "../../../component/WidgetTab";
-import WidgetTrendingNews from "../../../component/WidgetTrendingNews";
-import NewsLetter from "../../../component/NewsLetter";
 import EntertainmentNews from "../../../component/EntertainmentNews";
-import SportsCarousel from "../../../component/SportsCarousel";
 import { Fade, Nav, NavItem, TabContent, TabPane } from "reactstrap";
-import MostShareWidget from "../../../component/MostShareWidget";
-import BannerSection from "../../../component/BannerSection";
 
-// images
-import banner2 from "../../../assets/img/banner/banner-2.jpg";
-import author1 from "../../../assets/img/favicon.png";
 import calendar from "../../../assets/img/icon/calendar.png";
 import { entertainments2 } from "../../../data/entertainments";
+import { useState } from "react";
 
 function About() {
   const [activeTab, setActiveTab] = useState("1");

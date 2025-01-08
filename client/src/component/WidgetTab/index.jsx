@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProtoTypes from "prop-types";
 import { TabContent, TabPane, Nav, NavItem, Fade } from "reactstrap";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import QubicwebFeed from "../RssParser";
+// import QubicwebFeed from "../RssParser";
+import { useSelector } from "react-redux";
+import WithLoadingAndError from "../LoadErrorHandle";
 
 const WidgetTabPane = ({ articles, a_id, id, dark }) => {
   return (
@@ -65,7 +67,8 @@ WidgetTabPane.propTypes = {
 
 const WidgetTab = ({ className }) => {
   const [activeTab, setActiveTab] = useState("1");
-  const { articles, error } = QubicwebFeed();
+  const { articles } = useSelector((state) => state.feed)
+  // const { articles, error } = useSelector((state) => state.feed);
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -83,7 +86,7 @@ const WidgetTab = ({ className }) => {
 
       if (diffInDays <= 7) {
         trending.push(article);
-      } else if (diffInDays <= 30) {
+      } else if (diffInDays <= 10) {
         related.push(article);
       } else {
         popular.push(article);
@@ -95,59 +98,57 @@ const WidgetTab = ({ className }) => {
 
   const { trending, related, popular } = classifyArticles();
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div className={`widget_tab md-mt-30 ${className}`}>
-      <Nav tabs>
-        <NavItem>
-          <Link
-            to="/"
-            className={classnames({ active: activeTab === "1" })}
-            onClick={() => {
-              toggle("1");
-            }}
-          >
-            TRENDING
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link
-            to="/"
-            className={classnames({ active: activeTab === "2" })}
-            onClick={() => {
-              toggle("2");
-            }}
-          >
-            RELATED
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link
-            to="/"
-            className={classnames({ active: activeTab === "3" })}
-            onClick={() => {
-              toggle("3");
-            }}
-          >
-            POPULAR
-          </Link>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
-          <WidgetTabPane a_id={activeTab} id="1" articles={trending} />
-        </TabPane>
-        <TabPane tabId="2">
-          <WidgetTabPane a_id={activeTab} id="2" articles={related} />
-        </TabPane>
-        <TabPane tabId="3">
-          <WidgetTabPane a_id={activeTab} id="3" articles={popular} />
-        </TabPane>
-      </TabContent>
-    </div>
+    <WithLoadingAndError>
+      <div className={`widget_tab md-mt-30 ${className}`}>
+        <Nav tabs>
+          <NavItem>
+            <Link
+              to="/"
+              className={classnames({ active: activeTab === "1" })}
+              onClick={() => {
+                toggle("1");
+              }}
+            >
+              TRENDING
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link
+              to="/"
+              className={classnames({ active: activeTab === "2" })}
+              onClick={() => {
+                toggle("2");
+              }}
+            >
+              RELATED
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link
+              to="/"
+              className={classnames({ active: activeTab === "3" })}
+              onClick={() => {
+                toggle("3");
+              }}
+            >
+              POPULAR
+            </Link>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={activeTab}>
+          <TabPane tabId="1">
+            <WidgetTabPane a_id={activeTab} id="1" articles={trending} />
+          </TabPane>
+          <TabPane tabId="2">
+            <WidgetTabPane a_id={activeTab} id="2" articles={related} />
+          </TabPane>
+          <TabPane tabId="3">
+            <WidgetTabPane a_id={activeTab} id="3" articles={popular} />
+          </TabPane>
+        </TabContent>
+      </div>
+    </WithLoadingAndError>
   );
 };
 

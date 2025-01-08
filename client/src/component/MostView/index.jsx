@@ -1,15 +1,14 @@
-import React from "react";
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
 
 import { mostViewSort } from "../../utils/commonFunctions";
 import Slider from "../Slider";
-import QubicwebFeed from "../RssParser";
+import { useSelector } from "react-redux";
 
 
 const MostView = ({ no_margin, title, dark }) => {
-  const { articles, loading, error } = QubicwebFeed();
+  const { articles } = useSelector((state) => state.feed);
 
 
   return (
