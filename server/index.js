@@ -332,6 +332,12 @@ const saveCacheToFile = () => {
   }
 };
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 // Basic Authentication credentials
 const BASIC_AUTH_USERNAME = "qubicwebserver";
 const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
@@ -446,6 +452,16 @@ const processFeedData = async (feedEntries) => {
       limit(async () => {
         let imageUrl = null;
 
+        // console.log("Entry Link:", entry.link);
+
+        // Extract link
+        // let link = "No link available";
+        // if (typeof entry.link === "string") {
+        //   link = entry.link;
+        // } else if (entry.link?.$?.href) {
+        //   link = entry.link.$.href; // Handle the "$.href" structure
+        // }
+
         // Process image URLs
         if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
           imageUrl = entry["media:group"]["media:thumbnail"].$.url;
@@ -491,12 +507,15 @@ const processFeedData = async (feedEntries) => {
             ? entry.title._
             : entry.title;
         const validTitle = typeof title === "string" ? title : "Untitled";
+        // console.log(entry.link?.$.href);
 
         return {
           title: validTitle,
-          link: entry.link?.href || "No link available",
+          link: entry.link?.$.href || "No link available",
           contentSnippet: entry.summary || "No summary available.",
-          publishedDate: entry.updated || "No published date available",
+          publishedDate: entry.updated
+            ? formatDate(entry.updated)
+            : "No published date available",
           image: imageUrl || "No image available",
           source: sourceObject,
           category: sourceObject.title || "Uncategorized",
@@ -522,13 +541,13 @@ const fetchAndCacheFeed = async () => {
       },
     });
 
-    console.log("Raw Response Data:", response.data);
+    // console.log("Raw Response Data:", response.data);
 
     // Parse XML to JSON
     const parser = new xml2js.Parser({ explicitArray: false });
     const parsedData = await parser.parseStringPromise(response.data);
 
-    console.log("Parsed Feed Data:", parsedData);
+    // console.log("Parsed Feed Data:", parsedData);
 
     // Validate and extract entries
     if (!parsedData || !parsedData.feed || !parsedData.feed.entry) {

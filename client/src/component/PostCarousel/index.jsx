@@ -5,6 +5,8 @@ import FontAwesome from "../uiStyle/FontAwesome";
 import Slider from "../Slider";
 import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
+import slider5 from "../../assets/img/post-2.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 
 const PostCarousel = ({ className }) => {
@@ -40,7 +42,13 @@ const PostCarousel = ({ className }) => {
                         <div className="post_img">
                           <div className="img_wrap">
                             <Link to="/">
-                              <img src={item.image} alt="slider5" />
+                              <LazyLoadImage
+                                alt="slider5"
+                                src={item.image} // Image source
+                                effect="blur" // Optional: Adds a blur effect before image loads
+                                placeholderSrc={slider5}
+                              />
+                              {/* <img src={item.image} alt={slider5} /> */}
                             </Link>
                           </div>
                         </div>
