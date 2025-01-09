@@ -338,43 +338,43 @@ const formatDate = (dateString) => {
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
 
-// Basic Authentication credentials
-const BASIC_AUTH_USERNAME = "qubicwebserver";
-const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
+// // Basic Authentication credentials
+// const BASIC_AUTH_USERNAME = "qubicwebserver";
+// const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
 
-// Basic Authentication middleware
-const basicAuthMiddleware = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) {
-    return res
-      .set("WWW-Authenticate", 'Basic realm="Restricted"')
-      .status(401)
-      .json({ error: "Authorization required" });
-  }
+// // Basic Authentication middleware
+// const basicAuthMiddleware = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   if (!authHeader) {
+//     return res
+//       .set("WWW-Authenticate", 'Basic realm="Restricted"')
+//       .status(401)
+//       .json({ error: "Authorization required" });
+//   }
 
-  const [type, credentials] = authHeader.split(" ");
-  if (type !== "Basic" || !credentials) {
-    return res.status(401).json({ error: "Invalid authorization format" });
-  }
+//   const [type, credentials] = authHeader.split(" ");
+//   if (type !== "Basic" || !credentials) {
+//     return res.status(401).json({ error: "Invalid authorization format" });
+//   }
 
-  const [username, password] = Buffer.from(credentials, "base64")
-    .toString("utf-8")
-    .split(":");
+//   const [username, password] = Buffer.from(credentials, "base64")
+//     .toString("utf-8")
+//     .split(":");
 
-  if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
-    return next();
-  }
+//   if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
+//     return next();
+//   }
 
-  return res.status(401).json({ error: "Invalid username or password" });
-};
+//   return res.status(401).json({ error: "Invalid username or password" });
+// };
 
-// Middleware to check if the request is internal (from the server itself)
-const internalRequestMiddleware = (req, res, next) => {
-  if (req.headers["internal-request"] === "true") {
-    return next(); // Allow internal requests without authentication
-  }
-  return basicAuthMiddleware(req, res, next); // Apply Basic Authentication for external requests
-};
+// // Middleware to check if the request is internal (from the server itself)
+// const internalRequestMiddleware = (req, res, next) => {
+//   if (req.headers["internal-request"] === "true") {
+//     return next(); // Allow internal requests without authentication
+//   }
+//   return basicAuthMiddleware(req, res, next); // Apply Basic Authentication for external requests
+// };
 
 app.use(cors());
 app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
@@ -535,11 +535,7 @@ const processFeedData = async (feedEntries) => {
 const fetchAndCacheFeed = async () => {
   try {
     console.log("Fetching RSS feed in background...");
-    const response = await axios.get("https://qubicbox.com/feed/wprss", {
-      headers: {
-        Authorization: `Basic ${Buffer.from(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`).toString("base64")}`,
-      },
-    });
+    const response = await axios.get("https://qubicbox.com/feed/wprss");
 
     // console.log("Raw Response Data:", response.data);
 
@@ -577,14 +573,7 @@ setInterval(fetchAndCacheFeed, 60 * 60 * 1000);
 fetchAndCacheFeed();
 
 // Route to serve the cached RSS feed
-app.get("/rss-feed", internalRequestMiddleware, (req, res) => {
-  res.setHeader(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate"
-  );
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-
+app.get("/rss-feed", (req, res) => {
   const { refresh } = req.query;
 
   if (refresh) {
