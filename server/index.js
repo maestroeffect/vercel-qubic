@@ -291,7 +291,7 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-const { parseStringPromise } = require("xml2js");
+const xml2js = require("xml2js");
 const cheerio = require("cheerio");
 const axiosRetry = require("axios-retry").default;
 const path = require("path");
@@ -385,8 +385,48 @@ axiosRetry(axios, {
   shouldResetTimeout: true,
 });
 
+// Fetch image with caching and concurrency control
+const fetchImageFromLinkWithCache = async (url) => {
+  if (imageCache.has(url)) {
+    return imageCache.get(url);
+  }
+
+  const imageUrl = await fetchImageFromLink(url);
+  if (imageUrl) {
+    imageCache.set(url, imageUrl);
+  }
+  return imageUrl;
+};
+
+// Fetch image with headers
+const fetchImageFromLink = async (url) => {
+  try {
+    const response = await axios.get(url, {
+      timeout: 5000,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      },
+    });
+    const $ = cheerio.load(response.data);
+    const selectors = [
+      'meta[property="og:image"]',
+      'meta[name="twitter:image"]',
+      "article img",
+      "img",
+    ];
+    for (const selector of selectors) {
+      const imageUrl = $(selector).attr("content") || $(selector).attr("src");
+      if (imageUrl) return imageUrl;
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
+
 // Fetch and process RSS feed data
-const processFeedData = async (feedData) => {
+const processFeedData = async (feedEntries) => {
   const videoSources = [
     "https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA",
     "https://www.youtube.com/channel/UCVeW9qkBjo3zosnqUbG7CFw",
@@ -401,71 +441,112 @@ const processFeedData = async (feedData) => {
   ];
   const blogSources = ["https://www.sheriffdeputiesltd.com/"];
 
-  if (feedData.items && Array.isArray(feedData.items)) {
-    return feedData.items.map((item) => {
-      const sourceObject = item.source || {
-        id: "Unknown Source",
-        title: "Unknown Title",
-      };
-      const sourceUrl2 = sourceObject.id;
-      const isVideo = videoSources.includes(sourceUrl2);
-      const isBlog = blogSources.includes(sourceUrl2);
+  const results = await Promise.allSettled(
+    feedEntries.map((entry) =>
+      limit(async () => {
+        let imageUrl = null;
 
-      const title =
-        item.title && typeof item.title === "object"
-          ? item.title._
-          : item.title;
-      const validTitle = typeof title === "string" ? title : "Untitled";
+        // Process image URLs
+        if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
+          imageUrl = entry["media:group"]["media:thumbnail"].$.url;
+        } else if (entry["media:content"]) {
+          const mediaContent = entry["media:content"];
+          if (Array.isArray(mediaContent) && mediaContent.length > 0) {
+            imageUrl = mediaContent[0].$.url || null;
+          }
+        } else if (
+          typeof entry.content === "object" &&
+          entry.content._ &&
+          entry.content._.match(/<img[^>]+src=["']([^"']+)["']/)
+        ) {
+          const contentMatch = entry.content._.match(
+            /<img[^>]+src=["']([^"']+)["']/
+          );
+          imageUrl = contentMatch ? contentMatch[1] : null;
+        } else if (entry.link?.$.href) {
+          imageUrl = await fetchImageFromLinkWithCache(entry.link.$.href);
+        }
 
-      return {
-        title: validTitle,
-        link: item.link || "No link available",
-        contentSnippet: item.contentSnippet || "No summary available.",
-        publishedDate: item.publishedDate
-          ? formatDate(item.publishedDate)
-          : "No published date available",
-        image: item.image || "No image available",
-        source: sourceObject,
-        category: sourceObject.title || "Uncategorized",
-        isVideo,
-        isBlog,
-      };
-    });
-  } else {
-    throw new Error(
-      "Unexpected feed structure: items not found or not an array."
-    );
-  }
-};
+        if (!imageUrl && entry.link) {
+          const linkHref =
+            typeof entry.link === "string" ? entry.link : entry.link.$?.href;
+          if (linkHref) {
+            const videoIdMatch = linkHref.match(/v=([a-zA-Z0-9_-]+)/);
+            if (videoIdMatch) {
+              imageUrl = `https://i.ytimg.com/vi/${videoIdMatch[1]}/maxresdefault.jpg`;
+            }
+          }
+        }
 
-// Helper functions
+        const sourceObject = entry.source || {
+          id: "Unknown Source",
+          title: "Unknown Title",
+        };
+        const sourceUrl2 = sourceObject.id;
+        const isVideo = videoSources.includes(sourceUrl2);
+        const isBlog = blogSources.includes(sourceUrl2);
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const options = { year: "numeric", month: "short", day: "numeric" };
-  return new Intl.DateTimeFormat("en-US", options).format(date);
+        const title =
+          entry.title && typeof entry.title === "object"
+            ? entry.title._
+            : entry.title;
+        const validTitle = typeof title === "string" ? title : "Untitled";
+
+        return {
+          title: validTitle,
+          link: entry.link?.href || "No link available",
+          contentSnippet: entry.summary || "No summary available.",
+          publishedDate: entry.updated || "No published date available",
+          image: imageUrl || "No image available",
+          source: sourceObject,
+          category: sourceObject.title || "Uncategorized",
+          isVideo,
+          isBlog,
+        };
+      })
+    )
+  );
+
+  return results
+    .filter((result) => result.status === "fulfilled")
+    .map((result) => result.value);
 };
 
 // Fetch and cache the RSS feed
 const fetchAndCacheFeed = async () => {
   try {
     console.log("Fetching RSS feed in background...");
-    const response = await axios.get("http://localhost:5000/rss-feed", {
+    const response = await axios.get("https://qubicbox.com/feed/wprss", {
       headers: {
         Authorization: `Basic ${Buffer.from(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`).toString("base64")}`,
       },
     });
 
-    if (!response.data || !response.data.items) {
-      throw new Error("Invalid feed data");
+    console.log("Raw Response Data:", response.data);
+
+    // Parse XML to JSON
+    const parser = new xml2js.Parser({ explicitArray: false });
+    const parsedData = await parser.parseStringPromise(response.data);
+
+    console.log("Parsed Feed Data:", parsedData);
+
+    // Validate and extract entries
+    if (!parsedData || !parsedData.feed || !parsedData.feed.entry) {
+      throw new Error("Invalid feed data structure");
     }
 
-    const processedItems = await processFeedData(response.data);
+    const feedEntries = Array.isArray(parsedData.feed.entry)
+      ? parsedData.feed.entry
+      : [parsedData.feed.entry]; // Ensure entries are in an array
+
+    console.log("Number of Feed Entries:", feedEntries.length);
+
+    // Process entries
+    const processedItems = await processFeedData(feedEntries);
 
     cachedFeed = { items: processedItems };
     lastFetchTime = Date.now();
     console.log("RSS feed successfully cached.");
-
     saveCacheToFile();
   } catch (error) {
     console.error("Error fetching RSS feed:", error.message);
