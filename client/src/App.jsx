@@ -95,7 +95,7 @@ function App() {
     (state) => state.feed
   );
 
-  const DATA_EXPIRY_TIME = 2 * 60 * 60 * 1000; // 24 hours in milliseconds
+  const DATA_EXPIRY_TIME = 6 * 60 * 60 * 1000; // 24 hours in milliseconds
   const isFromLocalStorageRef = useRef(false); // Track if data is loaded from localStorage
 
   // Check for stored data or fetch fresh data
