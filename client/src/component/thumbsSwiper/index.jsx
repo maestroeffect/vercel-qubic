@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
 
-
 function ThumbsSwiper() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { articles } = useSelector((state) => state.feed);
@@ -20,7 +19,6 @@ function ThumbsSwiper() {
   const generalArticles = articles.filter((article) =>
     includedCategories.includes(article.category)
   );
-
 
   return (
     <WithLoadingAndError>
@@ -42,11 +40,15 @@ function ThumbsSwiper() {
             {generalArticles.slice(0, 9).map((item, i) => (
               <div key={i} className="single_post post_type6 xs-mb30">
                 <div className="post_img gradient1">
-                  <img src={item?.image} style={{
-                    width: "1460px",
-                    height: "500px",
-                    objectFit: "cover",
-                  }} alt="thumb" />
+                  <img
+                    src={item?.image}
+                    style={{
+                      width: "1460px",
+                      height: "500px",
+                      objectFit: "cover",
+                    }}
+                    alt="thumb"
+                  />
                   <span
                     // onClick={() => this.modalHandler(true)}
                     className="tranding"
@@ -60,15 +62,21 @@ function ThumbsSwiper() {
                     <Link to="#">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link className="play_btn" to={item.link} onClick={(e) => {
-                      e.preventDefault();
-                      window.open(item.link, "_blank", "noopener,noreferrer");
-                    }}>
-                      {item.title.slice(0, 50)}...
+                    <Link
+                      className="play_btn"
+                      to={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(item.link, "_blank", "noopener,noreferrer");
+                      }}
+                    >
+                      {item.title}
                     </Link>
                   </h4>
                   <div className="space-10" />
-                  <p className="post-p">{item?.contentSnippet.slice(0, 100)}...</p>
+                  <p className="post-p">
+                    {item?.contentSnippet.slice(0, 100)}...
+                  </p>
                 </div>
               </div>
             ))}
@@ -102,11 +110,15 @@ function ThumbsSwiper() {
           >
             {generalArticles.slice(0, 9).map((item, i) => (
               <div key={i} className="single_gallary_item">
-                <img src={item.image} style={{
-                  width: "95px",
-                  height: "70px",
-                  objectFit: "cover",
-                }} alt="thumb" />
+                <img
+                  src={item.image}
+                  style={{
+                    width: "95px",
+                    height: "70px",
+                    objectFit: "cover",
+                  }}
+                  alt="thumb"
+                />
               </div>
             ))}
           </Slider>

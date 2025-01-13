@@ -8,14 +8,15 @@ import FontAwesome from "../uiStyle/FontAwesome";
 import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
 
-
 const FeatureNews = ({ className }) => {
   // const { articles, loading, error } = useSelector((state) => state.feed);
   const { articles } = useSelector((state) => state.feed);
 
   return (
     <WithLoadingAndError>
-      <div className={`feature_carousel_area mb40 ${className ? className : ""}`}>
+      <div
+        className={`feature_carousel_area mb40 ${className ? className : ""}`}
+      >
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -58,11 +59,15 @@ const FeatureNews = ({ className }) => {
                     <div key={i} className="single_post post_type6 post_type7">
                       <div className="post_img gradient1">
                         <Link to="/">
-                          <img src={item?.image} style={{
-                            width: "255px",
-                            height: "320px",
-                            objectFit: "cover",
-                          }} alt="thumb" />
+                          <img
+                            src={item?.image}
+                            style={{
+                              width: "255px",
+                              height: "320px",
+                              objectFit: "cover",
+                            }}
+                            alt="thumb"
+                          />
                         </Link>
                       </div>
                       <div className="single_post_text">
@@ -71,10 +76,19 @@ const FeatureNews = ({ className }) => {
                           <Link to="/">{item.publishedDate}</Link>
                         </div>
                         <h4>
-                          <Link to={item.link} onClick={(e) => {
-                            e.preventDefault();
-                            window.open(item.link, "_blank", "noopener,noreferrer");
-                          }}>{item.title.slice(0, 50)}...</Link>
+                          <Link
+                            to={item.link}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.open(
+                                item.link,
+                                "_blank",
+                                "noopener,noreferrer"
+                              );
+                            }}
+                          >
+                            {item.title}
+                          </Link>
                         </h4>
                       </div>
                     </div>

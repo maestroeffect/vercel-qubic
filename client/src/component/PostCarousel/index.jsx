@@ -8,7 +8,6 @@ import WithLoadingAndError from "../LoadErrorHandle";
 import slider5 from "../../assets/img/post-2.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-
 const PostCarousel = ({ className }) => {
   const { articles } = useSelector((state) => state.feed);
 
@@ -38,7 +37,10 @@ const PostCarousel = ({ className }) => {
                     }}
                   >
                     {articles.map((item, i) => (
-                      <div key={i} className="single_post widgets_small post_type5">
+                      <div
+                        key={i}
+                        className="single_post widgets_small post_type5"
+                      >
                         <div className="post_img">
                           <div className="img_wrap">
                             <Link to="/">
@@ -61,12 +63,21 @@ const PostCarousel = ({ className }) => {
 
                         <div className="single_post_text">
                           <h4>
-                            <Link to={item.link} onClick={(e) => {
-                              e.preventDefault();
-                              window.open(item.link, "_blank", "noopener,noreferrer");
-                            }}>{item.title.slice(0, 25)}...</Link>
+                            <Link
+                              to={item.link}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                window.open(
+                                  item.link,
+                                  "_blank",
+                                  "noopener,noreferrer"
+                                );
+                              }}
+                            >
+                              {item.title.slice(0, 80)}
+                            </Link>
                           </h4>
-                          <p>{item.contentSnippet.slice(0, 25)}...</p>
+                          {/* <p>{item.contentSnippet.slice(0, 25)}...</p> */}
                         </div>
                       </div>
                     ))}
