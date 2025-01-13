@@ -45,15 +45,22 @@ const MixCarousel = ({ className, dark }) => {
                     }}
                   >
                     {articles.map((item, i) => (
-                      <div key={i} className="single_post post_type6 post_type9">
+                      <div
+                        key={i}
+                        className="single_post post_type6 post_type9"
+                      >
                         <div className="post_img gradient1">
                           <div className="img_wrap">
                             <Link className="play_btn" to="/">
-                              <img src={item.image} style={{
-                                height: "440px",
-                                width: "1080px",
-                                objectFit: "cover",
-                              }} alt="news" />
+                              <img
+                                src={item.image}
+                                style={{
+                                  height: "440px",
+                                  width: "1080px",
+                                  objectFit: "cover",
+                                }}
+                                alt="news"
+                              />
                             </Link>
                           </div>
                           <span
@@ -69,10 +76,19 @@ const MixCarousel = ({ className, dark }) => {
                             <Link to="#">{item.publishedDate}</Link>
                           </div>
                           <h4>
-                            <Link to={item.link} onClick={(e) => {
-                              e.preventDefault();
-                              window.open(item.link, "_blank", "noopener,noreferrer");
-                            }}>{item.title.slice(0, 50)}...</Link>
+                            <Link
+                              to={item.link}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                window.open(
+                                  item.link,
+                                  "_blank",
+                                  "noopener,noreferrer"
+                                );
+                              }}
+                            >
+                              {item.title}
+                            </Link>
                           </h4>
                         </div>
                       </div>

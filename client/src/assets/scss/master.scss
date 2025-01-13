@@ -45,11 +45,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;700;800;900&display=swap");
 
 @font-face {
-  font-family: "Garamond";
-  src: url("../fonts/Garamond-bold.ttf") format("truetype");
+  font-family: "YahooSans-Semibold";
+  src: url("../fonts/YahooSans-Semibold.woff") format("truetype");
   font-weight: normal;
   font-size: normal;
 }
+
+// @font-face {
+//     font-family: "Yahoo Sans Bold Regular";
+//     src: url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.eot");
+//     src: url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.eot?#iefix")format("embedded-opentype"),
+//     url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.woff2")format("woff2"),
+//     url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.woff")format("woff"),
+//     url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.ttf")format("truetype"),
+//     url("https://db.onlinewebfonts.com/t/557602b15207c6d67bbdda171a4157dd.svg#Yahoo Sans Bold Regular")format("svg");
+// }
 
 // @font-face {
 //   font-family: "Made Coachella";
