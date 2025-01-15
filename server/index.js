@@ -338,44 +338,6 @@ const formatDate = (dateString) => {
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
 
-// // Basic Authentication credentials
-// const BASIC_AUTH_USERNAME = "qubicwebserver";
-// const BASIC_AUTH_PASSWORD = "Tintinnabulation123@";
-
-// // Basic Authentication middleware
-// const basicAuthMiddleware = (req, res, next) => {
-//   const authHeader = req.headers["authorization"];
-//   if (!authHeader) {
-//     return res
-//       .set("WWW-Authenticate", 'Basic realm="Restricted"')
-//       .status(401)
-//       .json({ error: "Authorization required" });
-//   }
-
-//   const [type, credentials] = authHeader.split(" ");
-//   if (type !== "Basic" || !credentials) {
-//     return res.status(401).json({ error: "Invalid authorization format" });
-//   }
-
-//   const [username, password] = Buffer.from(credentials, "base64")
-//     .toString("utf-8")
-//     .split(":");
-
-//   if (username === BASIC_AUTH_USERNAME && password === BASIC_AUTH_PASSWORD) {
-//     return next();
-//   }
-
-//   return res.status(401).json({ error: "Invalid username or password" });
-// };
-
-// // Middleware to check if the request is internal (from the server itself)
-// const internalRequestMiddleware = (req, res, next) => {
-//   if (req.headers["internal-request"] === "true") {
-//     return next(); // Allow internal requests without authentication
-//   }
-//   return basicAuthMiddleware(req, res, next); // Apply Basic Authentication for external requests
-// };
-
 app.use(cors());
 app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
 
@@ -452,16 +414,6 @@ const processFeedData = async (feedEntries) => {
       limit(async () => {
         let imageUrl = null;
 
-        // console.log("Entry Link:", entry.link);
-
-        // Extract link
-        // let link = "No link available";
-        // if (typeof entry.link === "string") {
-        //   link = entry.link;
-        // } else if (entry.link?.$?.href) {
-        //   link = entry.link.$.href; // Handle the "$.href" structure
-        // }
-
         // Process image URLs
         if (entry["media:group"]?.["media:thumbnail"]?.$.url) {
           imageUrl = entry["media:group"]["media:thumbnail"].$.url;
@@ -509,10 +461,17 @@ const processFeedData = async (feedEntries) => {
         const validTitle = typeof title === "string" ? title : "Untitled";
         // console.log(entry.link?.$.href);
 
+        // Extract full content
+        const fullContent =
+          entry.content && typeof entry.content === "object"
+            ? entry.content._
+            : "No full content available.";
+
         return {
           title: validTitle,
           link: entry.link?.$.href || "No link available",
           contentSnippet: entry.summary || "No summary available.",
+          fullContent: fullContent, // New property for full content
           publishedDate: entry.updated
             ? formatDate(entry.updated)
             : "No published date available",
@@ -558,6 +517,12 @@ const fetchAndCacheFeed = async () => {
 
     // Process entries
     const processedItems = await processFeedData(feedEntries);
+
+    // Log the entire processed items
+    // console.log(
+    //   "Processed Feed Items:",
+    //   JSON.stringify(processedItems, null, 2)
+    // );
 
     cachedFeed = { items: processedItems };
     lastFetchTime = Date.now();
