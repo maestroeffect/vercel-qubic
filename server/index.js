@@ -477,6 +477,7 @@ const processFeedData = async (feedEntries) => {
             : "No published date available",
           image: imageUrl || "No image available",
           source: sourceObject,
+          author: entry.author,
           category: sourceObject.title || "Uncategorized",
           isVideo,
           isBlog,
