@@ -35,11 +35,14 @@ const WidgetTabPane = ({ articles, a_id, id, dark }) => {
                   <Link to="#">{item.publishedDate}</Link>
                 </div>
                 <h4>
-                  <Link to={item.link} onClick={(e) => {
-                    e.preventDefault();
-                    window.open(item.link, "_blank", "noopener,noreferrer");
-                  }}>
-                    {item.title.slice(0, 50)}...
+                  <Link
+                    to={item.link}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }}
+                  >
+                    {item.title}
                   </Link>
                 </h4>
               </div>
@@ -67,7 +70,7 @@ WidgetTabPane.propTypes = {
 
 const WidgetTab = ({ className }) => {
   const [activeTab, setActiveTab] = useState("1");
-  const { articles } = useSelector((state) => state.feed)
+  const { articles } = useSelector((state) => state.feed);
   // const { articles, error } = useSelector((state) => state.feed);
 
   const toggle = (tab) => {
