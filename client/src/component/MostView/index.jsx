@@ -6,10 +6,8 @@ import { mostViewSort } from "../../utils/commonFunctions";
 import Slider from "../Slider";
 import { useSelector } from "react-redux";
 
-
 const MostView = ({ no_margin, title, dark }) => {
   const { articles } = useSelector((state) => state.feed);
-
 
   return (
     <div className={`widget tab_widgets ${no_margin ? "" : "mb30"}`}>
@@ -31,7 +29,11 @@ const MostView = ({ no_margin, title, dark }) => {
               <div className="single_post widgets_small type8">
                 <div className="post_img">
                   <div className="img_wrap">
-                    <img src={item?.image} className="fixed-dimensions-trending2" alt="thumb" />
+                    <img
+                      src={item?.image}
+                      className="fixed-dimensions-trending2"
+                      alt="thumb"
+                    />
                   </div>
                   <span className="tranding">
                     <FontAwesome name="bolt" />
@@ -43,15 +45,20 @@ const MostView = ({ no_margin, title, dark }) => {
                     <Link to="/">{item.publishedDate}</Link>
                   </div>
                   <h4>
-                    <Link to={item.link} onClick={(e) => {
-                      e.preventDefault();
-                      window.open(item.link, "_blank", "noopener,noreferrer");
-                    }}>{item.title.slice(0, 45)}...</Link>
+                    <Link
+                      to={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(item.link, "_blank", "noopener,noreferrer");
+                      }}
+                    >
+                      {item.title.slice(0, 50)}
+                    </Link>
                   </h4>
                 </div>
-                <div className="type8_count">
+                {/* <div className="type8_count">
                   <h2>{item.id}</h2>
-                </div>
+                </div> */}
               </div>
               {i + 2 < articles.length ? (
                 <>
