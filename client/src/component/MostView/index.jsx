@@ -52,7 +52,7 @@ const MostView = ({ no_margin, title, dark }) => {
                         window.open(item.link, "_blank", "noopener,noreferrer");
                       }}
                     >
-                      {item.title.slice(0, 50)}
+                      {item.title}
                     </Link>
                   </h4>
                 </div>
