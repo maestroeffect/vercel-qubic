@@ -45,8 +45,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;700;800;900&display=swap");
 
 @font-face {
-  font-family: "YahooSans-Semibold";
-  src: url("../fonts/YahooSans-Semibold.woff") format("truetype");
+  font-family: "Garamond-bold";
+  src: url("../fonts/Garamond-bold.ttf") format("truetype");
   font-weight: normal;
   font-size: normal;
 }
@@ -724,12 +724,12 @@ a.social_medium {
   h4 {
     font-size: 16px;
     color: $body_color;
-    font-weight: $wightMedium;
+    font-weight: bold !important;
     line-height: 21px;
 
     a {
       color: $body_color;
-      font-weight: $wightMedium;
+      font-weight: bold !important;
     }
   }
 }
