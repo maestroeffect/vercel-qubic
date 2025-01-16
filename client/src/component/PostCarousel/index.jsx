@@ -75,7 +75,7 @@ const PostCarousel = ({ className }) => {
                                 );
                               }}
                             >
-                              {item.title.slice(0, 70)}
+                              {item.title}
                             </Link>
                           </h4>
                           {/* <p>{item.contentSnippet.slice(0, 25)}...</p> */}
