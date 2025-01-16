@@ -8,10 +8,11 @@ import { useSelector } from "react-redux";
 import transm1 from "../../assets/img/gallery-1.jpg";
 import transm2 from "../../assets/img/gallery-2.jpg";
 
-
 const TrendingNews = ({ dark }) => {
   const { articles } = useSelector((state) => state.feed);
-  const generalArticles = articles.filter((article) => article.category === "Engadget");
+  const generalArticles = articles.filter(
+    (article) => article.category === "Engadget"
+  );
 
   // https://technext24.com/
 
@@ -44,14 +45,23 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category.slice(0, 20) || "UNKNOWN"}</Link>
+                    <Link to="/">
+                      {item.category.slice(0, 20) || "UNKNOWN"}
+                    </Link>
                     <Link to="/">{item.publishedDate || "KAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={item.link} onClick={(e) => {
-                      e.preventDefault();
-                      window.open(item.link, "_blank", "noopener,noreferrer");
-                    }}>{item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title}</Link>
+                    <Link
+                      to={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(item.link, "_blank", "noopener,noreferrer");
+                      }}
+                    >
+                      {item.title}
+                    </Link>
+
+                    {/* {item.title.length > 50 ? `${item.title.substring(0, 50)}...` : item.title} */}
                   </h4>
                 </div>
               </div>
@@ -72,7 +82,8 @@ const TrendingNews = ({ dark }) => {
                 <div className="post_img">
                   <div className="img_wrap">
                     <img
-                      src={item?.image || transm2} className="fixed-dimensions-trending"
+                      src={item?.image || transm2}
+                      className="fixed-dimensions-trending"
                       alt="thumb"
                     />
                   </div>
@@ -82,14 +93,21 @@ const TrendingNews = ({ dark }) => {
                 </div>
                 <div className="single_post_text">
                   <div className="meta2">
-                    <Link to="/">{item.category.slice(0, 10) || "UNKNOWN"}</Link>
+                    <Link to="/">
+                      {item.category.slice(0, 10) || "UNKNOWN"}
+                    </Link>
                     <Link to="/">{item.publishedDate || "kAI"}</Link>
                   </div>
                   <h4 title={item.title} className="title-truncate">
-                    <Link to={item.link} onClick={(e) => {
-                      e.preventDefault();
-                      window.open(item.link, "_blank", "noopener,noreferrer");
-                    }}>{item.title.length > 50 ? `${item.title.substring(0, 45)}...` : item.title}</Link>
+                    <Link
+                      to={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(item.link, "_blank", "noopener,noreferrer");
+                      }}
+                    >
+                      {item.title}
+                    </Link>
                   </h4>
                 </div>
               </div>

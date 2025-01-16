@@ -40,11 +40,18 @@ const MostShareWidget = ({ title, dark }) => {
                       <Link to="#">{item.publishedDate}</Link>
                     </div>
                     <h4>
-                      <Link to={item.link} onClick={(e) => {
-                        e.preventDefault();
-                        window.open(item.link, "_blank", "noopener,noreferrer");
-                      }}>
-                        {item.title.slice(0, 50)}...
+                      <Link
+                        to={item.link}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          window.open(
+                            item.link,
+                            "_blank",
+                            "noopener,noreferrer"
+                          );
+                        }}
+                      >
+                        {item.title}
                       </Link>
                     </h4>
                     <ul className="inline socail_share">
