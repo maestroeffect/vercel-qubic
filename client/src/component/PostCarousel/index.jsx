@@ -61,9 +61,10 @@ const PostCarousel = ({ className }) => {
                           </div>
                         </div>
 
-                        <div className="single_post_text">
+                        <div className="single_post_text fw-bold">
                           <h4>
                             <Link
+                              className=""
                               to={item.link}
                               onClick={(e) => {
                                 e.preventDefault();
@@ -74,7 +75,7 @@ const PostCarousel = ({ className }) => {
                                 );
                               }}
                             >
-                              {item.title.slice(0, 80)}
+                              {item.title.slice(0, 70)}
                             </Link>
                           </h4>
                           {/* <p>{item.contentSnippet.slice(0, 25)}...</p> */}
