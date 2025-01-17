@@ -42,8 +42,9 @@ const menus = [
     id: 5,
     linkText: "Digital Directory",
     child: false,
-    link: "https://google.com",
+    link: "https://app.qubicweb.com",
     // icon: "angle-down",
+    target: "_blank", // Add this
   },
 ];
 
