@@ -1,4 +1,3 @@
-import React from "react";
 import BreadCrumb from "../../../component/BreadCrumb";
 import BusinessNews from "../../../component/BusinessNews";
 import FontAwesome from "../../../component/uiStyle/FontAwesome";
