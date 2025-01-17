@@ -42,7 +42,7 @@ const menus = [
     id: 5,
     linkText: "Digital Directory",
     child: false,
-    link: "/feedDirectory",
+    link: "https://google.com",
     // icon: "angle-down",
   },
 ];
