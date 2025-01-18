@@ -84,7 +84,7 @@ import LeftPost2 from "./pages/home/left_post2";
 // import HomeDarkAudioPost3 from "./pages/homeDark/audio_post3";
 // import HomeDarkLeftPost2 from "./pages/homeDark/left_post2";
 import Blog from "./component/Blog";
-import Cybershield from "./pages/home/cybershield";
+// import Cybershield from "./pages/home/cybershield";
 
 const router = createBrowserRouter([
   {
@@ -97,7 +97,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/cybershield",
-        element: <Cybershield />,
+        // element: <Cybershield />,
       },
       {
         path: "/entertainment",
