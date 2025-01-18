@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Lightbox from "react-image-lightbox"; // Install this package using 'npm install react-image-lightbox'
+import Lightbox from "react"; // Install this package using 'npm install react-image-lightbox'
 import "react-image-lightbox/style.css";
 import BreadCrumb from "../../../component/BreadCrumb";
 
