@@ -13,13 +13,13 @@ import { useTheme } from "../../context/ThemeContext";
 const menus = [
   {
     id: 1,
-    linkText: "Qubicbrief",
+    linkText: "Digital Brief",
     child: false,
     // icon: "angle-down",
   },
   {
     id: 2,
-    linkText: "Qubicshield",
+    linkText: "Cybershield",
     child: false,
     link: "/cybershield",
     // icon: "angle-down",
@@ -40,7 +40,7 @@ const menus = [
   },
   {
     id: 5,
-    linkText: "Qubicdirectory",
+    linkText: "Digital Directory",
     child: false,
     link: "https://app.qubicweb.com",
     // icon: "angle-down",
