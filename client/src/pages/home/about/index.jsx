@@ -19,7 +19,7 @@ function About() {
         <div className="space-10" />
         {/* <div className="row"> */}
         {/* <div className="col-lg-12"> */}
-        <div className="author_about p-0">
+        <div className="container author_about p-0">
           {/* <div className="author_img">
                   <div className="author_wrap">
                     <img src={author1} alt="author1" />
@@ -55,23 +55,55 @@ function About() {
           <br />
           <h2>What Makes Qubicweb Unique?</h2>
           <br />
+          <p>
+            Comprehensive Coverage Across Services: Qubicweb is designed to
+            offer a dynamic and user-friendly platform that caters to various
+            technology and security information needs through its specialized
+            services:
+          </p>
           <ul>
             <li>
               <span>
-                Language Versatility: At Qubicweb, we understand the importance
-                of accessibility and inclusivity. That’s why our platform lets
-                you seamlessly translate articles into other languages while
-                reading, breaking down language barriers and making technology
-                news accessible to a global audience.
+                Digital Brief: Stay informed with the latest technology and
+                security news curated from reputable websites. Digital Brief
+                serves as our homepage, providing a seamless way to access
+                timely, reliable updates at a glance. Here, our commitment to
+                Content Transparency shines—Qubicweb doesn’t create or alter
+                these stories. Instead, we link you directly to the original
+                articles, ensuring you receive accurate information from trusted
+                sources.
               </span>
             </li>
             <li>
               <span>
-                Content Transparency: Qubicweb is not a content creator.
-                Instead, we pull feeds directly from reputable and trusted
-                sources across the web. By linking you to the original articles,
-                we ensure you get accurate information from the experts
-                themselves.
+                Cybershield: Empower yourself with security awareness materials
+                crafted by Qubicweb. These resources, available for free
+                download, are designed to help individuals and organizations
+                stay vigilant in today’s digital landscape. While these
+                materials are free to use, they must remain unchanged to
+                preserve the integrity and effectiveness of the content.
+              </span>
+            </li>
+            <li>
+              <span>
+                Blog: Dive deeper into technology and security topics through
+                our carefully written blog posts. Each post reflects Qubicweb’s
+                expertise and insights, offering fresh perspectives and
+                practical advice on a wide range of subjects that matter to tech
+                enthusiasts and professionals alike.
+              </span>
+            </li>
+            <li>
+              <span>
+                Digital Directory: Discover a comprehensive listing of all the
+                websites feeding news into Digital Brief. The Digital Directory
+                transforms your experience by giving you access to the entire
+                collection of stories published by each source. This feature
+                allows you to explore beyond the latest headlines, turning
+                Qubicweb into your go-to hub for in-depth exploration. Here too,
+                our commitment to Content Transparency is evident—Qubicweb acts
+                as a conduit, not a creator, ensuring you always know where the
+                stories originate.
               </span>
             </li>
           </ul>
