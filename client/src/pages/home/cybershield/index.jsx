@@ -1,16 +1,36 @@
+import { useState, useEffect } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 
 import BreadCrumb from "../../../component/BreadCrumb";
 
-const images = [
-  "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-  "https://images.unsplash.com/photo-1519985176271-adb1088fa94c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-];
-
 const Cybershield = () => {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const WORDPRESS_API_URL = "https://api.qubicweb.com/wp-json/wp/v2/media";
+
+    // Fetch images from WordPress REST API
+    fetch(WORDPRESS_API_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter and map the response to an array of image URLs
+        const imageUrls = data
+          .filter((item) => item.media_type === "image") // Ensure it's an image
+          .map((item) => item.source_url); // Get the image URL
+        console.log(imageUrls); // Log the image URLs
+        setImages(imageUrls);
+      })
+      .catch((error) => console.error("Error fetching media:", error));
+  }, []);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      // Force re-initialization of gallery after images are loaded
+      window.dispatchEvent(new Event("resize"));
+    }
+  }, [images]);
+
   return (
     <>
       <BreadCrumb title="Cybershield" />
@@ -29,9 +49,7 @@ const Cybershield = () => {
                     >
                       <Item
                         original={src}
-                        thumbnail={src}
-                        width="1024"
-                        height="768"
+                        thumbnail={src} // You can adjust this if needed
                       >
                         {({ ref, open }) => (
                           <img
@@ -40,7 +58,11 @@ const Cybershield = () => {
                             src={src}
                             alt={`Gallery Image ${index + 1}`}
                             className="gallery-image img-fluid"
-                            style={{ cursor: "pointer" }}
+                            style={{
+                              cursor: "pointer",
+                              width: "100%",
+                              height: "auto",
+                            }}
                           />
                         )}
                       </Item>
