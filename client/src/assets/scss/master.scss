@@ -2803,3 +2803,21 @@ a.cbtn3 {
   transform: scale(1.1); /* Zoom the image inside the container */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for hover effect */
 }
+
+.downloadIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+
+.image-container:hover .downloadIcon {
+  opacity: 1;
+}
+
+.downloadIcon img {
+  width: 24px;
+  height: 24px;
+}

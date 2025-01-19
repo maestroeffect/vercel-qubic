@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 
-import BreadCrumb from "../../../component/BreadCrumb";
-
 const Cybershield = () => {
   const [images, setImages] = useState([]);
 
@@ -32,49 +30,55 @@ const Cybershield = () => {
   }, [images]);
 
   return (
-    <>
-      <BreadCrumb title="Cybershield" />
-      <div className="archives padding-top-10">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h1 className="text-center mb-2">Cybershield</h1>
-              <p className="text-center mb-4">View some of our resources</p>
-              <Gallery>
-                <div className="row">
-                  {images.map((src, index) => (
-                    <div
-                      className="col-sm-6 col-md-4 col-lg-4 mb-4 image-container"
-                      key={index}
+    <div className="archives">
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1 className="text-center mt-4 mb-4">Cybershield</h1>
+            <Gallery>
+              <div className="row">
+                {images.map((src, index) => (
+                  <div
+                    className={`col-sm-6 col-md-4 col-lg-4 mb-4 image-container`}
+                    key={index}
+                  >
+                    <Item
+                      original={src}
+                      thumbnail={src} // You can adjust this if needed
                     >
-                      <Item
-                        original={src}
-                        thumbnail={src} // You can adjust this if needed
-                      >
-                        {({ ref, open }) => (
-                          <img
-                            ref={ref}
-                            onClick={open}
-                            src={src}
-                            alt={`Gallery Image ${index + 1}`}
-                            className="gallery-image img-fluid"
-                            style={{
-                              cursor: "pointer",
-                              width: "100%",
-                              height: "auto",
-                            }}
-                          />
-                        )}
-                      </Item>
-                    </div>
-                  ))}
-                </div>
-              </Gallery>
-            </div>
+                      {({ ref, open }) => (
+                        <img
+                          ref={ref}
+                          onClick={open}
+                          src={src}
+                          alt={`Gallery Image ${index + 1}`}
+                          className="gallery-image img-fluid"
+                          style={{
+                            cursor: "pointer",
+                            width: "100%",
+                            height: "auto",
+                          }}
+                        />
+                      )}
+                    </Item>
+                    <a
+                      href={src}
+                      download={`image-${index + 1}.jpg`} // Default filename for downloads
+                      className="downloadIcon"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/724/724933.png"
+                        alt="Download"
+                      />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </Gallery>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
