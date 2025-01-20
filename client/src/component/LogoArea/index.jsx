@@ -1,8 +1,8 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
-import logo2 from "../../assets/img/qubicweblogo.jpg";
+import logo2 from "../../assets/img/qubicweb01.png";
 import logoDark from "../../assets/img/footer_logo.png";
-import { useTheme } from "../../context/ThemeContext";  // Import the context;
+import { useTheme } from "../../context/ThemeContext"; // Import the context;
 
 const LogoArea = ({ className }) => {
   const { darkMode } = useTheme();
@@ -27,7 +27,6 @@ const LogoArea = ({ className }) => {
             </div> */}
           </div>
         </div>
-
       </div>
     </>
     // <div className={`logo_area ${className ? className : ""}`}>
