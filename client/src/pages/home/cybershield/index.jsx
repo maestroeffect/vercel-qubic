@@ -1,33 +1,74 @@
 import { useState, useEffect } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
+import loadingGif from "../../../assets/img/loading.gif"; // Path to your loading GIF
 
 const Cybershield = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const WORDPRESS_API_URL = "https://api.qubicweb.com/wp-json/wp/v2/media";
+    const PER_PAGE = 100; // Adjust this to the max allowed by the API
 
-    // Fetch images from WordPress REST API
-    fetch(WORDPRESS_API_URL)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchAllImages = async () => {
+      try {
+        let page = 1;
+        let allImages = [];
+        let hasMore = true;
+
+        while (hasMore) {
+          const response = await fetch(
+            `${WORDPRESS_API_URL}?page=${page}&per_page=${PER_PAGE}`
+          );
+          const data = await response.json();
+
+          if (data.length > 0) {
+            allImages = [...allImages, ...data];
+            page++;
+          } else {
+            hasMore = false;
+          }
+        }
+
         // Filter and map the response to an array of image URLs
-        const imageUrls = data
+        const imageUrls = allImages
           .filter((item) => item.media_type === "image") // Ensure it's an image
-          .map((item) => item.source_url); // Get the image URL
-        console.log(imageUrls); // Log the image URLs
+          .map((item) => ({
+            src: item.source_url,
+            width: item.media_details?.width || 1920, // Fallback width
+            height: item.media_details?.height || 1080, // Fallback height
+          }));
+
+        console.log("Processed Images Array:", imageUrls); // Log the processed images
         setImages(imageUrls);
-      })
-      .catch((error) => console.error("Error fetching media:", error));
+      } catch (error) {
+        console.error("Error fetching media:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllImages();
   }, []);
 
   useEffect(() => {
     if (images.length > 0) {
+      // Log images whenever they are updated
+      console.log("Images State Updated:", images);
       // Force re-initialization of gallery after images are loaded
       window.dispatchEvent(new Event("resize"));
     }
   }, [images]);
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <img src={loadingGif} alt="Loading..." />
+        {/* <p>Loading...</p> */}
+      </div>
+    );
+  }
 
   return (
     <div className="archives">
@@ -37,20 +78,22 @@ const Cybershield = () => {
             <h1 className="text-center mt-4 mb-4">Cybershield</h1>
             <Gallery>
               <div className="row">
-                {images.map((src, index) => (
+                {images.map((image, index) => (
                   <div
                     className={`col-sm-6 col-md-4 col-lg-4 mb-4 image-container`}
                     key={index}
                   >
                     <Item
-                      original={src}
-                      thumbnail={src} // You can adjust this if needed
+                      original={image.src}
+                      thumbnail={image.src}
+                      width={image.width}
+                      height={image.height}
                     >
-                      {({ ref, open }) => (
+                      {({ ref }) => (
                         <img
                           ref={ref}
-                          onClick={open}
-                          src={src}
+                          // onClick={open}
+                          src={image.src}
                           alt={`Gallery Image ${index + 1}`}
                           className="gallery-image img-fluid"
                           style={{
@@ -62,7 +105,7 @@ const Cybershield = () => {
                       )}
                     </Item>
                     <a
-                      href={src}
+                      href={image.src}
                       download={`image-${index + 1}.jpg`} // Default filename for downloads
                       className="downloadIcon"
                     >
