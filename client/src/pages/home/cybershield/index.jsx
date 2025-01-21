@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import loadingGif from "../../../assets/img/loading.gif"; // Path to your loading GIF
+// import "./Cybershield.css"; // Import custom styles for animations
 
 const Cybershield = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [transitioning, setTransitioning] = useState(false); // Track animation state
+  const IMAGES_PER_PAGE = 6; // Number of images per page
 
   useEffect(() => {
     const WORDPRESS_API_URL = "https://api.qubicweb.com/wp-json/wp/v2/media";
@@ -40,7 +44,6 @@ const Cybershield = () => {
             height: item.media_details?.height || 1080, // Fallback height
           }));
 
-        console.log("Processed Images Array:", imageUrls); // Log the processed images
         setImages(imageUrls);
       } catch (error) {
         console.error("Error fetching media:", error);
@@ -52,20 +55,26 @@ const Cybershield = () => {
     fetchAllImages();
   }, []);
 
-  useEffect(() => {
-    if (images.length > 0) {
-      // Log images whenever they are updated
-      console.log("Images State Updated:", images);
-      // Force re-initialization of gallery after images are loaded
-      window.dispatchEvent(new Event("resize"));
-    }
-  }, [images]);
+  const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
+
+  // Paginate images based on current page
+  const paginatedImages = images.slice(
+    (currentPage - 1) * IMAGES_PER_PAGE,
+    currentPage * IMAGES_PER_PAGE
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setTransitioning(true); // Start transition
+    setTimeout(() => {
+      setCurrentPage(pageNumber);
+      setTransitioning(false); // End transition
+    }, 300); // Match this duration to the CSS animation time
+  };
 
   if (loading) {
     return (
       <div className="loading-overlay">
         <img src={loadingGif} alt="Loading..." />
-        {/* <p>Loading...</p> */}
       </div>
     );
   }
@@ -77,8 +86,12 @@ const Cybershield = () => {
           <div className="col-12">
             <h1 className="text-center mt-4 mb-4">Cybershield</h1>
             <Gallery>
-              <div className="row">
-                {images.map((image, index) => (
+              <div
+                className={`row gallery-content ${
+                  transitioning ? "fade-out" : "fade-in"
+                }`}
+              >
+                {paginatedImages.map((image, index) => (
                   <div
                     className={`col-sm-6 col-md-4 col-lg-4 mb-4 image-container`}
                     key={index}
@@ -92,7 +105,6 @@ const Cybershield = () => {
                       {({ ref }) => (
                         <img
                           ref={ref}
-                          // onClick={open}
                           src={image.src}
                           alt={`Gallery Image ${index + 1}`}
                           className="gallery-image img-fluid"
@@ -118,6 +130,39 @@ const Cybershield = () => {
                 ))}
               </div>
             </Gallery>
+
+            {/* Pagination Controls */}
+            <div className="pagination flex justify-content-center text-center mt-4 mb-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                className={`btn pagination-btn mx-1 ${
+                  currentPage === 1 ? "disabled" : ""
+                }`}
+                disabled={currentPage === 1}
+              >
+                <i className="bi bi-chevron-left"></i> Prev
+              </button>
+              {[...Array(totalPages).keys()].map((page) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page + 1)}
+                  className={`btn pagination-btn mx-1 ${
+                    currentPage === page + 1 ? "active" : ""
+                  }`}
+                >
+                  {page + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                className={`btn pagination-btn mx-1 ${
+                  currentPage === totalPages ? "disabled" : ""
+                }`}
+                disabled={currentPage === totalPages}
+              >
+                Next <i className="bi bi-chevron-right"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -2821,3 +2821,37 @@ a.cbtn3 {
   width: 24px;
   height: 24px;
 }
+
+.gallery-content {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-content.fade-in {
+  opacity: 1;
+}
+
+.gallery-content.fade-out {
+  opacity: 0;
+}
+
+/* Pagination Button Styles */
+.pagination-btn {
+  background-color: #e8752b;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pagination-btn:hover {
+  background-color: #cf651d; /* Slightly darker orange */
+}
+
+.pagination-btn.active {
+  background-color: #cf651d;
+  font-weight: bold;
+}
+
+.pagination-btn.disabled {
+  background-color: #f5a478; /* Muted orange for disabled buttons */
+  cursor: not-allowed;
+}
