@@ -7,10 +7,11 @@ import FontAwesome from "../uiStyle/FontAwesome";
 // import QubicwebFeed from "../RssParser";
 import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
+import { shuffleArray } from "../../utils/helpers";
 
 const FeatureNews = ({ className }) => {
   // const { articles, loading, error } = useSelector((state) => state.feed);
-  const { articles } = useSelector((state) => state.feed);
+  const articles = shuffleArray(useSelector((state) => state.feed.articles));
 
   return (
     <WithLoadingAndError>

@@ -422,7 +422,7 @@ const processFeedData = async (feedEntries) => {
   ];
   const blogSources = [
     "https://www.sheriffdeputiesltd.com/",
-    "https://blog.compass-security.com/feed/",
+    "https://blog.compass-security.com/",
   ];
 
   const results = await Promise.allSettled(

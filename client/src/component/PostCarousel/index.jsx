@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
 import slider5 from "../../assets/img/post-2.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-
+import { shuffleArray } from "../../utils/helpers";
 const PostCarousel = ({ className }) => {
-  const { articles } = useSelector((state) => state.feed);
+  const articles = shuffleArray(useSelector((state) => state.feed.articles));
 
   return (
     <WithLoadingAndError>

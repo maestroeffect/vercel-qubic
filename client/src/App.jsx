@@ -91,11 +91,15 @@ function shuffleArray(array) {
 
 function App() {
   const dispatch = useDispatch();
-  const { articles, videoArticles, blogArticles } = useSelector(
-    (state) => state.feed
-  );
 
-  const DATA_EXPIRY_TIME = 3 * 60 * 60 * 1000; // 24 hours in milliseconds
+  // Shuffle articles when accessing Redux state
+  const { articles, videoArticles, blogArticles } = useSelector((state) => ({
+    articles: shuffleArray(state.feed.articles),
+    videoArticles: shuffleArray(state.feed.videoArticles),
+    blogArticles: shuffleArray(state.feed.blogArticles),
+  }));
+
+  const DATA_EXPIRY_TIME = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
   const isFromLocalStorageRef = useRef(false); // Track if data is loaded from localStorage
 
   // Check for stored data or fetch fresh data
@@ -127,10 +131,10 @@ function App() {
     }
   }, [dispatch]);
 
-  // Store data in localStorage when articles are updated
+  // Store shuffled data in localStorage when articles are updated
   useEffect(() => {
     if (!isFromLocalStorageRef.current && articles.length > 0) {
-      console.log("Storing articles in localStorage...");
+      console.log("Storing shuffled articles in localStorage...");
       localStorage.setItem("articles", JSON.stringify(shuffleArray(articles)));
       localStorage.setItem(
         "videoArticles",

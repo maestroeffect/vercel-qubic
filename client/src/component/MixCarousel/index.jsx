@@ -6,12 +6,16 @@ import ModalVideo from "react-modal-video";
 import Slider from "../Slider";
 import { useSelector } from "react-redux";
 import WithLoadingAndError from "../LoadErrorHandle";
-// import QubicwebFeed from "../../component/RssParser";
+import { shuffleArray } from "../../utils/helpers";
 
+// Helper function to shuffle an array
 const MixCarousel = ({ className, dark }) => {
   const [vModal, setvModal] = useState(false);
   const [videoId] = useState("0r6C3z3TEKw");
-  const { articles } = useSelector((state) => state.feed);
+
+  // Shuffle articles when accessing Redux state
+  const articles = shuffleArray(useSelector((state) => state.feed.articles));
+
   return (
     <WithLoadingAndError>
       <div className={`mix_area ${className ? className : ""}`}>
