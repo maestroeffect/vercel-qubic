@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import BannerSection from "../../../component/BannerSection";
 import FontAwesome from "../../../component/uiStyle/FontAwesome";
 import NewsLetter from "../../../component/NewsLetter";
@@ -59,7 +59,7 @@ class Contact extends Component {
                 <div className="col-lg-6">
                   <div className="title_inner">
                     <h6>CONTACT US</h6>
-                    <h1>let's Contact</h1>
+                    <h1>Lets Contact</h1>
                   </div>
                 </div>
               </div>

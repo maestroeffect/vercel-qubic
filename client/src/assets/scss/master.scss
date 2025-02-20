@@ -2855,3 +2855,21 @@ a.cbtn3 {
   background-color: #f5a478; /* Muted orange for disabled buttons */
   cursor: not-allowed;
 }
+
+.srchbtn {
+  background: #e9752c !important;
+  border: none !important;
+}
+
+.srchbtn:hover {
+  background: #000 !important;
+}
+
+.srchbtn2 {
+  background: #000 !important;
+  border: none;
+}
+
+.srchbtn2:hover {
+  background: #e9752c !important;
+}

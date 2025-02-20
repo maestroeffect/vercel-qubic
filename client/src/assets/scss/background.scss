@@ -5,7 +5,9 @@
 @import "responsive";
 
 .inner_bg {
-  background: url(../img/inner_bg.jpg);
+  background: url(../img/contact.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .wlc_overlay {

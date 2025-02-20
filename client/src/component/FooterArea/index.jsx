@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FooterCopyright from "../FooterCopyright";
-import FooterMoreNews from "../FooterMoreNews";
-import TwitterFeed from "../TwitterFeed";
+
 import FontAwesome from "../uiStyle/FontAwesome";
 
 import flogo from "../../assets/img/footer_logo.png";
-import FooterNewsCategories from "../FooterNewsCategories";
 
 const FooterArea = ({ className }) => {
   const [email, setEmail] = useState("");

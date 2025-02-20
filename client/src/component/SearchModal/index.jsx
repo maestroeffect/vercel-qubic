@@ -1,12 +1,18 @@
-import React, { useState } from "react";
 import ProtoTypes from "prop-types";
 import FontAwesome from "../uiStyle/FontAwesome";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchModal = ({ setSearchShow }) => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
-    setSearch("");
+    if (search.trim()) {
+      navigate(`/search?q=${search}`);
+      setSearchShow(false); // Close modal after search
+    }
   };
 
   return (
@@ -37,8 +43,8 @@ const SearchModal = ({ setSearchShow }) => {
   );
 };
 
-export default SearchModal;
-
 SearchModal.propTypes = {
-  setSearchShow: ProtoTypes.func,
+  setSearchShow: ProtoTypes.func.isRequired,
 };
+
+export default SearchModal;

@@ -420,7 +420,10 @@ const processFeedData = async (feedEntries) => {
     "https://www.youtube.com/channel/UC0ArlFuFYMpEewyRBzdLHiw",
     "https://www.youtube.com/channel/UCddiUEpeqJcYeBxX1IVBKvQ",
   ];
-  const blogSources = ["https://www.sheriffdeputiesltd.com/"];
+  const blogSources = [
+    "https://www.sheriffdeputiesltd.com/",
+    "https://blog.compass-security.com/feed/",
+  ];
 
   const results = await Promise.allSettled(
     feedEntries.map((entry) =>
