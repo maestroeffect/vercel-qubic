@@ -42,7 +42,7 @@ const menus = [
     id: 5,
     linkText: "Digital Directory",
     child: false,
-    link: "#",
+    link: "app.qubicweb.com",
     // icon: "angle-down",
     target: "_blank", // Add this
   },
@@ -77,8 +77,20 @@ const MainMenu = ({ className }) => {
                     className="collapse navbar-collapse navbar-responsive-collapse"
                   >
                     <ul className="nav navbar-nav" id="scroll">
-                      {arr.length > 0
-                        ? arr.map((item, i) => (
+                      {arr.length > 0 &&
+                        arr.map((item, i) => {
+                          // Ensure external links are properly formatted
+                          const isExternal =
+                            item.link &&
+                            (item.link.startsWith("http") ||
+                              item.link.includes("app.qubicweb.com"));
+                          const formattedLink = isExternal
+                            ? item.link.startsWith("http")
+                              ? item.link
+                              : `https://${item.link}` // Add https:// if missing
+                            : item.link;
+
+                          return (
                             <li
                               key={i}
                               className={`${item.child ? "dropdown" : ""} nav-item`}
@@ -93,30 +105,30 @@ const MainMenu = ({ className }) => {
                                   {item.linkText}
                                   <FontAwesome name={item.icon} />
                                 </NavLink>
-                              ) : (
-                                <NavLink
-                                  to={item.link}
+                              ) : isExternal ? (
+                                // Use <a> tag for external links
+                                <a
+                                  href={formattedLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                   className="menu-dropdown fw-bold"
-                                  data-toggle="dropdown"
+                                >
+                                  {item.linkText}{" "}
+                                  <FontAwesome name={item.icon} />
+                                </a>
+                              ) : (
+                                // Use NavLink for internal links
+                                <NavLink
+                                  to={formattedLink || "#"}
+                                  className="menu-dropdown fw-bold"
                                 >
                                   {item.linkText}{" "}
                                   <FontAwesome name={item.icon} />
                                 </NavLink>
                               )}
-                              {item.child ? (
-                                <ul className="dropdown-menu" role="menu">
-                                  {item.submenu.map((sub_item, i) => (
-                                    <li key={i}>
-                                      <NavLink to={sub_item.link}>
-                                        {sub_item.linkText}
-                                      </NavLink>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
                             </li>
-                          ))
-                        : null}
+                          );
+                        })}
                     </ul>
                   </div>
                   <SidebarMenu
