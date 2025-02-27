@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import FontAwesome from "../uiStyle/FontAwesome";
 import { Link, NavLink } from "react-router-dom";
 import SearchModal from "../SearchModal";
@@ -15,36 +14,31 @@ const menus = [
     id: 1,
     linkText: "Digital Brief",
     child: false,
-    // icon: "angle-down",
   },
   {
     id: 2,
     linkText: "Cybershield",
     child: false,
     link: "/cybershield",
-    // icon: "angle-down",
   },
   {
     id: 3,
     linkText: "About",
     child: false,
     link: "/about",
-    // icon: "angle-down",
   },
   {
     id: 4,
     linkText: "Blog",
     child: false,
     link: "/blog",
-    // icon: "angle-down",
   },
   {
     id: 5,
     linkText: "Digital Directory",
     child: false,
-    link: "app.qubicweb.com",
-    // icon: "angle-down",
-    target: "_blank", // Add this
+    link: "https://app.qubicweb.com", // Ensuring it includes https://
+    target: "_blank", // Ensure it opens in a new tab
   },
 ];
 
@@ -52,8 +46,6 @@ const MainMenu = ({ className }) => {
   const [searchShow, setSearchShow] = useState(false);
   const [sideShow, setSideShow] = useState(false);
   const { darkMode, toggleDarkMode } = useTheme(); // Access context values
-
-  const arr = darkMode ? menus : menus;
 
   return (
     <>
@@ -77,71 +69,51 @@ const MainMenu = ({ className }) => {
                     className="collapse navbar-collapse navbar-responsive-collapse"
                   >
                     <ul className="nav navbar-nav" id="scroll">
-                      {arr.length > 0 &&
-                        arr.map((item, i) => {
-                          // Ensure external links are properly formatted
-                          const isExternal =
-                            item.link &&
-                            (item.link.startsWith("http") ||
-                              item.link.includes("app.qubicweb.com"));
-                          const formattedLink = isExternal
-                            ? item.link.startsWith("http")
-                              ? item.link
-                              : `https://${item.link}` // Add https:// if missing
-                            : item.link;
+                      {menus.map((item, i) => {
+                        const isExternal =
+                          item.link &&
+                          (item.link.startsWith("http") ||
+                            item.link.includes("app.qubicweb.com"));
 
-                          return (
-                            <li
-                              key={i}
-                              className={`${item.child ? "dropdown" : ""} nav-item`}
-                            >
-                              {item.child ? (
-                                <NavLink
-                                  onClick={(e) => e.preventDefault()}
-                                  to="/"
-                                  className="menu-dropdown fw-bold"
-                                  data-toggle="dropdown"
-                                >
-                                  {item.linkText}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              ) : isExternal ? (
-                                // Use <a> tag for external links
-                                <a
-                                  href={formattedLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="menu-dropdown fw-bold"
-                                >
-                                  {item.linkText}{" "}
-                                  <FontAwesome name={item.icon} />
-                                </a>
-                              ) : (
-                                // Use NavLink for internal links
-                                <NavLink
-                                  to={formattedLink || "#"}
-                                  className="menu-dropdown fw-bold"
-                                >
-                                  {item.linkText}{" "}
-                                  <FontAwesome name={item.icon} />
-                                </NavLink>
-                              )}
-                            </li>
-                          );
-                        })}
+                        return (
+                          <li
+                            key={i}
+                            className={`${item.child ? "dropdown" : ""} nav-item`}
+                          >
+                            {isExternal ? (
+                              // External Links: Open in New Tab
+                              <a
+                                href={item.link}
+                                target={item.target || "_self"}
+                                rel="noopener noreferrer"
+                                className="menu-dropdown fw-bold"
+                              >
+                                {item.linkText} <FontAwesome name={item.icon} />
+                              </a>
+                            ) : (
+                              // Internal Links: Use NavLink
+                              <NavLink
+                                to={item.link || "#"}
+                                className="menu-dropdown fw-bold"
+                              >
+                                {item.linkText} <FontAwesome name={item.icon} />
+                              </NavLink>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                   <SidebarMenu
                     sideShow={sideShow}
                     setSideShow={setSideShow}
-                    menus={arr}
+                    menus={menus}
                   />
                 </div>
               </nav>
               <div className="col-lg-4 align-self-center">
                 <div className="menu_right d-flex align-items-center justify-content-end">
                   <div className="users_area d-flex align-items-center">
-                    {/* <SearchBar /> */}
                     <ul className="inline d-flex align-items-center mb-0">
                       <li
                         className="search_btn me-3"
