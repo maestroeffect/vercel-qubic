@@ -19,7 +19,7 @@ function About() {
         <div className="space-10" />
         {/* <div className="row"> */}
         {/* <div className="col-lg-12"> */}
-        <div className="container author_about p-0">
+        <div className="container p-6 mx-auto">
           {/* <div className="author_img">
                   <div className="author_wrap">
                     <img src={author1} alt="author1" />

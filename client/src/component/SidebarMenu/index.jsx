@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProtoTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import FontAwesome from "../uiStyle/FontAwesome";
@@ -9,18 +9,25 @@ import "./style.scss";
 const SidebarMenu = ({ menus, sideShow, setSideShow, className }) => {
   const [sMenu, setSMenu] = useState(null);
   const [stMenu, setSTMenu] = useState(null);
+  // const location = useLocation(); // Get current URL
+
+  // Remove the last item (Digital Directory)
+  const filteredMenus = menus.slice(0, -1);
+
   return (
     <div
       className={`sidebarMenu ${sideShow ? "" : "hideSideMenu"} ${
         className ? className : ""
       }`}
     >
+      {/* Close icon (bigger size) */}
       <span className="clox" onClick={() => setSideShow(false)}>
-        Close
+        <FontAwesome name="times" style={{ fontSize: "25px" }} />
       </span>
+
       <ul className="navBar">
-        {menus.length > 0
-          ? menus.map((item, i) => (
+        {filteredMenus.length > 0
+          ? filteredMenus.map((item, i) => (
               <li key={i} className={`${item.child ? "has_sub" : ""}`}>
                 {item.child ? (
                   <p
@@ -32,13 +39,14 @@ const SidebarMenu = ({ menus, sideShow, setSideShow, className }) => {
                       name={
                         sMenu === item.id ? "angle-down active" : "angle-down"
                       }
+                      style={{ fontSize: "16px" }}
                     />
                   </p>
                 ) : (
                   <NavLink
-                    exact="true"
-                    className={sMenu === item.id ? "active" : ""}
                     to={item.link}
+                    className={({ isActive }) => (isActive ? "active" : "")} // Correct active behavior
+                    onClick={() => setSideShow(false)} // Close sidebar on click
                   >
                     {item.linkText}
                   </NavLink>
@@ -67,26 +75,20 @@ const SidebarMenu = ({ menus, sideShow, setSideShow, className }) => {
                                     ? "angle-down active"
                                     : "angle-down"
                                 }
+                                style={{ fontSize: "16px" }}
                               />
                             </p>
                           ) : (
-                            <NavLink exact="true" to={sub_item.link}>
+                            <NavLink
+                              to={sub_item.link}
+                              className={({ isActive }) =>
+                                isActive ? "active" : ""
+                              }
+                              onClick={() => setSideShow(false)} // Close sidebar on click
+                            >
                               {sub_item.linkText}
                             </NavLink>
                           )}
-                          {sub_item.third_menu ? (
-                            <Collapse isOpen={stMenu === sub_item.id}>
-                              <ul className="thirdMenu">
-                                {sub_item.third_menu.map((third_item, i) => (
-                                  <li key={i}>
-                                    <NavLink to={third_item.link}>
-                                      {third_item.linkText}
-                                    </NavLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            </Collapse>
-                          ) : null}
                         </li>
                       ))}
                     </ul>
