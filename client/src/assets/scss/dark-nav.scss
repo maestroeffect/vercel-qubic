@@ -706,6 +706,10 @@
     .navbar-toggler {
       left: 15px;
     }
+
+    .theme-1 .navbar-toggler {
+      left: 100% !important;
+    }
   }
 
   /* Small Devices, Tablets */

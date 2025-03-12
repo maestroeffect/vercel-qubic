@@ -1679,3 +1679,19 @@
 .navbar-toggler {
   z-index: 1050; /* Ensure it stays on top */
 }
+
+@media (min-width: 575px) {
+  .theme-1 .navbar-toggler {
+    left: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .theme-1 .navbar-toggler {
+    left: 100%;
+  }
+
+  .logo_area {
+    padding-left: 10px !important;
+  }
+}

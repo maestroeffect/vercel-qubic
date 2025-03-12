@@ -18,28 +18,10 @@ const LogoArea = ({ className }) => {
                 </Link>
               </div>
             </div>
-            {/* <div className="col-lg-6 align-self-center">
-              <div className="banner1">
-                <Link to="#">
-                  <img src={tpBanner} alt="banner" />
-                </Link>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
     </>
-    // <div className={`logo_area ${className ? className : ""}`}>
-    //   <div className="container">
-    //     <div className="row">
-    //       <div className="col-lg-4 align-self-center">
-    //         <div className="logo">
-
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

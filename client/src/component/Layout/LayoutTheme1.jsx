@@ -6,10 +6,10 @@ import MainMenu from "../../component/MainMenu";
 import FooterArea from "../../component/FooterArea";
 import { Outlet } from "react-router-dom";
 import ScrollTopButton from "../ScrollTopButton";
-import { useTheme } from "../../context/ThemeContext";  // Import the context
+import { useTheme } from "../../context/ThemeContext"; // Import the context
 
 const LayoutTheme1 = ({ children }) => {
-  const { darkMode, toggleDarkMode } = useTheme();  // Get dark mode and toggle function from context
+  const { darkMode, toggleDarkMode } = useTheme(); // Get dark mode and toggle function from context
 
   return (
     <div className={`theme-1 ${darkMode ? "dark-theme" : ""}`}>
@@ -22,7 +22,7 @@ const LayoutTheme1 = ({ children }) => {
         <div className="row">
           <div className="container">
             <div className="d-flex align-items-center justify-content-between">
-              <div className="col-lg-3 p-0 m-0" >
+              <div className="col-lg-3 p-0 m-0">
                 <LogoArea className={darkMode ? "dark_bg" : "white_bg"} />
               </div>
               <div className="col-lg-9 p-0 flex-grow-1 justify-content-end">
