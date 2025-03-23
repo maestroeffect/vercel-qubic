@@ -7,4 +7,7 @@ export default defineConfig({
     global: "window", // Polyfill global as window for the browser environment
   },
   plugins: [react()],
+  server: {
+    historyApiFallback: true, // Ensures React Router handles navigation
+  },
 });
