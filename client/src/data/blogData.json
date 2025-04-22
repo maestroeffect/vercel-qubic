@@ -1,8 +1,9 @@
 [
     {
         "id": 1,
-        "author": "Omoruyi Ihiere",
+        "author": "нαεмℓεт",
         "author_img": "author_img.jpg",
+        "author_bio": "Haemlet is a technology observer and cybersecurity thinker passionate about decoding the digital world. Through sharp insights and a touch of wit, he explores the intersection of innovation, risk and human behaviour in tech. When he’s not writing for Qubicweb, he’s likely dissecting the next big cybersecurity threat or quietly watching how the world responds.",
         "slug": "ai-vs-threat-actors",
         "title": "AI vs. Threat Actors: Who’s Winning the Cybersecurity Showdown?",
         "category": "Cybersecurity",

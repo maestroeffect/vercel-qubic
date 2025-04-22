@@ -36,21 +36,22 @@ function About() {
           </div>
           <p>
             In today’s fast-paced digital landscape, staying informed about
-            cybersecurity, technology trends and innovations is essential.
-            Technology continues to transform how businesses operate,
-            governments govern and individuals connect. From groundbreaking
-            advancements to emerging threats, understanding these shifts is
-            crucial for thriving in an increasingly interconnected world.
+            security, technology trends and innovations is essential. Technology
+            continues to transform how businesses operate, governments govern
+            and individuals connect. From groundbreaking advancements to
+            emerging threats, understanding these shifts is crucial for thriving
+            in an increasingly interconnected world.
             <br />
             <br />
-            Qubicweb is an online technology aggregator for cybersecurity,
-            innovation, and IT-related news, providing real-time, curated
-            content for tech professionals, business leaders and policy makers.
-            It serves as an intelligence dashboard for staying informed on the
-            latest cyber threats, regulatory updates, emerging technologies and
-            industry trends. The platform uses intelligent filtering tools to
-            deliver personalized news feeds, issue alerts, and expert insights,
-            helping users stay ahead of digital risks and market shifts.
+            Qubicweb is an online technology aggregator for technology,
+            cybersecurity and innovation related news, providing real-time,
+            curated content for tech professionals, business leaders and policy
+            makers. It serves as an intelligence dashboard for staying informed
+            on the latest cyber threats, regulatory updates, emerging
+            technologies and industry trends. The platform uses intelligent
+            filtering tools to deliver personalized news feeds, issue alerts and
+            expert insights, helping users stay ahead of digital risks and
+            market shifts.
           </p>
 
           <br />
@@ -72,9 +73,9 @@ function About() {
                 curated from reputable websites. Digital Brief serves as our
                 homepage, providing a seamless way to access timely, reliable
                 updates at a glance. Here, our commitment to Content
-                Transparency shines—Qubicweb doesn’t create or alter these
+                Transparency shines. Qubicweb doesn’t create or alter these
                 stories. Instead, we link you directly to the original articles,
-                ensuring you receive accurate information from trusted sources.
+                ensuring you receive accurate information from trusted sources
               </span>
             </li>
             <li>
@@ -113,7 +114,7 @@ function About() {
                 stories published by each source. This feature allows you to
                 explore beyond the latest headlines, turning Qubicweb into your
                 go-to hub for in-depth exploration. Here too, our commitment to
-                Content Transparency is evident—Qubicweb acts as a conduit, not
+                Content Transparency is evident. Qubicweb acts as a conduit, not
                 a creator, ensuring you always know where the stories originate.
               </span>
             </li>
@@ -129,16 +130,16 @@ function About() {
           </p>
           <ul>
             <li>
-              Real-time updates: Stay ahead with the latest insights in tech and
-              cybersecurity.
+              <Link>Real-time updates:</Link> Stay ahead with the latest
+              insights in tech and cybersecurity.
             </li>
             <li>
-              Credible sources: Access news from verified and authoritative
-              websites.
+              <Link>Credible sources:</Link> Access news from verified and
+              authoritative websites.
             </li>
             <li>
-              Ease of use: Simplify your browsing experience with our intuitive
-              interface.
+              <Link>Ease of use:</Link> Simplify your browsing experience with
+              our intuitive interface.
             </li>
           </ul>
 
@@ -146,12 +147,10 @@ function About() {
           <br />
           <p>
             Qubicweb offers tasteful and effective advertising opportunities for
-            companies looking to promote their products, services, or events to
-            a highly engaged audience. Contact us at{" "}
-            <a href="https://advertising@qubicweb.com">
-              advertising@qubicweb.com
-            </a>{" "}
-            for more details.
+            companies looking to promote their products, services or events to a
+            highly engaged audience.Contact us at{" "}
+            <a href="https://info@qubicbox.com">info@qubicbox.com</a> for more
+            details.
           </p>
 
           <br />
@@ -175,13 +174,13 @@ function About() {
                 <Link>Qubicbox:</Link>
               </b>{" "}
               Qubicbox is a business technology solution brand offering secure
-              software services, digital advisory, IT consulting, and web
+              software services, digital advisory, IT consulting and web
               application platforms tailored to small and growing businesses. It
               is designed to help organizations secure their digital
-              infrastructure, manage technological risks, and drive innovation.
+              infrastructure, manage technological risks and drive innovation.
               Qubicbox serves as an innovation hub for business digitization,
               offering tools and expertise that support secure software
-              development, digital product delivery, and technology enablement
+              development, digital product delivery and technology enablement
               for emerging enterprises.
             </li>
             <li>
@@ -194,9 +193,7 @@ function About() {
               social commerce tools. It empowers individuals to declutter
               responsibly while offering others access to affordable pre-owned
               goods. The platform leverages a network of verified agents who
-              help manage listings, ensuring trust and transparency. Qlutterbox
-              also facilitates secure payments, buyer verification and logistics
-              coordination to ensure seamless transactions between users.
+              help manage listings, ensuring trust and transparency.
             </li>
             <li>
               <b>
@@ -208,16 +205,14 @@ function About() {
               web-based ecosystem. It serves as a trust-based network that
               enhances visibility for skilled individuals and micro-enterprises,
               allowing them to showcase services, build credibility, and attract
-              new customers. The platform provides geo-tagged listings, customer
-              reviews, direct contact options, and booking tools, simplifying
-              how customers discover, engage, and contract local services.
-              Qubictry promotes economic inclusion by helping artisans access
-              broader markets and scale their businesses digitally.
+              new customers. Qubictry promotes economic inclusion by helping
+              artisans access broader markets and scale their businesses
+              digitally.
             </li>
           </ul>
 
           <br />
-          <h2>Join the Qubicweb Community</h2>
+          {/* <h2>Join the Qubicweb Community</h2>
           <p>
             Stay informed and empowered with Qubicweb. Whether it’s
             cybersecurity, AI, software development, or emerging tech trends,
@@ -228,7 +223,7 @@ function About() {
             </a>{" "}
             or contact us at{" "}
             <a href="mailto:info@qubicweb.com">info@qubicweb.com</a>.
-          </p>
+          </p> */}
         </div>
         {/* </div> */}
         {/* </div> */}
