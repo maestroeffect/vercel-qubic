@@ -43,13 +43,14 @@ function About() {
             crucial for thriving in an increasingly interconnected world.
             <br />
             <br />
-            Qubicweb is your gateway to real-time updates, insights and analysis
-            of the latest developments in the technology and cybersecurity
-            space. By curating the most important stories from trusted sources
-            across the web, Qubicweb provides a comprehensive and concise
-            summary of the day’s essential news, making it an indispensable
-            resource for tech enthusiasts, industry professionals and
-            decision-makers alike.
+            Qubicweb is an online technology aggregator for cybersecurity,
+            innovation, and IT-related news, providing real-time, curated
+            content for tech professionals, business leaders and policy makers.
+            It serves as an intelligence dashboard for staying informed on the
+            latest cyber threats, regulatory updates, emerging technologies and
+            industry trends. The platform uses intelligent filtering tools to
+            deliver personalized news feeds, issue alerts, and expert insights,
+            helping users stay ahead of digital risks and market shifts.
           </p>
 
           <br />
@@ -64,30 +65,38 @@ function About() {
           <ul>
             <li>
               <span>
-                Digital Brief: Stay informed with the latest technology and
-                security news curated from reputable websites. Digital Brief
-                serves as our homepage, providing a seamless way to access
-                timely, reliable updates at a glance. Here, our commitment to
-                Content Transparency shines—Qubicweb doesn’t create or alter
-                these stories. Instead, we link you directly to the original
-                articles, ensuring you receive accurate information from trusted
-                sources.
+                <Link>
+                  <b>Digital Brief:</b>{" "}
+                </Link>
+                Stay informed with the latest technology and security news
+                curated from reputable websites. Digital Brief serves as our
+                homepage, providing a seamless way to access timely, reliable
+                updates at a glance. Here, our commitment to Content
+                Transparency shines—Qubicweb doesn’t create or alter these
+                stories. Instead, we link you directly to the original articles,
+                ensuring you receive accurate information from trusted sources.
               </span>
             </li>
             <li>
               <span>
-                Cybershield: Empower yourself with security awareness materials
-                crafted by Qubicweb. These resources, available for free
-                download, are designed to help individuals and organizations
-                stay vigilant in today’s digital landscape. While these
-                materials are free to use, they must remain unchanged to
-                preserve the integrity and effectiveness of the content.
+                <Link>
+                  <b>Qybershield:</b>
+                </Link>{" "}
+                Empower yourself with security awareness materials crafted by
+                Qubicweb. These resources, available for free download, are
+                designed to help individuals and organizations stay vigilant in
+                today’s digital landscape. While these materials are free to
+                use, they must remain unchanged to preserve the integrity and
+                effectiveness of the content.
               </span>
             </li>
             <li>
               <span>
-                Blog: Dive deeper into technology and security topics through
-                our carefully written blog posts. Each post reflects Qubicweb’s
+                <Link>
+                  <b>Blog:</b>{" "}
+                </Link>
+                Dive deeper into technology and security topics through our
+                carefully written blog posts. Each post reflects Qubicweb’s
                 expertise and insights, offering fresh perspectives and
                 practical advice on a wide range of subjects that matter to tech
                 enthusiasts and professionals alike.
@@ -95,25 +104,22 @@ function About() {
             </li>
             <li>
               <span>
-                Digital Directory: Discover a comprehensive listing of all the
-                websites feeding news into Digital Brief. The Digital Directory
-                transforms your experience by giving you access to the entire
-                collection of stories published by each source. This feature
-                allows you to explore beyond the latest headlines, turning
-                Qubicweb into your go-to hub for in-depth exploration. Here too,
-                our commitment to Content Transparency is evident—Qubicweb acts
-                as a conduit, not a creator, ensuring you always know where the
-                stories originate.
+                <Link>
+                  <b>Digital Directory:</b>
+                </Link>{" "}
+                Discover a comprehensive listing of all the websites feeding
+                news into Digital Brief. The Digital Directory transforms your
+                experience by giving you access to the entire collection of
+                stories published by each source. This feature allows you to
+                explore beyond the latest headlines, turning Qubicweb into your
+                go-to hub for in-depth exploration. Here too, our commitment to
+                Content Transparency is evident—Qubicweb acts as a conduit, not
+                a creator, ensuring you always know where the stories originate.
               </span>
             </li>
           </ul>
           <br />
-          {/* <h2>Origin</h2>
-            <br />
-            <p>
-              Founded in 2025, Qubicweb was created to bridge the gap between technology professionals and timely, relevant news. By combining algorithmic precision with human editorial oversight, Qubicweb offers a curated experience that is both efficient and insightful. This unique blend ensures readers can quickly access trustworthy information without wading through an overwhelming amount of content online.
-            </p>
-            <br /> */}
+
           <h2>Why Qubicweb?</h2>
           <br />
           <p>
@@ -164,56 +170,49 @@ function About() {
           <p>Qubicweb is part of the Qubicbox ecosystem, which includes:</p>
           <ul>
             <li>
-              <Link>Qubicbox</Link>: A versatile platform offering cybersecurity
-              services, web development advisory, and tools designed to empower
-              small businesses in the digital space.
+              <b>
+                {" "}
+                <Link>Qubicbox:</Link>
+              </b>{" "}
+              Qubicbox is a business technology solution brand offering secure
+              software services, digital advisory, IT consulting, and web
+              application platforms tailored to small and growing businesses. It
+              is designed to help organizations secure their digital
+              infrastructure, manage technological risks, and drive innovation.
+              Qubicbox serves as an innovation hub for business digitization,
+              offering tools and expertise that support secure software
+              development, digital product delivery, and technology enablement
+              for emerging enterprises.
             </li>
             <li>
-              <Link>Qlutterbox</Link>: A web application designed to facilitate
-              the sale of items, offering individuals a secure and user-friendly
-              platform to declutter and earn from unwanted goods. The platform
-              is managed by registered agents who assist in advertising and
-              verifying transactions, leveraging social media APIs for seamless
-              postings.
+              <b>
+                {" "}
+                <Link>Qlutterbox:</Link>
+              </b>{" "}
+              Qlutterbox is a marketplace platform that allows users to sell and
+              buy items securely through agent-assisted listings and integrated
+              social commerce tools. It empowers individuals to declutter
+              responsibly while offering others access to affordable pre-owned
+              goods. The platform leverages a network of verified agents who
+              help manage listings, ensuring trust and transparency. Qlutterbox
+              also facilitates secure payments, buyer verification and logistics
+              coordination to ensure seamless transactions between users.
             </li>
             <li>
-              <Link>Qubictry</Link>: An online directory for artisans,
-              connecting skilled professionals with customers in need of their
-              services, thereby fostering growth and visibility for local
-              artisans.
-            </li>
-          </ul>
-
-          <p>
-            The platforms in the Qubicbox ecosystem complement each other to
-            deliver value across diverse domains:
-          </p>
-          <ul>
-            <li>
-              Qubicweb enhances awareness by aggregating real-time technology
-              news, including cybersecurity trends and digital innovations. This
-              keeps users of Qlutterbox and Qubictry informed about threats and
-              opportunities in the digital space, ensuring their interactions
-              remain secure and efficient.
-            </li>
-            <li>
-              Qlutterbox empowers small businesses and individuals, including
-              artisans listed on Qubictry, by providing an additional revenue
-              stream through the sale of fairly used items. This creates an
-              avenue for artisans to declutter their spaces while generating
-              income.
-            </li>
-            <li>
-              Qubictry connects artisans who may benefit from the web
-              development advisory and cybersecurity services provided by
-              Qubicbox, enabling them to create secure online profiles or
-              platforms to showcase their skills and attract more clients.
-            </li>
-            <li>
-              Qubicbox acts as the backbone, ensuring robust digital security
-              for all platforms, while also supporting businesses listed on
-              Qlutterbox and Qubictry with tools to strengthen their digital
-              presence and protect their data.
+              <b>
+                {" "}
+                <Link>Qubictry:</Link>
+              </b>{" "}
+              Qubictry is a digital directory platform for artisans and service
+              providers, connecting them with customers through a mobile and
+              web-based ecosystem. It serves as a trust-based network that
+              enhances visibility for skilled individuals and micro-enterprises,
+              allowing them to showcase services, build credibility, and attract
+              new customers. The platform provides geo-tagged listings, customer
+              reviews, direct contact options, and booking tools, simplifying
+              how customers discover, engage, and contract local services.
+              Qubictry promotes economic inclusion by helping artisans access
+              broader markets and scale their businesses digitally.
             </li>
           </ul>
 

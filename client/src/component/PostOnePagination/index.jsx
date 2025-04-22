@@ -1,7 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import QubicwebFeed from "../RssParser";
+import { useSelector } from "react-redux";
 
 const PostOnePagination = ({ className }) => {
   const { articles, loading, error } = useSelector((state) => state.feed);
@@ -11,7 +10,11 @@ const PostOnePagination = ({ className }) => {
   }
 
   if (error) {
-    return <div>Error: {error.message || "An error occurred while fetching articles."}</div>;
+    return (
+      <div>
+        Error: {error.message || "An error occurred while fetching articles."}
+      </div>
+    );
   }
 
   if (!articles || articles.length === 0) {
@@ -31,7 +34,7 @@ const PostOnePagination = ({ className }) => {
             <p>PREVIOUS NEWS</p>
             {previousNews ? (
               <h3>
-                <Link to={`/${previousNews.slug}`}>
+                <Link to={previousNews.link}>
                   {previousNews.title || "No Title Available"}
                 </Link>
               </h3>
@@ -47,7 +50,7 @@ const PostOnePagination = ({ className }) => {
             <p>NEXT NEWS</p>
             {nextNews ? (
               <h3>
-                <Link to={`/${nextNews.slug}`}>
+                <Link to={nextNews.link}>
                   {nextNews.title || "No Title Available"}
                 </Link>
               </h3>

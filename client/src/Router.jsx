@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/cybershield",
+        path: "/qybershield",
         element: <Cybershield />,
       },
       {

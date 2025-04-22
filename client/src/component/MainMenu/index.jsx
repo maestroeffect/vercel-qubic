@@ -14,12 +14,13 @@ const menus = [
     id: 1,
     linkText: "Digital Brief",
     child: false,
+    link: "/",
   },
   {
     id: 2,
-    linkText: "Cybershield",
+    linkText: "Qybershield",
     child: false,
-    link: "/cybershield",
+    link: "/qybershield",
   },
   {
     id: 3,

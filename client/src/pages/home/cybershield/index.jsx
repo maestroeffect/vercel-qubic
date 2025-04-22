@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import loadingGif from "../../../assets/img/loading.gif"; // Path to your loading GIF
@@ -9,11 +9,11 @@ const Cybershield = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [transitioning, setTransitioning] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
-  const IMAGES_PER_PAGE = 6;
+  const IMAGES_PER_PAGE = 54;
 
   useEffect(() => {
     const WORDPRESS_API_URL = "https://api.qubicweb.com/wp-json/wp/v2/media";
-    const PER_PAGE = 50;
+    const PER_PAGE = 80;
 
     const fetchAllImages = async () => {
       try {
@@ -34,11 +34,12 @@ const Cybershield = () => {
           console.log("Fetched Data:", data);
 
           // Read total pages from headers
-          const totalPagesHeader = response.headers.get("X-WP-TotalPages");
-          const totalPages = totalPagesHeader
-            ? parseInt(totalPagesHeader, 10)
-            : 1;
-          setTotalPages(totalPages);
+          const totalItems = response.headers.get("X-WP-Total");
+          if (totalItems) {
+            setTotalPages(
+              Math.ceil(parseInt(totalItems, 10) / IMAGES_PER_PAGE)
+            );
+          }
 
           if (data.length > 0) {
             allImages = [...allImages, ...data];
@@ -77,18 +78,41 @@ const Cybershield = () => {
     fetchAllImages();
   }, []);
 
-  const paginatedImages = images.slice(
-    (currentPage - 1) * IMAGES_PER_PAGE,
-    currentPage * IMAGES_PER_PAGE
-  );
+  // Memoized images for the current page
+  const paginatedImages = useMemo(() => {
+    return images.slice(
+      (currentPage - 1) * IMAGES_PER_PAGE,
+      currentPage * IMAGES_PER_PAGE
+    );
+  }, [images, currentPage]);
+
+  // Preload images of the next page
+  useEffect(() => {
+    const preloadImages = (imageUrls) => {
+      imageUrls.forEach((image) => {
+        const img = new Image();
+        img.src = image.src;
+      });
+    };
+
+    // Preload images for the next page
+    const nextPage = currentPage + 1;
+    if (nextPage <= totalPages) {
+      const nextPageImages = images.slice(
+        nextPage * IMAGES_PER_PAGE - IMAGES_PER_PAGE,
+        nextPage * IMAGES_PER_PAGE
+      );
+      preloadImages(nextPageImages);
+    }
+  }, [currentPage, images, totalPages]);
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber < 1 || pageNumber > totalPages) return;
     setTransitioning(true);
-    setCurrentPage(pageNumber);
     setTimeout(() => {
+      setCurrentPage(pageNumber);
       setTransitioning(false);
-    }, 300);
+    }, 100);
   };
 
   if (loading) {
@@ -104,14 +128,21 @@ const Cybershield = () => {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h1 className="text-center mt-4 mb-4">Cybershield</h1>
+            <h1 className="text-center mt-4 mb-4">Qybershield</h1>
+            <p className="text-center mb-4 px-3">
+              <b>Qybershield</b>- Your go-to hub for free cybersecurity
+              awareness content. A curated repository of security tips,
+              infographics, checklists and educational materials designed to
+              help individuals and businesses stay informed, stay safe and stay
+              ahead of cyber threats.
+            </p>
             <Gallery>
               <div
                 className={`row gallery-content ${transitioning ? "fade-out" : "fade-in"}`}
               >
                 {paginatedImages.map((image, index) => (
                   <div
-                    className="col-sm-6 col-md-4 col-lg-4 mb-4 image-container"
+                    className="col-6 col-md-2 col-lg-2 mb-4 image-container"
                     key={index}
                   >
                     <Item
@@ -119,6 +150,7 @@ const Cybershield = () => {
                       thumbnail={image.src}
                       width={image.width}
                       height={image.height}
+                      caption={`Gallery Image ${index + 1}`}
                     >
                       {({ ref }) => (
                         <img

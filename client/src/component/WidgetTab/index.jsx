@@ -107,7 +107,7 @@ const WidgetTab = ({ className }) => {
         <Nav tabs>
           <NavItem>
             <Link
-              to="/"
+              to="#"
               className={classnames({ active: activeTab === "1" })}
               onClick={() => {
                 toggle("1");
@@ -118,7 +118,7 @@ const WidgetTab = ({ className }) => {
           </NavItem>
           <NavItem>
             <Link
-              to="/"
+              to="#"
               className={classnames({ active: activeTab === "2" })}
               onClick={() => {
                 toggle("2");
@@ -129,7 +129,7 @@ const WidgetTab = ({ className }) => {
           </NavItem>
           <NavItem>
             <Link
-              to="/"
+              to="#"
               className={classnames({ active: activeTab === "3" })}
               onClick={() => {
                 toggle("3");
