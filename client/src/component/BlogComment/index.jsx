@@ -1,228 +1,187 @@
-import ProtoTypes from "prop-types";
-import author2 from "../../assets/img/comments-1.png";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 import { toast } from "react-toastify";
-import { Component } from "react";
+import Comment from "../Comment";
 
-class BlogComment extends Component {
-  constructor(props) {
-    super(props);
-    this.validator = new SimpleReactValidator();
-  }
+const API_URL = "https://qubicweb.com/apis/comment.php"; // Change this
 
-  state = {
+const BlogComment = ({ theme = 1, dark = false }) => {
+  const location = useLocation();
+  const slug = location.pathname; // Use blog page path as unique slug
+
+  const [formData, setFormData] = useState({
     name: "",
-    subject: "",
     email: "",
-    phone: "",
     message: "",
-  };
-  changeHandler = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-  submitHandler = (e) => {
+  });
+
+  const [comments, setComments] = useState([]);
+  const validator = useRef(new SimpleReactValidator());
+
+  // Fetch comments from the server
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(
+          `${API_URL}?slug=${encodeURIComponent(slug)}`
+        );
+        const data = await response.json();
+
+        if (data.message === "No comments available") {
+          setComments([]);
+        } else {
+          setComments(data);
+        }
+      } catch (error) {
+        toast.error("Failed to load comments");
+      }
+    };
+
+    fetchComments();
+  }, [slug]);
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (this.validator.allValid()) {
-      toast.success("You submitted the form and stuff!");
-      this.setState({
-        name: "",
-        email: "",
-        message: "",
-      });
-      this.validator.hideMessages();
+
+    if (validator.current.allValid()) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...formData, slug }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Refresh comments
+          setComments([
+            {
+              name: formData.name,
+              content: formData.message,
+              timestamp: new Date().toISOString(),
+            },
+            ...comments,
+          ]);
+          toast.success("Comment posted!");
+          setFormData({ name: "", email: "", message: "" });
+          validator.current.hideMessages();
+        } else {
+          toast.error(result.error || "Failed to post comment");
+        }
+      } catch (error) {
+        toast.error("Server error");
+      }
     } else {
-      toast.error("Please fill the input");
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      // you can use the autoForceUpdate option to do this automatically`
-      this.forceUpdate();
+      toast.error("Please fill the required fields correctly.");
+      validator.current.showMessages();
     }
   };
 
-  render() {
-    const { name, email, message } = this.state;
-    return (
-      <div className="comment_form">
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-lg-12 m-auto">
-              <form onSubmit={this.submitHandler}>
-                <div className="row">
-                  <div className="col-md-6">
-                    <input
-                      value={name}
-                      name="name"
-                      onChange={this.changeHandler}
-                      type="text"
-                      placeholder="Full name"
-                    />
-                    {this.validator.message("Full Name", name, "required")}
-                  </div>
-                  <div className="col-md-6">
-                    <input
-                      value={email}
-                      name="email"
-                      onChange={this.changeHandler}
-                      type="text"
-                      placeholder="Email address"
-                    />
-                    {this.validator.message("Email", email, "required|email")}
-                  </div>
-                  <div className="col-12">
-                    <textarea
-                      value={message}
-                      onChange={this.changeHandler}
-                      name="message"
-                      id="message"
-                      cols="30"
-                      rows="5"
-                      placeholder="Tell us about your opinion…"
-                    />
-                    {this.validator.message("Message", message, "required")}
-                  </div>
-                  <div className="col-12">
-                    <button
-                      className={this.props.theme === 3 ? "cbtn4" : "cbtn2"}
-                      type="submit"
-                    >
-                      POST COMMENT
-                    </button>
-                  </div>
+  return (
+    <div className="comment_form">
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-lg-10 mt-5">
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-6">
+                  <input
+                    value={formData.name}
+                    name="name"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Full name"
+                  />
+                  {validator.current.message(
+                    "Full Name",
+                    formData.name,
+                    "required"
+                  )}
                 </div>
-              </form>
-            </div>
-          </div>
-          <div className="space-60" />
-          <div className="comment_list">
-            <div className="row">
-              <div className="col-12 col-lg-12 m-auto">
-                <h3>Our latest news</h3>
-                <div className="single_comment">
-                  <div className="comment_img">
-                    <img src={author2} alt="author2" />
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <Link to="/">QuomodoSoft</Link>
-                    </div>
-                    <div className="col-sm-6">
-                      <div className="replay text-right">
-                        <p>replay</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-5" />
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
+                <div className="col-md-6">
+                  <input
+                    value={formData.email}
+                    name="email"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Email address"
+                  />
+                  {validator.current.message(
+                    "Email",
+                    formData.email,
+                    "required|email"
+                  )}
                 </div>
-                <div className="space-15" />
-                {this.props.dark ? (
-                  <div className="border_white" />
-                ) : (
-                  <div className="border_black" />
-                )}
-                <div className="space-15" />
-                <div className="single_comment">
-                  <div className="comment_img">
-                    <img src={author2} alt="author2" />
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <Link to="/">QuomodoSoft</Link>
-                    </div>
-                    <div className="col-sm-6">
-                      <div className="replay text-right">
-                        <p>replay</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-5" />
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
+                <div className="col-12">
+                  <textarea
+                    value={formData.message}
+                    onChange={handleChange}
+                    name="message"
+                    cols="30"
+                    rows="5"
+                    placeholder="Tell us about your opinion…"
+                  />
+                  {validator.current.message(
+                    "Message",
+                    formData.message,
+                    "required"
+                  )}
                 </div>
-                <div className="space-15" />
-                {this.props.dark ? (
-                  <div className="border_white" />
-                ) : (
-                  <div className="border_black" />
-                )}
-                <div className="space-15" />
-                <div className="single_comment">
-                  <div className="comment_img">
-                    <img src={author2} alt="author2" />
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <Link to="/">QuomodoSoft</Link>
-                    </div>
-                    <div className="col-sm-6">
-                      <div className="replay text-right">
-                        <p>replay</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-5" />
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
+                <div className="col-12">
+                  <button
+                    className={theme === 3 ? "cbtn4" : "cbtn2"}
+                    type="submit"
+                  >
+                    POST OPINION
+                  </button>
                 </div>
-                <div className="space-15" />
-                {this.props.dark ? (
-                  <div className="border_white" />
-                ) : (
-                  <div className="border_black" />
-                )}
-                <div className="space-15" />
-                <div className="single_comment inner_cm">
-                  <div className="comment_img">
-                    <img src={author2} alt="author2" />
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <Link to="/">QuomodoSoft</Link>
-                    </div>
-                    <div className="col-sm-6">
-                      <div className="replay text-right">
-                        <p>replay</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-5" />
-                  <p>
-                    We’ve invested every aspect of how we serve our users over
-                    the past Pellentesque rutrum ante in nulla suscipit, vel
-                    posuere leo tristique.
-                  </p>
-                </div>
-                <div className="space-40" />
-                <Link
-                  to="/"
-                  className={this.props.theme === 3 ? "cbtn4" : "cbtn2"}
-                >
-                  Load More
-                </Link>
               </div>
+            </form>
+          </div>
+        </div>
+
+        <div className="space-60" />
+        <div className="comment_list">
+          <div className="row">
+            <div className="col-12 col-lg-10">
+              <h3>Comments</h3>
+              {comments.length === 0 ? (
+                <p>No comments yet.</p>
+              ) : (
+                comments.map((comment, idx) => (
+                  <Comment
+                    key={idx}
+                    author={comment.name}
+                    content={comment.content}
+                    timestamp={comment.timestamp}
+                    theme={theme}
+                    dark={dark}
+                  />
+                ))
+              )}
+              {/* <div className="space-40" />
+              <Link to="#" className={theme === 3 ? "cbtn4" : "cbtn2"}>
+                Load More
+              </Link> */}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+BlogComment.propTypes = {
+  theme: PropTypes.number,
+  dark: PropTypes.bool,
+};
 
 export default BlogComment;
-BlogComment.propTypes = {
-  theme: ProtoTypes.number,
-  dark: ProtoTypes.bool,
-};

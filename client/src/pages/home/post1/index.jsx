@@ -8,20 +8,61 @@ import MostShareWidget from "../../../component/MostShareWidget";
 // import FollowUs from "../../../component/FollowUs";
 import BannerSection from "../../../component/BannerSection";
 // import PostOnePagination from "../../../component/PostOnePagination";
-
 // images
-// import banner2 from "../../../assets/img/banner/banner-2.jpg";
-// import big2 from "../../../assets/img/post-thumb-4.png";
-// import quote from "../../../assets/img/icon/q.png";
-// import quote_1 from "../../../assets/img/post-quote.jpg";
-// import big1 from "../../../assets/img/post-thumb-3.jpg";
 import OurBlogSection from "../../../component/OurBlogSection";
 // import BlogComment from "../../../component/BlogComment";
 import blogData from "../../../data/blogData.json";
+import BlogComment from "../../../component/BlogComment";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const Post1 = () => {
+  const [commentCount, setCommentCount] = useState(0);
+  const [likes, setLikes] = useState(0);
+  const [liked, setLiked] = useState(false);
   const { slug } = useParams();
   const post = blogData.find((p) => p.slug === slug);
   if (!post) return <h2>Post not found</h2>;
+
+  useEffect(() => {
+    if (!slug) return;
+
+    // Fetch comments
+    axios
+      .get(`https://qubicweb.com/apis/comment.php?slug=${slug}`)
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setCommentCount(res.data.length);
+        }
+      });
+
+    // Fetch likes
+    axios
+      .get(`https://qubicweb.com/apis/likes.php?slug=${slug}`)
+      .then((res) => {
+        if (res.data?.likes !== undefined) {
+          setLikes(res.data.likes);
+        }
+      });
+  }, [slug]);
+
+  const handleLikeToggle = () => {
+    const newLiked = !liked;
+    setLiked(newLiked);
+    setLikes((prev) => (newLiked ? prev + 1 : prev - 1));
+
+    axios
+      .post(`https://qubicweb.com/apis/likes.php`, {
+        slug,
+        action: newLiked ? "like" : "unlike",
+      })
+      .catch(() => {
+        // Revert UI on failure
+        setLiked(!newLiked);
+        setLikes((prev) => (newLiked ? prev - 1 : prev + 1));
+      });
+  };
+
   return (
     <>
       <div className="archives post post1">
@@ -45,11 +86,17 @@ const Post1 = () => {
                     <ul className="inline">
                       <li>
                         <FontAwesome name="comment" />
-                        563
+                        {commentCount}
                       </li>
-                      <li>
-                        <FontAwesome name="fire" />
-                        563
+                      <li
+                        onClick={handleLikeToggle}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <FontAwesome
+                          name="heart"
+                          style={{ color: liked ? "red" : "gray" }}
+                        />
+                        {likes}
                       </li>
                     </ul>
                   </div>
@@ -137,13 +184,13 @@ const Post1 = () => {
                     <FontAwesome name="tag" /> tags
                   </li>
                   <li>
-                    <Link to="/">CyberSecurity</Link>
+                    <Link to="#">CyberSecurity</Link>
                   </li>
                   <li>
-                    <Link to="/">Threat Detection</Link>
+                    <Link to="#">Threat Detection</Link>
                   </li>
                   <li>
-                    <Link to="/">Corona</Link>
+                    <Link to="#">Corona</Link>
                   </li>
                 </ul>
               </div>
@@ -158,17 +205,17 @@ const Post1 = () => {
                 </div>
                 <div className="author-details">
                   <h5>
-                    <Link to="/" className="author-name">
+                    <Link to="#" className="author-name">
                       {post.author}
                     </Link>
                     {/* <span className="author-role">News Writer</span> */}
                   </h5>
 
                   <div className="author-socials">
-                    <Link to="/">
+                    <Link to="#">
                       <FontAwesome name="twitter" />
                     </Link>
-                    <Link to="/">
+                    <Link to="#">
                       <FontAwesome name="envelope" />
                     </Link>
                     {/* Add more if needed */}
@@ -189,7 +236,7 @@ const Post1 = () => {
               {/* <FollowUs title="Follow Us" /> */}
               <WidgetTrendingNews />
               <div className="banner2 mb30">
-                <Link to="/">Advertisement</Link>
+                <Link to="#">Advertisement</Link>
               </div>
               <MostShareWidget title="Most Share" />
               <NewsLetter />
@@ -200,8 +247,8 @@ const Post1 = () => {
       <div className="space-30" />
       <OurBlogSection />
       {/* <div className="space-60" /> */}
-      {/* <BlogComment /> */}
-      <div className="space-100" />
+      <BlogComment />
+      <div className="space-10" />
       <BannerSection />
     </>
   );

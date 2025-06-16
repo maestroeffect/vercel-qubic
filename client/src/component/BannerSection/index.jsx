@@ -9,7 +9,7 @@ const BannerSection = ({ className }) => {
         <div className="row">
           <div className="col-lg-8 m-auto">
             <div className="banner1">
-              <Link to="/">
+              <Link to="#">
                 Advertisment
                 {/* <img src={bannerImg} alt="bannerImg" /> */}
               </Link>

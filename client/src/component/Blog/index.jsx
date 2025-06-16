@@ -1,24 +1,40 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import calendar from "../../assets/img/icon/calendar.png";
 import FontAwesome from "../uiStyle/FontAwesome";
 import WidgetTrendingNews from "../WidgetTrendingNews";
 import WithLoadingAndError from "../LoadErrorHandle";
-import blog_1_main from "../../assets/img/blog/blog_1.jpg";
+import blogData from "../../data/blogData.json";
 
-const manualBlogPosts = [
-  {
-    id: 1,
-    slug: "ai-vs-threat-actors",
-    image: blog_1_main,
-    category: "Cybersecurity",
-    title: "AI vs. Threat Actors: Who’s Winning the Cybersecurity Showdown?",
-    publishedDate: "April 10, 2025",
-    contentSnippet:
-      "What was once a domain defined by firewalls and antivirus software is now a high-stakes arena where intelligent algorithms battle one another in real time. In this digital arms race, AI is the weapon of choice for defenders and attackers alike.",
-  },
-];
+const POSTS_PER_PAGE = 3;
 
 const Blog = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // 🔽 Sort blog posts by date (newest first)
+  const sortedBlogData = [...blogData].sort(
+    (a, b) => new Date(a.publishedDate) - new Date(b.publishedDate)
+  );
+
+  // 🔢 Calculate pagination
+  const totalPages = Math.ceil(sortedBlogData.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const currentPosts = sortedBlogData.slice(
+    startIndex,
+    startIndex + POSTS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
+
   return (
     <WithLoadingAndError>
       <div className="archives padding-top-30">
@@ -37,21 +53,21 @@ const Blog = () => {
                   </div>
                 </div>
               </div>
+
               <div className="about_posts_tab">
                 <div className="row">
-                  {manualBlogPosts.map((item) => (
-                    <div className="col-lg-12 mb-3" key={item.id}>
+                  {currentPosts.map((item) => (
+                    <div className="col-lg-12 p-0 mb-3" key={item.id}>
                       <div className="row g-3 align-items-start border-top border-bottom">
-                        {/* Image Section */}
                         <div className="col-md-5">
                           <div className="post_img">
                             <Link to={`/${item.slug}`}>
                               <img
-                                src={item.image}
+                                src={`/assets/img/blog/1/${item.image}`}
                                 style={{
                                   width: "350px",
                                   height: "250px",
-                                  objectFit: "contain",
+                                  objectFit: "cover",
                                 }}
                                 className="img-fluid rounded fixed-dimensions-blog"
                                 alt="blog"
@@ -63,10 +79,8 @@ const Blog = () => {
                           </div>
                         </div>
 
-                        {/* Content Section */}
                         <div className="col-md-7">
                           <div className="single_post_text py-3">
-                            {/* Meta Section */}
                             <div className="d-flex align-items-center flex-wrap gap-3">
                               <span className="d-flex align-items-center mr-3">
                                 <FontAwesome
@@ -116,6 +130,47 @@ const Blog = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Pagination */}
+              <div className="cpagination v4 p-3">
+                <nav aria-label="Page navigation example">
+                  <ul className="pagination">
+                    <li
+                      className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                      >
+                        <FontAwesome name="caret-left" />
+                      </button>
+                    </li>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <li
+                        className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+                        key={i + 1}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => handlePageChange(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    ))}
+                    <li
+                      className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      >
+                        <FontAwesome name="caret-right" />
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
 

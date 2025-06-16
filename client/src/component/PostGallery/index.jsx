@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ProtoTypes from "prop-types";
 import WidgetTab from "../WidgetTab";
 import ModalVideo from "react-modal-video";
 import "./style.scss";
 
 import ThumbsSwiper from "../thumbsSwiper";
-
 
 class PostGallery extends Component {
   constructor(props) {
@@ -33,9 +32,7 @@ class PostGallery extends Component {
     const { className } = this.props;
     const { vModal, videoId } = this.state;
 
-
     return (
-
       <div className={`post_gallary_area mb40 ${className}`}>
         <div className="container">
           <div className="row">

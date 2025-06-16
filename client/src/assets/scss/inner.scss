@@ -197,6 +197,15 @@
   }
 }
 
+.page-item.active .page-link {
+  background: $secondary_bg !important;
+  border: 1px black solid !important;
+}
+
+.page-link {
+  color: #000 !important;
+}
+
 /*PAGINATION CSS*/
 .cpagination.v4 {
   li {

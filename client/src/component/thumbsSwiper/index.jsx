@@ -13,12 +13,17 @@ function ThumbsSwiper() {
   const includedCategories = [
     "Tech News Archives - Nairametrics",
     "NaijaTechGuide",
-    // "Sheriff Deputies Ltd",
-    "The Verge -  All Posts",
+    "Sheriff Deputies Ltd",
+    "Latest from TechRadar",
+    "The Last Watchdog",
   ];
   const generalArticles = articles.filter((article) =>
     includedCategories.includes(article.category)
   );
+
+  // console.log(articles.data);
+
+  // console.log(generalArticles);
 
   return (
     <WithLoadingAndError>
